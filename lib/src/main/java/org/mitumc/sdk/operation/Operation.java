@@ -29,7 +29,7 @@ public class Operation implements BytesChangeable, Dictionariable {
         this.fact = fact;
         this.factSigns = new ArrayList<FactSign>();
         setHint();
-        generateHash();
+        // generateHash();
     }
 
     private void setHint() {
@@ -62,7 +62,8 @@ public class Operation implements BytesChangeable, Dictionariable {
     }
 
     public void addSign(String signKey) {
-        this.factSigns.add(SignManager.getFactSignWithSignKey(this.fact.hash.getSha3Digest(), signKey));
+        this.factSigns.add(SignManager.getFactSignWithSignKey(Util.concatByteArray(this.fact.hash.getSha3Digest(), Constant.NETWORK_ID.getBytes()), signKey));
+        generateHash();
     }
 
     @Override
@@ -80,6 +81,10 @@ public class Operation implements BytesChangeable, Dictionariable {
 
     @Override
     public HashMap<String,Object> toDict() {
+        if(this.factSigns.size() < 1) {
+            Util.raiseError("Fact Sign is empty.");
+        }
+
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("memo", this.memo);

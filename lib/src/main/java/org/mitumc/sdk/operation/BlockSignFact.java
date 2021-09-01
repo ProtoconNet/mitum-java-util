@@ -6,6 +6,7 @@ import java.util.Base64;
 import java.util.HashMap;
 
 import org.bitcoinj.core.Base58;
+import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Util;
 
 public class BlockSignFact<T extends BlockSignItem> extends OperationFact {
@@ -16,6 +17,12 @@ public class BlockSignFact<T extends BlockSignItem> extends OperationFact {
         super(type);
         this.sender = new Address(sender);
         this.items = new ArrayList<T>(Arrays.asList(items));
+
+        generateHash();
+    }
+
+    private void generateHash() {
+        this.hash = new Hash(toBytes());
     }
 
     @Override

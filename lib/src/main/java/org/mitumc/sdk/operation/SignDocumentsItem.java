@@ -23,6 +23,10 @@ public class SignDocumentsItem extends BlockSignItem {
         byte[] bowner = this.owner.toBytes();
         byte[] bcurrencyId = this.currencyId.getBytes();
 
+        if(bdocumentId.length < 1) {
+            return Util.concatByteArray(bowner, bcurrencyId);
+        }
+
         return Util.concatByteArray(bdocumentId, bowner, bcurrencyId);
     }
 

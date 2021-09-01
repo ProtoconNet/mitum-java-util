@@ -1,0 +1,27 @@
+{
+  "fact": {
+    "sender": "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1",
+    "_hint": "mitum-blocksign-create-documents-operation-fact-v0.0.1",
+    "items": [
+      {
+        "signers": [],
+        "currency": "MCC",
+        "filehash": "abcd:mbfh-v0.0.1",
+        "_hint": "mitum-blocksign-create-documents-single-file-v0.0.1"
+      }
+    ],
+    "hash": "FNxVVbHrsrVyrVb7SaEP8NZCsc5RB9WrcLsQeBb3Sr3f",
+    "token": "MjAyMS0wOS0wMVQxNjoyNTo0My4zNjha"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "51ivSMFrA7afyy3GBtkgffddfz45711gG9oVs5WyptamaktkekP3F1UyrXZFFSXqouZnXrh4fuWcGQWK2zFGepKZ",
+      "signed_at": "2021-09-01T16:25:43.554Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "GBMQ2ZIPTVULEH37AZVX3PF2UNHEAHZRNQXWGU2Z53OI3IDDHMK3AA3Y:stellar-pub-v0.0.1"
+    }
+  ],
+  "_hint": "mitum-blocksign-create-documents-operation-v0.0.1",
+  "hash": "gprR4niRoUH4fmLUQbUHq1vbuaJuwNjViJAV8cUy9sb"
+}

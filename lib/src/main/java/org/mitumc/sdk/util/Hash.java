@@ -3,6 +3,7 @@ package org.mitumc.sdk.util;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.bitcoinj.core.Base58;
 
 public class Hash {
     private String msg;
@@ -28,7 +29,7 @@ public class Hash {
         try{
             MessageDigest hasher = MessageDigest.getInstance("SHA-256");
             this.sha256Digest = hasher.digest(this.target);
-            this.sha256Hash = new String(this.sha256Digest);
+            this.sha256Hash = Base58.encode(this.sha256Digest);
         } catch(NoSuchAlgorithmException e) {
             Util.raiseError("No such algorithm; sha-256");
         }
@@ -38,7 +39,7 @@ public class Hash {
         try {
             MessageDigest hasher = MessageDigest.getInstance("SHA3-256");
             this.sha3Digest = hasher.digest(this.target);
-            this.sha3Hash = new String(this.sha3Digest);
+            this.sha3Hash = Base58.encode(this.sha3Digest);
         } catch(NoSuchAlgorithmException e) {
             Util.raiseError("No such algorithm; sha3-256");
         }

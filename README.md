@@ -1,2 +1,2 @@
 # mitum-java-util
-mitum-currency java sdk
+mitum-currency Java SDK

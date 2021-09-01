@@ -29,7 +29,6 @@ public class STELLARKeypair extends BaseKeypair {
     void generatePublicKey() {
         this.keypair = KeyPair.fromSecretSeed(this.privateKey.getRawKey());
         this.publicKey = new BaseKey(keypair.getAccountId(), Constant.KEY_STELLAR_PUBLIC);
-
     }
 
     @Override

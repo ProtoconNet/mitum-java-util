@@ -31,9 +31,9 @@ dependencies {
     implementation 'org.bouncycastle:bcprov-jdk16:1.46'
     implementation 'com.github.projectpai:bitcoinj:0.14.7'
 
-    implementation files('./lib/stellar-sdk.jar')
-    implementation files('./lib/bcprov-jdk15on-169.jar')
-    implementation files('./lib/bitcoinj-core-0.15.10.jar')
+    // implementation files('./src/lib/stellar-sdk.jar')
+    // implementation files('./src/lib/bcprov-jdk15on-169.jar')
+    // implementation files('./src/lib/bitcoinj-core-0.15.10.jar')
 }
 
 tasks.named('test') {

@@ -1,0 +1,32 @@
+{
+  "fact": {
+    "sender": "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1",
+    "_hint": "mitum-currency-transfers-operation-fact-v0.0.1",
+    "items": [
+      {
+        "receiver": "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1",
+        "amounts": [
+          {
+            "amount": "1000",
+            "currency": "MCC",
+            "_hint": "mitum-currency-amount-v0.0.1"
+          }
+        ],
+        "_hint": "mitum-currency-transfers-item-single-amount-v0.0.1"
+      }
+    ],
+    "hash": "BGpApY267YZ1GH9QM18i95WuAvR65XBmYfhuM3o48san",
+    "token": "MjAyMS0wOS0wMVQxNjoxNjozMi43Mzla"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "2g9CzjFtFp1Er8C8h5teDHCBoG1DE6H5w9V65ZHB5vfu4X7tyK7EivjnAEYGdeinMZEjVqx2Ymv4CNcFsNtQdjG",
+      "signed_at": "2021-09-01T16:16:33.062Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "GBMQ2ZIPTVULEH37AZVX3PF2UNHEAHZRNQXWGU2Z53OI3IDDHMK3AA3Y:stellar-pub-v0.0.1"
+    }
+  ],
+  "_hint": "mitum-currency-transfers-operation-v0.0.1",
+  "hash": "DpUch9KvU7JgrdSKjwikkZU1TRHWU7zJJxLphkcKVkbg"
+}

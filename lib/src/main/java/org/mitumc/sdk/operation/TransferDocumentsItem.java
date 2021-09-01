@@ -27,6 +27,10 @@ public class TransferDocumentsItem extends BlockSignItem {
         byte[] breceiver = this.receiver.toBytes();
         byte[] bcurrencyId = this.currencyId.getBytes();
 
+        if(bdocumentId.length < 1) {
+            return Util.concatByteArray(bowner, breceiver, bcurrencyId);
+        }
+
         return Util.concatByteArray(bdocumentId, bowner, breceiver, bcurrencyId);
     }
 

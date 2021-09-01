@@ -2,6 +2,7 @@ package org.mitumc.sdk.operation;
 
 import java.util.ArrayList;
 
+import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Keys;
 
 public class OperationManager {
@@ -63,15 +64,15 @@ public class OperationManager {
     }
 
     public static BlockSignFact<CreateDocumentsItem> newBlockSignFact(String sender, CreateDocumentsItem[] items) {
-        return new BlockSignFact<CreateDocumentsItem>(Item.ITEM_TYPE_CREATE_DOCUMENTS, sender, items);
+        return new BlockSignFact<CreateDocumentsItem>(Constant.MBS_CREATE_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 
     public static BlockSignFact<SignDocumentsItem> newBlockSignFact(String sender, SignDocumentsItem[] items) {
-        return new BlockSignFact<SignDocumentsItem>(Item.ITEM_TYPE_SIGN_DOCUMENTS, sender, items);
+        return new BlockSignFact<SignDocumentsItem>(Constant.MBS_SIGN_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 
     public static BlockSignFact<TransferDocumentsItem> newBlockSignFact(String sender, TransferDocumentsItem[] items) {
-        return new BlockSignFact<TransferDocumentsItem>(Item.ITEM_TYPE_TRANSFER_DOCUMENTS, sender, items);
+        return new BlockSignFact<TransferDocumentsItem>(Constant.MBS_TRANSFER_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 
     public static Operation newOperation(OperationFact fact) {

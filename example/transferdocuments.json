@@ -1,0 +1,28 @@
+{
+  "fact": {
+    "sender": "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1",
+    "_hint": "mitum-blocksign-transfer-documents-operation-fact-v0.0.1",
+    "items": [
+      {
+        "owner": "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1",
+        "receiver": "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1",
+        "currency": "MCC",
+        "documentid": "1",
+        "_hint": "mitum-blocksign-transfer-item-single-document-v0.0.1"
+      }
+    ],
+    "hash": "GWadHDLwmR9xnKhA2WMci2XhxR2E8H9zPgW1QXcSDo9T",
+    "token": "MjAyMS0wOS0wMVQxNjo0OTozMy45NDda"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "3h68DziNNXWe87w4aNVkbtzBAKL66znwvq7uXkcnsb5YEmmbESbZH4c2HnNEKDRb1iTvGdXmRfesio2cuBo98R4Y",
+      "signed_at": "2021-09-01T16:49:34.299Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "GBMQ2ZIPTVULEH37AZVX3PF2UNHEAHZRNQXWGU2Z53OI3IDDHMK3AA3Y:stellar-pub-v0.0.1"
+    }
+  ],
+  "_hint": "mitum-blocksign-transfer-documents-operation-v0.0.1",
+  "hash": "JBPWeZjwdtDo9h8EgCypVCWchex59GZFMzRwEpZrE4WY"
+}

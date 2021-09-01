@@ -24,6 +24,10 @@ public class Amount implements BytesChangeable, Dictionariable {
         byte[] bamount = this.amount.toBytes(true);
         byte[] bcurrency = this.currency.getBytes();
 
+        if(bamount.length < 1) {
+            return bcurrency;
+        }
+
         return Util.concatByteArray(bamount, bcurrency);
     }
 
@@ -32,7 +36,7 @@ public class Amount implements BytesChangeable, Dictionariable {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
-        hashMap.put("amount", this.amount.getValue());
+        hashMap.put("amount", "" + this.amount.getValue());
         hashMap.put("currency", this.currency);
 
         return hashMap;

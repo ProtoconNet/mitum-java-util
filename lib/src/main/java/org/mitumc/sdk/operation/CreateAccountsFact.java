@@ -49,7 +49,7 @@ public class CreateAccountsFact extends OperationFact {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
-        hashMap.put("hash", Base58.encode(this.hash.getSha3Digest()));
+        hashMap.put("hash", this.hash.getSha3Hash());
         hashMap.put("token", Base64.getEncoder().encodeToString(this.token.getISO().getBytes()));
         hashMap.put("sender", this.sender.getAddress());
 

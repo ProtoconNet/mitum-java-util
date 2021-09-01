@@ -5,10 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimeStamp {
-    final public static String ISO_PATTERN = "yyyy-MM-ddTHH:mm:ssZ";
-    final public static String UTC_PATTERN = "yyyy-MM-dd HH:mm:ss +0000 UTC";
-    final public static DateFormat ISOformatter = new SimpleDateFormat(ISO_PATTERN);
-    final public static DateFormat UTCformatter = new SimpleDateFormat(UTC_PATTERN);
+    final public static String ISO_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    final public static String UTC_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS +0000 'UTC'";
+    private DateFormat ISOformatter;
+    private DateFormat UTCformatter;
     private Date timestamp;
     private String ISOtimestamp;
     private String UTCtimestamp;
@@ -18,6 +18,9 @@ public class TimeStamp {
     }
 
     TimeStamp(Date timestamp) {
+        this.ISOformatter = new SimpleDateFormat(ISO_PATTERN);
+        this.UTCformatter = new SimpleDateFormat(UTC_PATTERN);
+
         this.timestamp = timestamp;
         formatTimestamp();
     }
@@ -26,10 +29,10 @@ public class TimeStamp {
 
         try {
             if(timestamp.indexOf('T') > -1 && timestamp.indexOf('Z') > -1) {
-                this.timestamp = ISOformatter.parse(timestamp);
+                this.timestamp = this.ISOformatter.parse(timestamp);
             }
             else if(timestamp.indexOf("UTC") > -1) {
-                this.timestamp = UTCformatter.parse(timestamp);
+                this.timestamp = this.UTCformatter.parse(timestamp);
             }
             else {
             Util.raiseError("Invalid timestamp format for Timestamp.");
@@ -42,8 +45,8 @@ public class TimeStamp {
     }
 
     private void formatTimestamp() {
-        this.ISOtimestamp = ISOformatter.format(this.timestamp);
-        this.UTCtimestamp = UTCformatter.format(this.timestamp);
+        this.ISOtimestamp = this.ISOformatter.format(this.timestamp);
+        this.UTCtimestamp = this.UTCformatter.format(this.timestamp);
     }
 
     public String getISO() {

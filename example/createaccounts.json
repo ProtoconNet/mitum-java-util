@@ -1,0 +1,43 @@
+{
+  "fact": {
+    "sender": "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1",
+    "_hint": "mitum-currency-create-accounts-operation-fact-v0.0.1",
+    "items": [
+      {
+        "amounts": [
+          {
+            "amount": "1000",
+            "currency": "MCC",
+            "_hint": "mitum-currency-amount-v0.0.1"
+          }
+        ],
+        "keys": {
+          "keys": [
+            {
+              "weight": 100,
+              "_hint": "mitum-currency-key-v0.0.1",
+              "key": "kQxEqq6t32EEegAvV4oqAGcwQJojertuU7EdsvZYAB9X:btc-pub-v0.0.1"
+            }
+          ],
+          "threshold": 100,
+          "_hint": "mitum-currency-keys-v0.0.1",
+          "hash": "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP"
+        },
+        "_hint": "mitum-currency-create-accounts-single-amount-v0.0.1"
+      }
+    ],
+    "hash": "6nrP4xGsv9T151dUo75LwikwC6inCV55fPG4jeYHjAPq",
+    "token": "MjAyMS0wOS0wMVQxNjoxMToyNS45NzRa"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "3TF56wgVdU7PYNUL4jWRLXKFPBMHxwgE5A4SoKyAgShwiht2fpfjVD2ggB5jToDdCAYu74RvmoQhsMD7WJ8PcN1N",
+      "signed_at": "2021-09-01T16:11:26.142Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "GBMQ2ZIPTVULEH37AZVX3PF2UNHEAHZRNQXWGU2Z53OI3IDDHMK3AA3Y:stellar-pub-v0.0.1"
+    }
+  ],
+  "_hint": "mitum-currency-create-accounts-operation-v0.0.1",
+  "hash": "6kqDQ7JLpbMHbj7ShKHK2dthTrfZBdoszGSy2MDAESpv"
+}

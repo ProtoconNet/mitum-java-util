@@ -102,4 +102,14 @@ public class Util {
 
         return stringBuilder.toString();
     }
+
+    public static void printBytes(byte[] bytes) {
+        if(bytes == null) {
+            return;
+        }
+        for(byte b : bytes) {
+            System.out.print(""+ b + " ");
+        }
+        System.out.println();
+    }
 }

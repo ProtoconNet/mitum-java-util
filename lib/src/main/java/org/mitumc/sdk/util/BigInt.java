@@ -25,24 +25,34 @@ public class BigInt implements BytesChangeable {
         this.abs = Math.abs(num);
     }
 
-    private int byteLength(byte[] bytes, boolean isBig) {
-        if(isBig) {
-            for(int i = 0; i < bytes.length; i++){
-                if(bytes[i] != 0) {
-                    return bytes.length - i;
-                }
+    private int byteLength(byte[] bytes) {
+
+        for(int i = 0; i < bytes.length; i++){
+            if(bytes[i] != 0) {
+                return bytes.length - i;
             }
         }
-        else {
-            for(int i = bytes.length - 1; i > -1; i--) {
-                if(bytes[i] != 0) {
-                    return i + 1;
-                }
-            }
+        
+        return -1;
+    }
+
+    private byte[] reverse(byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
+        int i = 0;
+        int j = bytes.length - 1;
+        byte tmp;
+        while (j > i) {
+            tmp = bytes[j];
+            bytes[j] = bytes[i];
+            bytes[i] = tmp;
+            j--;
+            i++;
         }
 
-        return -1;
-    } 
+        return bytes;
+    }
 
     public long getValue() {
         return this.num;
@@ -81,25 +91,32 @@ public class BigInt implements BytesChangeable {
             Util.raiseError("Invalid endian for BigInt.");
         }
 
-        boolean isBig = endian.equals(BIG_ENDIAN);
+        byte[] bytes = ByteBuffer.allocate(byteLength).order(ByteOrder.BIG_ENDIAN).putLong(this.abs).array();
 
-        byte[] bytes = ByteBuffer.allocate(byteLength).order(
-            isBig ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN).putLong(this.abs).array();
+        boolean isAllZero = true;
+        for(byte b : bytes) {
+            if(b != 0) {
+                isAllZero = false;
+            }
+        }
 
         if(isTight) {
-            int len = byteLength(bytes, isBig);
+            int len = byteLength(bytes);
+
+            if(len == -1) {
+                if(isAllZero) {
+                    return new byte[0];
+                }
+
+                Util.raiseError("Invalid value for BigInt.");
+            }
+
             byte[] result = new byte[len];
-            
-            if(isBig) {
-                System.arraycopy(bytes, bytes.length - len, result, 0, len);
-            }
-            else {
-                System.arraycopy(bytes, 0, result, 0, len);
-            }
-        
+            System.arraycopy(bytes, bytes.length - len, result, 0, len);
+
             return result;
         }
-        
-        return bytes;
+
+        return reverse(bytes);
     }
 }
