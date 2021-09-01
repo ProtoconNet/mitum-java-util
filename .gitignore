@@ -20,7 +20,7 @@
 
 *.jar
 !gradle/wrapper/gradle-wrapper.jar
-!mitum-java-util.jar
+!release/*.jar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

@@ -18,7 +18,7 @@ public class OperationManager {
         return new CreateAccountsItem(keys, amounts);
     }
 
-    public static TransfersItem newTransfersItem(String receiver) throws Exception {
+    public static TransfersItem newTransfersItem(String receiver) {
         return new TransfersItem(receiver);
     }
 
