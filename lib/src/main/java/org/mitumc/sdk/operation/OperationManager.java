@@ -1,7 +1,5 @@
 package org.mitumc.sdk.operation;
 
-import java.util.ArrayList;
-
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Keys;
 

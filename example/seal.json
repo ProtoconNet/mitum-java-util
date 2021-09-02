@@ -1,0 +1,42 @@
+{
+  "body_hash": "9uuRTLfN3nWK9sZvibebpYcUCvpZqJuRWq8cvJLVvDft",
+  "operations": [
+    {
+      "fact": {
+        "sender": "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1",
+        "_hint": "mitum-currency-transfers-operation-fact-v0.0.1",
+        "items": [
+          {
+            "receiver": "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1",
+            "amounts": [
+              {
+                "amount": "1000",
+                "currency": "MCC",
+                "_hint": "mitum-currency-amount-v0.0.1"
+              }
+            ],
+            "_hint": "mitum-currency-transfers-item-single-amount-v0.0.1"
+          }
+        ],
+        "hash": "Apxfj5Wwtk3vocBFt8GhuWL6hh2J2E9WjQ56cerAXtyF",
+        "token": "MjAyMS0wOS0wMlQxMjoxODowMS45Mjla"
+      },
+      "memo": "",
+      "fact_signs": [
+        {
+          "signature": "4ha2VGkpp1MViXVeKk7pSn9M5ixNyXGhM8krrUJBojtSrPPBKsBxzg1qfdtkJrEDXb9A3UB16jheGrabs2bU13Vv",
+          "signed_at": "2021-09-02T12:18:02.089Z",
+          "_hint": "base-fact-sign-v0.0.1",
+          "signer": "GBMQ2ZIPTVULEH37AZVX3PF2UNHEAHZRNQXWGU2Z53OI3IDDHMK3AA3Y:stellar-pub-v0.0.1"
+        }
+      ],
+      "_hint": "mitum-currency-transfers-operation-v0.0.1",
+      "hash": "9M8Ws4NeKEAE32s1C256oGhuSudfPjWKByVx4qFd5WUr"
+    }
+  ],
+  "signature": "57HVTVryYQjMHVyPAWZwDrxRegj6htLvFuFBfJdp111KgJjvt6Q88gqjiQJbZYkUZvwyj97p1o8QsuGnfqNQdU1G",
+  "signed_at": "2021-09-02T12:18:02.178Z",
+  "_hint": "seal-v0.0.1",
+  "hash": "FA8muMmJ57GKjCCaLtM4wiGSWYAZHmHZybwyjfJsi2YK",
+  "signer": "GBMQ2ZIPTVULEH37AZVX3PF2UNHEAHZRNQXWGU2Z53OI3IDDHMK3AA3Y:stellar-pub-v0.0.1"
+}

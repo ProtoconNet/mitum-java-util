@@ -82,6 +82,14 @@ public class Operation implements BytesChangeable, Dictionariable {
         generateHash();
     }
 
+    public Hash getHash() {
+        if(this.hash != null){
+            return this.hash;
+        }
+
+        return null;
+    }
+
     @Override
     public byte[] toBytes() {
         if(this.factSigns.size() < 1) {

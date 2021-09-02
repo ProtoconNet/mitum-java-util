@@ -3,7 +3,7 @@ package org.mitumc.sdk.key;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.Util;
 
-abstract class BaseKeypair {
+public abstract class BaseKeypair implements KeyTypeFixable {
     public static final String KEYPAIR_TYPE_BTC = "btc-keypair";
     public static final String KEYPAIR_TYPE_ETHER = "ether-keypair";
     public static final String KEYPAIR_TYPE_STELLAR = "stellar-keypair";
@@ -35,6 +35,11 @@ abstract class BaseKeypair {
         else {
             Util.raiseError("Invalid private key type for Keypair.");
         }
+    }
+
+    @Override
+    public String getKeypairType() {
+        return this.keypairType;
     }
 
     public String getPrivateKey() {

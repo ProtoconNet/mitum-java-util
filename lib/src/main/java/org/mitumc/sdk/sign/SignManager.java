@@ -1,6 +1,5 @@
 package org.mitumc.sdk.sign;
 
-import java.security.KeyPair;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;

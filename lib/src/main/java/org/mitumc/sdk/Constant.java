@@ -1,15 +1,15 @@
 package org.mitumc.sdk;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
+// import java.io.FileNotFoundException;
+// import java.io.FileReader;
+// import java.io.IOException;
+// import java.util.Properties;
 
-import org.mitumc.sdk.util.Util;
+// import org.mitumc.sdk.util.Util;
 
 public class Constant {
-    public static Properties configProps;
-    public static Properties hintProps;
+    // public static Properties configProps;
+    // public static Properties hintProps;
 
     public static final String VERSION = "v0.0.1";
     public static final String NETWORK_ID = "mitum";
@@ -50,24 +50,24 @@ public class Constant {
     public static final String MBS_SIGN_DOCUMENTS_OPERATION_FACT = "mitum-blocksign-sign-documents-operation-fact";
     public static final String MBS_SIGN_DOCUMENTS_OPERATION = "mitum-blocksign-sign-documents-operation";
 
-    public Constant() {
-        try {
-            this.configProps = loadConfig();
-            this.hintProps = loadHint();
-        } catch(Exception e) {
-            Util.raiseError("Fail to load properties.");
-        }
-    }
+    // public Constant() {
+    //     // try {
+    //     //     this.configProps = loadConfig();
+    //     //     this.hintProps = loadHint();
+    //     // } catch(Exception e) {
+    //     //     Util.raiseError("Fail to load properties.");
+    //     // }
+    // }
 
-    private Properties loadConfig() throws IOException, FileNotFoundException {
-        Properties prop = new Properties();
-        prop.load(new FileReader("properties/config.properties"));
-        return prop;
-    }
+    // private Properties loadConfig() throws IOException, FileNotFoundException {
+    //     Properties prop = new Properties();
+    //     prop.load(new FileReader("properties/config.properties"));
+    //     return prop;
+    // }
 
-    private Properties loadHint() throws IOException, FileNotFoundException {
-        Properties prop = new Properties();
-        prop.load(new FileReader("properties/hint.properties"));
-        return prop;
-    }
+    // private Properties loadHint() throws IOException, FileNotFoundException {
+    //     Properties prop = new Properties();
+    //     prop.load(new FileReader("properties/hint.properties"));
+    //     return prop;
+    // }
 }
