@@ -17,7 +17,7 @@ public class TimeStamp {
         this(new Date());
     }
 
-    TimeStamp(Date timestamp) {
+    public TimeStamp(Date timestamp) {
         this.ISOformatter = new SimpleDateFormat(ISO_PATTERN);
         this.UTCformatter = new SimpleDateFormat(UTC_PATTERN);
 
@@ -25,7 +25,9 @@ public class TimeStamp {
         formatTimestamp();
     }
 
-    TimeStamp(String timestamp) {
+    public TimeStamp(String timestamp) {
+        this.ISOformatter = new SimpleDateFormat(ISO_PATTERN);
+        this.UTCformatter = new SimpleDateFormat(UTC_PATTERN);
 
         try {
             if(timestamp.indexOf('T') > -1 && timestamp.indexOf('Z') > -1) {
@@ -35,7 +37,7 @@ public class TimeStamp {
                 this.timestamp = this.UTCformatter.parse(timestamp);
             }
             else {
-            Util.raiseError("Invalid timestamp format for Timestamp.");
+                Util.raiseError("Invalid timestamp format for Timestamp.");
             }
         } catch(Exception e) {
             Util.raiseError("Parse error for Timestamp.");

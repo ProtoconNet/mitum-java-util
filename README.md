@@ -405,4 +405,29 @@ If you want to get signature for 'mitum-currency', use 'base58' to encode the si
 
 ## Add Fact Signature to Operation
 
-'Add Fact Signature' will be available in next update.
+Use 'Signer.addSignToOperation' to add new fact signature to "fact_signs".
+
+After adding a fact signature, operation hash is always changed.
+
+### Signer (org.mitumc.sdk.Signer)
+
+```java
+>>> HashMap<String, Object> addSignToOperation(String signKey, JsonObject operation, String networkId);
+>>> HashMap<String, Object> addSignToOperation(String signKey, JsonObject operation);
+>>> HashMap<String, Object> addSignToOperation(String signKey, String operationPath, String networkId);
+>>> HashMap<String, Object> addSignToOperation(String signKey, String operationPath);
+```
+
+```java
+import org.mitumc.sdk.Signer;
+import org.mitumc.sdk.JSONParser;
+
+>>> String key = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
+
+>>> HashMap<string, Object> newOper = Signer.addSignToOperation(key, "operation.json", "mitum");
+>>> JSONParser.createJSON(newOper, "newOperation.json");
+```
+
+Signer class doesn't create json file of new operation.
+
+Use 'JSONParser' if you need.
