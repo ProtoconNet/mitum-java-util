@@ -82,4 +82,12 @@ public class OperationManager {
     public static Operation newOperation(String memo, OperationFact fact) {
         return new Operation(memo, fact);
     }
+
+    public static Operation newOperation(OperationFact fact, String networkId) {
+        return new Operation(fact, networkId);
+    }
+
+    public static Operation newOperation(String memo, OperationFact fact, String networkId) {
+        return new Operation(memo, fact, networkId);
+    }
 }

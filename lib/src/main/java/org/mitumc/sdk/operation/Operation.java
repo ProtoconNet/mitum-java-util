@@ -20,6 +20,8 @@ public class Operation implements BytesChangeable, Dictionariable {
     private ArrayList<FactSign> factSigns;
     private Hash hash;
 
+    private String networkId;
+
     Operation(OperationFact fact) {
         this("", fact);
     }
@@ -30,6 +32,15 @@ public class Operation implements BytesChangeable, Dictionariable {
         this.factSigns = new ArrayList<FactSign>();
         setHint();
         // generateHash();
+    }
+
+    Operation(OperationFact fact, String NetworkId) {
+        this("", fact, NetworkId);
+    }
+
+    Operation(String memo, OperationFact fact, String networkId) {
+        this(memo, fact);
+        this.networkId = networkId;
     }
 
     private void setHint() {
@@ -62,7 +73,12 @@ public class Operation implements BytesChangeable, Dictionariable {
     }
 
     public void addSign(String signKey) {
-        this.factSigns.add(SignManager.getFactSignWithSignKey(Util.concatByteArray(this.fact.hash.getSha3Digest(), Constant.NETWORK_ID.getBytes()), signKey));
+        this.factSigns.add(
+            SignManager.getFactSignWithSignKey(
+                Util.concatByteArray(
+                    this.fact.hash.getSha3Digest(), 
+                    this.networkId != null ? this.networkId.getBytes() : Constant.NETWORK_ID.getBytes()), 
+                signKey));
         generateHash();
     }
 

@@ -62,7 +62,7 @@ Before generating new operation, you should check below for 'mitum-currency',
 * 'private key' of source account to generate signatures (a.k.a signing key)
 * 'public address' of source account
 * 'public key' of target account
-* 'network id' - now network id is fixed to 'mitum'. This will be flexible soon.
+* 'network id'
 
 Additionally, you should check below for 'mitum-data-blocksign',
 
@@ -80,25 +80,25 @@ The package provides 'KeyManager' class to manage classes about key.
 Methods that 'KeyManager' supports are,
 
 ```java
-Key newKey(String key, int weight);
-Keys newKeys(int threshold);
-Keys newKeys(Key[] keys, int threshold); 
-Object getNewKeypair(String keypairType);
-Object getKeypairFromPrivateKey(String hintedKey);
-Object getKeypairFromPrivateKey(String rawKey, String keyType);
+>>> Key newKey(String key, int weight);
+>>> Keys newKeys(int threshold);
+>>> Keys newKeys(Key[] keys, int threshold); 
+>>> Object getNewKeypair(String keypairType);
+>>> Object getKeypairFromPrivateKey(String hintedKey);
+>>> Object getKeypairFromPrivateKey(String rawKey, String keyType);
 ```
 
 #### KeyManager - newKey / newKeys
 
 ```java
-import org.mitumc.sdk.key.KeyManager.newKey;
-import org.mitumc.sdk.key.KeyManager.newKeys;
+>>> import org.mitumc.sdk.key.KeyManager.newKey;
+>>> import org.mitumc.sdk.key.KeyManager.newKeys;
 
-Key key = newKey("SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1", 100);
-Keys keys = newKeys(100);
-keys.addKey(key);
+>>> Key key = newKey("SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1", 100);
+>>> Keys keys = newKeys(100);
+>>> keys.addKey(key);
 
-Keys keys2 = newKeys(new Key[]{key}, 100);
+>>> Keys keys2 = newKeys(new Key[]{key}, 100);
 ```
 
 Note that 'keys' and 'keys2' work same.
@@ -112,25 +112,37 @@ The package provides 'OperationManager' class to manage classes about operation.
 Methods that 'OperationManager' supports are,
 
 ```java
-Amount newAmount(String currency, long amount);
-CreateAccountsItem newCreateAccountsItem(Keys keys);
-CreateAccountsItem newCreateAccountsItem(Keys keys, Amount[] amounts);
-TransfersItem newTransfersItem(String receiver);
-TransfersItem newTransfersItem(String receiver, Amount[] amounts);
-CreateDocumentsItem newCreateDocumentsItem(String fileHash, String currencyId);
-CreateDocumentsItem newCreateDocumentsItem(String fileHash, String[] signers, String currencyId);
-SignDocumentsItem newSignDocumentsItem(String owner, int documentId, String currencyId);
-TransferDocumentsItem newTransferDocumentsItem(String owner, String receiver, int documentId, String currencyId);
-CreateAccountsFact newCreateAccountsFact(String sender);
-CreateAccountsFact newCreateAccountsFact(String sender, CreateAccountsItem[] items);
-KeyUpdaterFact newKeyUpdaterFact(String target, String currencyId, Keys keys);
-TransfersFact newTransfersFact(String sender);
-TransfersFact newTransfersFact(String sender, TransfersItem[] items);
-BlockSignFact newBlockSignFact(String sender, CreateDocumentsItem[] items);
-BlockSignFact newBlockSignFact(String sender, SignDocumentsItem[] items);
-BlockSignFact newBlockSignFact(String sender, TransferDocumentsItem[] items);
-Operation newOperation(OperationFact fact);
-Operation newOperation(String memo, OperationFact fact);
+>>> Amount newAmount(String currency, long amount);
+
+>>> CreateAccountsItem newCreateAccountsItem(Keys keys);
+>>> CreateAccountsItem newCreateAccountsItem(Keys keys, Amount[] amounts);
+
+>>> TransfersItem newTransfersItem(String receiver);
+>>> TransfersItem newTransfersItem(String receiver, Amount[] amounts);
+
+>>> CreateDocumentsItem newCreateDocumentsItem(String fileHash, String currencyId);
+>>> CreateDocumentsItem newCreateDocumentsItem(String fileHash, String[] signers, String currencyId);
+
+>>> SignDocumentsItem newSignDocumentsItem(String owner, int documentId, String currencyId);
+
+>>> TransferDocumentsItem newTransferDocumentsItem(String owner, String receiver, int documentId, String currencyId);
+
+>>> CreateAccountsFact newCreateAccountsFact(String sender);
+>>> CreateAccountsFact newCreateAccountsFact(String sender, CreateAccountsItem[] items);
+
+>>> KeyUpdaterFact newKeyUpdaterFact(String target, String currencyId, Keys keys);
+
+>>> TransfersFact newTransfersFact(String sender);
+>>> TransfersFact newTransfersFact(String sender, TransfersItem[] items);
+
+>>> BlockSignFact newBlockSignFact(String sender, CreateDocumentsItem[] items);
+>>> BlockSignFact newBlockSignFact(String sender, SignDocumentsItem[] items);
+>>> BlockSignFact newBlockSignFact(String sender, TransferDocumentsItem[] items);
+
+>>> Operation newOperation(OperationFact fact);
+>>> Operation newOperation(String memo, OperationFact fact);
+>>> Operation newOperation(OperationFact fact, String networkId);
+>>> Operation newOperation(String memo, OperationFact fact, String networkId);
 ```
 
 The usage of OperationManager will be introduces in the next section.
@@ -142,8 +154,8 @@ You can create a json file of generated operation object without 'JSONParser'. H
 Methods that 'JSONParser' supports are,
 
 ```java
-void createJSON(shadow.com.google.gson.JsonObject target, String fpName);
-void createJSON(HashMap target, String fpName);
+>>> void createJSON(shadow.com.google.gson.JsonObject target, String fpName);
+>>> void createJSON(HashMap target, String fpName);
 ```
 
 A use-case of 'JSONParser' will be introduced in the next part, too.
@@ -152,34 +164,34 @@ A use-case of 'JSONParser' will be introduced in the next part, too.
 
 For new account, 'currency id' and 'initial amount' must be set. With source account, you can create and register new account of target public key.
 
-Setting 'network id' will be available later. 
-
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
+>>> import org.mitumc.sdk.key.*;
+>>> import org.mitumc.sdk.operation.*;
 
-String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
-String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
+>>> String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
+>>> String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
 
-String targetPub = "kQxEqq6t32EEegAvV4oqAGcwQJojertuU7EdsvZYAB9X:btc-pub-v0.0.1";
+>>> String targetPub = "kQxEqq6t32EEegAvV4oqAGcwQJojertuU7EdsvZYAB9X:btc-pub-v0.0.1";
 
-Key key = KeyManager.newKey(targetPub, 100);
-Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
+>>> Key key = KeyManager.newKey(targetPub, 100);
+>>> Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
 
-Amount amount = OperationManager.newAmount("MCC", 1000);
-CreateAccountsItem item = OperationManager.newCreateAccountsItem(keys, new Amount[]{amount});
+>>> Amount amount = OperationManager.newAmount("MCC", 1000);
+>>> CreateAccountsItem item = OperationManager.newCreateAccountsItem(keys, new Amount[]{amount});
 
-CreateAccountsFact fact = OperationManager.newCreateAccountsFact(sourceAddr, new CreateAccountsItem[]{item});
+>>> CreateAccountsFact fact = OperationManager.newCreateAccountsFact(sourceAddr, new CreateAccountsItem[]{item});
 
-Operation operation = OperationManager.newOperation("", fact);
-operation.addSign(sourcePriv);
+>>> Operation operation = OperationManager.newOperation(fact);
+>>> operation.addSign(sourcePriv);
 
-JSONParser.createJSON(operation.toDict(), "createaccounts.json");
+>>> JSONParser.createJSON(operation.toDict(), "createaccounts.json");
 ```
 
 You must add new fact signature by addFactSign before creating operation json files.
+
+If you would like to change 'network id' for the operation, use 'newOperation(fact, networkId)' or 'newOperation(memo, fact, networkId)' instead of 'newOperation(fact)' and 'newOperation(memo, fact)'
 
 With 'JSONParser.createJSON', the result format will be like [this](example/createaccounts.json). (Each value is up to input arguments and time)
 
@@ -190,22 +202,22 @@ Key-Updater literally supports to update source public key to something else.
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
+>>> import org.mitumc.sdk.key.*;
+>>> import org.mitumc.sdk.operation.*;
 
-String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
-String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
+>>> String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
+>>> String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
 
-String targetPub = "kQxEqq6t32EEegAvV4oqAGcwQJojertuU7EdsvZYAB9X:btc-pub-v0.0.1";
+>>> String targetPub = "kQxEqq6t32EEegAvV4oqAGcwQJojertuU7EdsvZYAB9X:btc-pub-v0.0.1";
 
-Key key = KeyManager.newKey(targetPub, 100);
-Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
+>>> Key key = KeyManager.newKey(targetPub, 100);
+>>> Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
 
-KeyUpdaterFact fact = OperationManager.newKeyUpdaterFact(sourceAddr, "MCC", keys);
-Operation operation = OperationManager.newOperation("", fact);
-operation.addSign(sourcePriv);
+>>> KeyUpdaterFact fact = OperationManager.newKeyUpdaterFact(sourceAddr, "MCC", keys);
+>>> Operation operation = OperationManager.newOperation(fact);
+>>> operation.addSign(sourcePriv);
 
-JSONParser.createJSON(operation.toDict(), "keyupdater.json");
+>>> JSONParser.createJSON(operation.toDict(), "keyupdater.json");
 ```
 
 Then keys of the source account will be replaced with target keys.
@@ -217,23 +229,23 @@ To generate an operation, you must prepare target address, not public key. Trans
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
+>>> import org.mitumc.sdk.key.*;
+>>> import org.mitumc.sdk.operation.*;
 
-String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
-String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
+>>> String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
+>>> String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
 
-String targetAddr = "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1";
+>>> String targetAddr = "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1";
 
-Amount amount = OperationManager.newAmount("MCC", 1000);
-TransfersItem item = OperationManager.newTransfersItem(targetAddr, new Amount[]{amount});
+>>> Amount amount = OperationManager.newAmount("MCC", 1000);
+>>> TransfersItem item = OperationManager.newTransfersItem(targetAddr, new Amount[]{amount});
 
-TransfersFact fact = OperationManager.newTransfersFact(sourceAddr, new TransfersItem[]{item});
+>>> TransfersFact fact = OperationManager.newTransfersFact(sourceAddr, new TransfersItem[]{item});
 
-Operation operation = OperationManager.newOperation("", fact);
-operation.addSign(sourcePriv);
+>>> Operation operation = OperationManager.newOperation(fact);
+>>> operation.addSign(sourcePriv);
 
-JSONParser.createJSON(operation.toDict(), "transfers.json");
+>>> JSONParser.createJSON(operation.toDict(), "transfers.json");
 ```
 
 ### Generate Create-Documents
@@ -243,19 +255,19 @@ To generate an operation, you must prepare file-hash. Create-Document supports t
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
+>>> import org.mitumc.sdk.key.*;
+>>> import org.mitumc.sdk.operation.*;
 
-String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
-String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
+>>> String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
+>>> String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
 
-CreateDocumentsItem item = OperationManager.newCreateDocumentsItem("abcd:mbfh-v0.0.1", "MCC");
-BlockSignFact fact = OperationManager.newBlockSignFact(sourceAddr, new CreateDocumentsItem[]{item});
+>>> CreateDocumentsItem item = OperationManager.newCreateDocumentsItem("abcd:mbfh-v0.0.1", "MCC");
+>>> BlockSignFact fact = OperationManager.newBlockSignFact(sourceAddr, new CreateDocumentsItem[]{item});
 
-Operation operation = OperationManager.newOperation("", fact);
-operation.addSign(sourcePriv);
+>>> Operation operation = OperationManager.newOperation(fact);
+>>> operation.addSign(sourcePriv);
 
-JSONParser.createJSON(operation.toDict(), "createdocuments.json");
+>>> JSONParser.createJSON(operation.toDict(), "createdocuments.json");
 ```
 
 ### Generate Sign-Documents
@@ -265,19 +277,19 @@ To generate an operation, you must prepare owner and document id. Sign-Document 
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
+>>> import org.mitumc.sdk.key.*;
+>>> import org.mitumc.sdk.operation.*;
 
-String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
-String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
+>>> String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
+>>> String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
 
-SignDocumentsItem item = OperationManager.newSignDocumentsItem(sourceAddr, 0, "MCC");
-BlockSignFact fact = OperationManager.newBlockSignFact(sourceAddr, new SignDocumentsItem[]{item});
+>>> SignDocumentsItem item = OperationManager.newSignDocumentsItem(sourceAddr, 0, "MCC");
+>>> BlockSignFact fact = OperationManager.newBlockSignFact(sourceAddr, new SignDocumentsItem[]{item});
 
-Operation operation = OperationManager.newOperation("", fact);
-operation.addSign(sourcePriv);
+>>> Operation operation = OperationManager.newOperation(fact);
+>>> operation.addSign(sourcePriv);
 
-JSONParser.createJSON(operation.toDict(), "signdocuments.json");
+>>> JSONParser.createJSON(operation.toDict(), "signdocuments.json");
 ```
 
 ### Generate Transfer-Documents
@@ -287,21 +299,21 @@ To generate an operation, you must prepare owner and document id. Transfer-Docum
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
+>>> import org.mitumc.sdk.key.*;
+>>> import org.mitumc.sdk.operation.*;
 
-String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
-String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
+>>> String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
+>>> String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
 
-String targetAddr = "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1";
+>>> String targetAddr = "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1";
 
-TransferDocumentsItem item = OperationManager.newTransferDocumentsItem(sourceAddr, targetAddr, 0, "MCC");
-BlockSignFact fact = OperationManager.newBlockSignFact(sourceAddr, new TransferDocumentsItem[]{item});
+>>> TransferDocumentsItem item = OperationManager.newTransferDocumentsItem(sourceAddr, targetAddr, 0, "MCC");
+>>> BlockSignFact fact = OperationManager.newBlockSignFact(sourceAddr, new TransferDocumentsItem[]{item});
 
-Operation operation = OperationManager.newOperation("", fact);
-operation.addSign(sourcePriv);
+>>> Operation operation = OperationManager.newOperation(fact);
+>>> operation.addSign(sourcePriv);
 
-JSONParser.createJSON(operation.toDict(), "transferdocuments.json");
+>>> JSONParser.createJSON(operation.toDict(), "transferdocuments.json");
 ```
 
 ## Generate New Seal
@@ -325,15 +337,15 @@ Now only stellar keypair is available. 'mitum-java-util' will supports BTC and E
 #### Generate Keypair
 
 ```java
-import org.mitumc.sdk.key.KeyManager;
+>>> import org.mitumc.sdk.key.KeyManager;
 
-STELLARKeypair keypair = (STELLARKeypair) KeyManager.getNewKeypair(BaseKeypair.KEYPAIR_TYPE_STELLAR);
+>>> STELLARKeypair keypair = (STELLARKeypair) KeyManager.getNewKeypair(BaseKeypair.KEYPAIR_TYPE_STELLAR);
 
-keypair.getPrivateKey(); // returns private key of the keypair
-keypair.getPublicKey(); // returns public key of the keypair
+>>> keypair.getPrivateKey(); // returns private key of the keypair
+>>> keypair.getPublicKey(); // returns public key of the keypair
 
-String key = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
-STELLARKeypair derivedKeypair = (STELLARKeypair) KeyManager.getKeypairFromPrivateKey(key);
+>>> String key = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
+>>> STELLARKeypair derivedKeypair = (STELLARKeypair) KeyManager.getKeypairFromPrivateKey(key);
 
 // keypair and derivedKeypair works same
 ```
@@ -346,8 +358,8 @@ If you want to get signature for 'mitum-currency', use 'base58' to encode the si
 
 ```java
 // Omit steps for generating keypair
-String message = "mitum";
-byte[] signedMessage = keypair.sign(message.getBytes());
+>>> String message = "mitum";
+>>> byte[] signedMessage = keypair.sign(message.getBytes());
 ```
 
 ## Add Fact Signature to Operation
