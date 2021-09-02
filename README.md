@@ -418,6 +418,8 @@ After adding a fact signature, operation hash is always changed.
 >>> HashMap<String, Object> addSignToOperation(String signKey, String operationPath);
 ```
 
+### Usage
+
 ```java
 import org.mitumc.sdk.Signer;
 import org.mitumc.sdk.JSONParser;
