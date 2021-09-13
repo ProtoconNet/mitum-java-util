@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 
-import org.bitcoinj.core.Base58;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Util;
@@ -43,7 +42,7 @@ public class TransfersFact extends OperationFact {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
-        hashMap.put("hash", Base58.encode(this.hash.getSha3Digest()));
+        hashMap.put("hash", this.hash.getSha3Hash());
         hashMap.put("token", Base64.getEncoder().encodeToString(this.token.getISO().getBytes()));
         hashMap.put("sender", this.sender.getAddress());
 
