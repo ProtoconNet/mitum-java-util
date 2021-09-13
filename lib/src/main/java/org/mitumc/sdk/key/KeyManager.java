@@ -22,10 +22,8 @@ public class KeyManager {
     public static Object getNewKeypair(String keypairType) {
         switch (keypairType) {
             case BaseKeypair.KEYPAIR_TYPE_BTC:
-                Util.raiseError("Not Support BTC Keypair.");
                 return BTCKeypair.newKeypair();
             case BaseKeypair.KEYPAIR_TYPE_ETHER:
-                Util.raiseError("Not Support ETHER Keypair.");
                 return ETHERKeypair.newKeypair();
             case BaseKeypair.KEYPAIR_TYPE_STELLAR:
                 return STELLARKeypair.newKeypair();
@@ -43,10 +41,8 @@ public class KeyManager {
 
         switch (type.getType()) {
             case Constant.KEY_BTC_PRIVATE:
-                Util.raiseError("Not Support BTC Keypair.");
                 return new BTCKeypair(key);
             case Constant.KEY_ETHER_PRIVATE:
-                Util.raiseError("Not Support ETHER Keypair.");
                 return new ETHERKeypair(key);
             case Constant.KEY_STELLAR_PRIVATE:
                 return new STELLARKeypair(key);
@@ -61,10 +57,8 @@ public class KeyManager {
 
         switch (type) {
             case BaseKeypair.KEYPAIR_TYPE_BTC:
-                Util.raiseError("Not Support BTC Keypair.");
                 return new BTCKeypair(key + new Hint(Constant.KEY_BTC_PRIVATE).getHint());
             case BaseKeypair.KEYPAIR_TYPE_ETHER:
-                Util.raiseError("Not Support ETHER Keypair.");
                 return new ETHERKeypair(key + new Hint(Constant.KEY_ETHER_PRIVATE).getHint());
             case BaseKeypair.KEYPAIR_TYPE_STELLAR:
                 return new STELLARKeypair(key + new Hint(Constant.KEY_STELLAR_PRIVATE).getHint());

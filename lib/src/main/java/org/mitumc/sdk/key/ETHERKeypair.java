@@ -1,16 +1,12 @@
 package org.mitumc.sdk.key;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.Security;
-import java.security.spec.ECGenParameterSpec;
-
-import org.bouncycastle.jce.provider.*;
 import org.mitumc.sdk.Constant;
-import org.mitumc.sdk.util.Util;
+import org.mitumc.sdk.util.Hint;
+
+import com.wuin.ecdsakeyj.*;
 
 public class ETHERKeypair extends BaseKeypair {
-    private KeyPair keypair;
+    private ETHKeyPair keypair;
 
     ETHERKeypair(String key) {
         super(key);
@@ -23,38 +19,22 @@ public class ETHERKeypair extends BaseKeypair {
     }
 
     public static ETHERKeypair newKeypair() {
-        Security.addProvider(new BouncyCastleProvider());
-
-        try {
-            KeyPairGenerator gen = KeyPairGenerator.getInstance("ECDSA", "BC");
-            ECGenParameterSpec spec = new ECGenParameterSpec("secp256k1");
-            gen.initialize(spec);
-
-            KeyPair etherKeypair = gen.generateKeyPair();
-
-            String _temp = etherKeypair.getPrivate().toString();
-            int idx = _temp.indexOf(":") + 2;
-            String pk = _temp.substring(idx, idx + 64);
-
-            return new ETHERKeypair(pk, Constant.KEY_ETHER_PRIVATE);
-        } catch (Exception e) {
-            Util.raiseError("Fail to generate new ETHER Keypair.");
-            return null;
-        }
+        ETHKeyPair kp = new ETHKeyPair();
+        return new ETHERKeypair(kp.getPrivateKey() + ":" + new Hint(Constant.KEY_ETHER_PRIVATE).getHint());
     }
 
-    public KeyPair getKeypair() {
+    public Object getKeypair() {
         return this.keypair;
     }
 
     @Override
     void generatePublicKey() {
-        Util.raiseError("ETHERKeypair.generatePublicKey() must be implemented.");
+        this.keypair = new ETHKeyPair(this.privateKey.getRawKey());
+        this.publicKey = new BaseKey(this.keypair.getPublicKey(), Constant.KEY_ETHER_PUBLIC);
     }
 
     @Override
     public byte[] sign(byte[] target) {
-        Util.raiseError("ETHERKeypair.sign() must be implemented.");
-        return new byte[0];
+        return this.keypair.sign(target);
     }
 }

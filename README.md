@@ -4,8 +4,6 @@
 
 'mitum-java-util' now supports generating fact, operation and sign with Stellar keypair.
 
-Using BTC, ETHER keypair, and adding fact signature to operation json files will be available later.
-
 ## Installation
 
 Recommended requirements for 'mitum-java-util' are,
@@ -16,8 +14,9 @@ Recommended requirements for 'mitum-java-util' are,
 Additionally, This project is using below external Java libraries.
 
 * [Java Stellar SDK v0.26.0](https://github.com/stellar/java-stellar-sdk)
-* [Bouncy Castle v1.46 for JDK 16](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16/1.46)
 * [bitcoinj v0.14.7](https://bitcoinj.org/)
+
+And you must download and add [ecdsa-keygen-java-1.0.jar](https://github.com/wyuinche/ecdsa-keygen-java) to the project to build.
 
 ```sh
 $ java -version
@@ -32,10 +31,10 @@ javac 16.0.1
 
 #### Gradle
 ```sh
-implementation files('./lib/mitum-java-util.jar')
+implementation files('./lib/mitum-java-util-1.0.jar')
 ```
 
-Replace './lib/mitum-java-util.jar' with your own file path.
+Replace './lib/mitum-java-util-1.0.jar' with your own file path.
 
 ## Generate New Operation
 
@@ -371,22 +370,33 @@ See [mitum-data-blocksign](https://github.com/ProtoconNet/mitum-data-blocksign).
 
 Sign message with btc, ether, stellar keypair.
 
-Now only stellar keypair is available. 'mitum-java-util' will supports BTC and ETHER soon.
-
 ### Usage
 
 #### Generate Keypair
 
 ```java
+>>> import org.mitumc.sdk.key.BaseKeypair; 
 >>> import org.mitumc.sdk.key.KeyManager;
 
+/* BTCKeypair keypair = (BTCKeypair) KeyManager.getNewKeypair(BaseKeypair.KEYPAIR_TYPE_BTC); for btc
+ * ETHERKeypair keypair = (ETHERKeypair) KeyManager.getNewKeypair(BaseKeypair.KEYPAIR_TYPE_ETHER); for ether
+*/
 >>> STELLARKeypair keypair = (STELLARKeypair) KeyManager.getNewKeypair(BaseKeypair.KEYPAIR_TYPE_STELLAR);
 
 >>> keypair.getPrivateKey(); // returns private key of the keypair
 >>> keypair.getPublicKey(); // returns public key of the keypair
 
+/* BTCKeypair keypair = (BTCKeypair) KeyManager.getKeypairFromPrivateKey(hinted key); for btc
+ * ETHERKeypair keypair = (ETHERKeypair) KeyManager.getKeypairFromPrivateKey(hinted key); for ether
+*/
 >>> String key = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
 >>> STELLARKeypair derivedKeypair = (STELLARKeypair) KeyManager.getKeypairFromPrivateKey(key);
+
+/* BTCKeypair keypair = (BTCKeypair) KeyManager.getKeypairFromPrivateKey(raw key, BaseKeypair.KEYPAIR_TYPE_BTC); for btc
+ * ETHERKeypair keypair = (ETHERKeypair) KeyManager.getKeypairFromPrivateKey(raw key, BaseKeypair.KEYPAIR_TYPE_ETHER); for ether
+*/
+>>> String nkey =  "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3";
+>>> STELLARKeypair derivedKeypair = (STELLARKeypair) KeyManager.getKeypairFromPrivateKey(nkey, BaseKeypair.KEYPAIR_TYPE_STELLAR);
 
 // keypair and derivedKeypair works same
 ```

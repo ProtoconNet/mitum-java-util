@@ -28,8 +28,9 @@ dependencies {
     implementation 'com.google.guava:guava:30.1-jre'
 
     implementation 'com.github.stellar:java-stellar-sdk:0.26.0'
-    implementation 'org.bouncycastle:bcprov-jdk16:1.46'
     implementation 'com.github.projectpai:bitcoinj:0.14.7'
+
+    implementation files('./src/lib/ecdsa-keygen-java-1.0.jar')
 
     // implementation files('./src/lib/stellar-sdk.jar')
     // implementation files('./src/lib/bcprov-jdk15on-169.jar')

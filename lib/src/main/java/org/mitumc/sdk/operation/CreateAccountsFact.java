@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 
-import org.bitcoinj.core.Base58;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Util;
