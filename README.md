@@ -16,7 +16,7 @@ Additionally, This project is using below external Java libraries.
 * [Java Stellar SDK v0.26.0](https://github.com/stellar/java-stellar-sdk)
 * [bitcoinj v0.14.7](https://bitcoinj.org/)
 
-And you must download and add [ecdsa-keygen-java-1.0.jar](https://github.com/wyuinche/ecdsa-keygen-java) to the project to build.
+And you must download and add [ecdsa-keygen-java-1.1.jar](https://github.com/wyuinche/ecdsa-keygen-java) to the project to build.
 
 ```sh
 $ java -version
