@@ -8,28 +8,16 @@ public class OperationManager {
         return new Amount(currency, amount);
     }
 
-    public static CreateAccountsItem newCreateAccountsItem(Keys keys) {
-        return new CreateAccountsItem(keys);
-    }
-
     public static CreateAccountsItem newCreateAccountsItem(Keys keys, Amount[] amounts) {
         return new CreateAccountsItem(keys, amounts);
-    }
-
-    public static TransfersItem newTransfersItem(String receiver) {
-        return new TransfersItem(receiver);
     }
 
     public static TransfersItem newTransfersItem(String receiver, Amount[] amounts) {
         return new TransfersItem(receiver, amounts);
     }
 
-    public static CreateDocumentsItem newCreateDocumentsItem(String fileHash, String currencyId) {
-        return new CreateDocumentsItem(fileHash, currencyId);
-    }
-
-    public static CreateDocumentsItem newCreateDocumentsItem(String fileHash, String[] signers, String currencyId) {
-        return new CreateDocumentsItem(fileHash, signers, currencyId);
+    public static CreateDocumentsItem newCreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes) {
+        return new CreateDocumentsItem(fileHash, documentId, signcode, title, size, currencyId, signers, signcodes);
     }
 
     public static SignDocumentsItem newSignDocumentsItem(String owner, int documentId, String currencyId) {

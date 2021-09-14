@@ -10,10 +10,6 @@ import org.mitumc.sdk.util.Util;
 abstract class CurrencyItem extends Item {
     protected ArrayList<Amount> amounts;
 
-    protected CurrencyItem(String itemType) {
-        this(itemType, new Amount[0]);
-    }
-
     protected CurrencyItem(String itemType, Amount[] amounts) {
         super(itemType);
         this.amounts = new ArrayList<Amount>(Arrays.asList(amounts));
@@ -40,10 +36,5 @@ abstract class CurrencyItem extends Item {
             default:
                 Util.raiseError("Invalid item type for Item.");
         }
-    }
-
-    public void addAmount(Amount amount) {
-        this.amounts.add(amount);
-        updateItemType();
     }
 }

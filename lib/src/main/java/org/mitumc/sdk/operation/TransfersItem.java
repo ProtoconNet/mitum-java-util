@@ -8,11 +8,6 @@ import org.mitumc.sdk.util.Util;
 public class TransfersItem extends CurrencyItem {
     private Address receiver;
 
-    TransfersItem(String receiver) {
-        super(Item.ITEM_TYPE_TRANSFERS);
-        this.receiver = new Address(receiver);
-    }
-
     TransfersItem(String receiver, Amount[] amounts) {
         super(Item.ITEM_TYPE_TRANSFERS, amounts);
         this.receiver = new Address(receiver);

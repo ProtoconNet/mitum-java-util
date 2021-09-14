@@ -113,17 +113,10 @@ Methods that 'OperationManager' supports are,
 ```java
 >>> Amount newAmount(String currency, long amount);
 
->>> CreateAccountsItem newCreateAccountsItem(Keys keys);
 >>> CreateAccountsItem newCreateAccountsItem(Keys keys, Amount[] amounts);
-
->>> TransfersItem newTransfersItem(String receiver);
 >>> TransfersItem newTransfersItem(String receiver, Amount[] amounts);
-
->>> CreateDocumentsItem newCreateDocumentsItem(String fileHash, String currencyId);
->>> CreateDocumentsItem newCreateDocumentsItem(String fileHash, String[] signers, String currencyId);
-
+>>> CreateDocumentsItem newCreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes);
 >>> SignDocumentsItem newSignDocumentsItem(String owner, int documentId, String currencyId);
-
 >>> TransferDocumentsItem newTransferDocumentsItem(String owner, String receiver, int documentId, String currencyId);
 
 >>> CreateAccountsFact newCreateAccountsFact(String sender);
@@ -260,8 +253,8 @@ To generate an operation, you must prepare file-hash. Create-Document supports t
 >>> String sourcePriv = "SAA7UAG4BYG6PZCPQZ5BPBA5OMOJVH5BIKZQFIZRM6TPFJ5TQW3QAHE3:stellar-priv-v0.0.1";
 >>> String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
 
->>> CreateDocumentsItem item = OperationManager.newCreateDocumentsItem("abcd:mbfh-v0.0.1", "MCC");
->>> BlockSignFact fact = OperationManager.newBlockSignFact(sourceAddr, new CreateDocumentsItem[]{item});
+>>> CreateDocumentsItem item = OperationManager.newCreateDocumentsItem("absscd:mbfh-v0.0.1", 300, "user03", "title300", 1234, "MCC", new String[0], new String[]{"user04"});
+>>> BlockSignFact<CreateDocumentsItem> fact = OperationManager.newBlockSignFact(sourceAddr, new CreateDocumentsItem[]{item});
 
 >>> Operation operation = OperationManager.newOperation(fact);
 >>> operation.addSign(sourcePriv);
@@ -283,7 +276,7 @@ To generate an operation, you must prepare owner and document id. Sign-Document 
 >>> String sourceAddr = "PGKUST2YyoS1ujCKpXKUgVcn1Vk323cFP3pN5Z2Gf7k:mca-v0.0.1";
 
 >>> SignDocumentsItem item = OperationManager.newSignDocumentsItem(sourceAddr, 0, "MCC");
->>> BlockSignFact fact = OperationManager.newBlockSignFact(sourceAddr, new SignDocumentsItem[]{item});
+>>> BlockSignFact<SignDocumentsItem> fact = OperationManager.newBlockSignFact(sourceAddr, new SignDocumentsItem[]{item});
 
 >>> Operation operation = OperationManager.newOperation(fact);
 >>> operation.addSign(sourcePriv);
@@ -291,9 +284,11 @@ To generate an operation, you must prepare owner and document id. Sign-Document 
 >>> JSONParser.createJSON(operation.toDict(), "signdocuments.json");
 ```
 
-### Generate Transfer-Documents
+### ~~Generate Transfer-Documents~~
 
-To generate an operation, you must prepare owner and document id. Transfer-Document supports to transfer documents to other account.
+__This operation is not supported anymore.__
+
+~~To generate an operation, you must prepare owner and document id. Transfer-Document supports to transfer documents to other account.~~
 
 #### Usage
 
@@ -307,7 +302,7 @@ To generate an operation, you must prepare owner and document id. Transfer-Docum
 >>> String targetAddr = "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1";
 
 >>> TransferDocumentsItem item = OperationManager.newTransferDocumentsItem(sourceAddr, targetAddr, 0, "MCC");
->>> BlockSignFact fact = OperationManager.newBlockSignFact(sourceAddr, new TransferDocumentsItem[]{item});
+>>> BlockSignFact<TransferDocumentsItem> fact = OperationManager.newBlockSignFact(sourceAddr, new TransferDocumentsItem[]{item});
 
 >>> Operation operation = OperationManager.newOperation(fact);
 >>> operation.addSign(sourcePriv);

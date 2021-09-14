@@ -6,56 +6,67 @@ import java.util.Date;
 
 public class TimeStamp {
     final public static String ISO_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    final public static String UTC_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS +0000 'UTC'";
-    private DateFormat ISOformatter;
-    private DateFormat UTCformatter;
-    private Date timestamp;
     private String ISOtimestamp;
     private String UTCtimestamp;
-    
+
+    private String date;
+    private String time;
+
     TimeStamp() {
         this(new Date());
     }
 
     public TimeStamp(Date timestamp) {
-        this.ISOformatter = new SimpleDateFormat(ISO_PATTERN);
-        this.UTCformatter = new SimpleDateFormat(UTC_PATTERN);
-
-        this.timestamp = timestamp;
+        DateFormat ISOformatter = new SimpleDateFormat(ISO_PATTERN);
+        this.ISOtimestamp = ISOformatter.format(timestamp);
         formatTimestamp();
     }
 
     public TimeStamp(String timestamp) {
-        this.ISOformatter = new SimpleDateFormat(ISO_PATTERN);
-        this.UTCformatter = new SimpleDateFormat(UTC_PATTERN);
+        this.ISOtimestamp = timestamp;
+        int t = timestamp.indexOf("T");
+        int z = timestamp.indexOf("Z");
 
-        try {
-            if(timestamp.indexOf('T') > -1 && timestamp.indexOf('Z') > -1) {
-                this.timestamp = this.ISOformatter.parse(timestamp);
-            }
-            else if(timestamp.indexOf("UTC") > -1) {
-                this.timestamp = this.UTCformatter.parse(timestamp);
-            }
-            else {
-                Util.raiseError("Invalid timestamp format for Timestamp.");
-            }
-        } catch(Exception e) {
-            Util.raiseError("Parse error for Timestamp.");
+        if(t < 0 || z < 0) {
+            Util.raiseError("Invalid timestamp for TimeStamp.");
+            return;
         }
-
         formatTimestamp();
     }
 
     private void formatTimestamp() {
-        this.ISOtimestamp = this.ISOformatter.format(this.timestamp);
-        this.UTCtimestamp = this.UTCformatter.format(this.timestamp);
+        int t = this.ISOtimestamp.indexOf("T");
+        int z = this.ISOtimestamp.indexOf("Z");
+
+        this.date = this.ISOtimestamp.substring(0, t);
+        this.time = this.ISOtimestamp.substring(11, z);
+
+        if(this.time.indexOf(".") < 0) {
+            this.UTCtimestamp = this.date + " " + this.time + " +0000 UTC";
+        }
+        else {
+            int dot = this.time.indexOf(".");
+            String decimal = this.time.substring(dot + 1);
+
+            int zero = decimal.length();
+            for(int i = decimal.length() - 1; i > -1; i--) {
+                if(decimal.charAt(i) != '0') {
+                    break;
+                }
+                zero = i;
+            }
+
+            String rdecimal = decimal.substring(0, zero);
+
+            this.UTCtimestamp = this.date + " " + this.time.substring(0, dot) + "." + rdecimal + " +0000 UTC";
+        }
     }
 
     public String getISO() {
         return this.ISOtimestamp;
     }
 
-    public String getUTC()  {
+    public String getUTC() {
         return this.UTCtimestamp;
     }
 }
