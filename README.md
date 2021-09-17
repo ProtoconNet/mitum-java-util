@@ -2,7 +2,7 @@
 
 'mitum-java-util' will introduce the usage of [mitum-currency](https://github.com/ProtoconNet/mitum-currency) and [mitum-data-blocksign](https://github.com/ProtoconNet/mitum-data-blocksign) for Java.
 
-'mitum-java-util' now supports generating fact, operation and sign with Stellar keypair.
+'mitum-java-util' now supports generating fact, operation and sign with btc, ether, stellar keypair.
 
 ## Installation
 
@@ -169,6 +169,14 @@ For new account, 'currency id' and 'initial amount' must be set. With source acc
 
 >>> Key key = KeyManager.newKey(targetPub, 100);
 >>> Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
+
+/* If you want to get address from Keys, try below.
+ *
+ * Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
+ * keys.getAddress();
+ * 
+ * Then getAddress() will returns what you want, like "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1".
+ */
 
 >>> Amount amount = OperationManager.newAmount("MCC", 1000);
 >>> CreateAccountsItem item = OperationManager.newCreateAccountsItem(keys, new Amount[]{amount});
