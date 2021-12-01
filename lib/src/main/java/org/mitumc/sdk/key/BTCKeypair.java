@@ -20,7 +20,7 @@ public class BTCKeypair extends BaseKeypair {
 
     public static BTCKeypair newKeypair() {
         BTCKeyPair kp = new BTCKeyPair();
-        return new BTCKeypair(kp.getPrivateKey() + ":" +  new Hint(Constant.KEY_BTC_PRIVATE).getHint());
+        return new BTCKeypair(kp.getPrivateKey() + "~" +  new Hint(Constant.KEY_BTC_PRIVATE).getHint());
     }
 
     public Object getKeypair() {
