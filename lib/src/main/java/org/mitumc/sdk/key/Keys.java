@@ -58,7 +58,7 @@ public class Keys implements BytesChangeable, Dictionariable {
     }
 
     public String getAddress() {
-        return this.hash.getSha3Hash() + ':' + Constant.MC_ADDRESS + '-' + Constant.VERSION;
+        return this.hash.getSha3Hash() + '~' + Constant.MC_ADDRESS + '-' + Constant.VERSION;
     }
 
     public String getHash() {

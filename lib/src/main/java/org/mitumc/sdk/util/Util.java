@@ -10,7 +10,7 @@ import org.mitumc.sdk.Constant;
 public class Util {
 
     public static HashMap<String, String> parseHint(String hinted) {
-        int idx = hinted.indexOf(':');
+        int idx = hinted.indexOf('~');
         if (idx == -1) {
             raiseError("Invalid hinted string for parseHint.");
         }

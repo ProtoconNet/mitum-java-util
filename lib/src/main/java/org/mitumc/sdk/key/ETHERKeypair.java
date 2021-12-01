@@ -20,7 +20,7 @@ public class ETHERKeypair extends BaseKeypair {
 
     public static ETHERKeypair newKeypair() {
         ETHKeyPair kp = new ETHKeyPair();
-        return new ETHERKeypair(kp.getPrivateKey() + ":" + new Hint(Constant.KEY_ETHER_PRIVATE).getHint());
+        return new ETHERKeypair(kp.getPrivateKey() + "~" + new Hint(Constant.KEY_ETHER_PRIVATE).getHint());
     }
 
     public Object getKeypair() {

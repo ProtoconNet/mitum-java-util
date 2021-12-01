@@ -49,7 +49,7 @@ public class BaseKey implements BytesChangeable {
     }
 
     public String getKey() {
-        return this.key + ':' + this.hint.getHint();
+        return this.key + '~' + this.hint.getHint();
     }
 
     public String getType() {
