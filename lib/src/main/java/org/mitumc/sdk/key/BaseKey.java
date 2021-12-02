@@ -57,7 +57,7 @@ public class BaseKey implements BytesChangeable {
     }
 
     public byte[] toBytes() {
-        return getKey().getBytes();
+        return (this.key + '~' + this.hint.getType()).getBytes();
     }
 
     public byte[] rawToBytes() {
