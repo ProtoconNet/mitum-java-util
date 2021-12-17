@@ -3,31 +3,29 @@ package org.mitumc.sdk.key;
 import java.util.HashMap;
 
 import org.mitumc.sdk.BytesChangeable;
-import org.mitumc.sdk.Constant;
-import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
 public class BaseKey implements BytesChangeable {
-    private Hint hint;
+    private String type;
     private String key;
 
     BaseKey(String key) {
-        setHint(key);
+        setType(key);
     }
 
     BaseKey(String key, String type) {
         this.key = key;
-        this.hint = new Hint(type);
+        this.type = type;
 
         if(!isTypeValid()) {
             Util.raiseError("Invalid key type for BaseKey.");
         }
     }
 
-    private void setHint(String hinted) {
-        HashMap<String, String> parsed = Util.parseHint(hinted);
+    private void setType(String typed) {
+        HashMap<String, String> parsed = Util.parseType(typed);
         this.key = parsed.get("raw");
-        this.hint = Util.getHintFromString(parsed.get("hint"));
+        this.type = parsed.get("type");
 
         if(!isTypeValid()) {
             Util.raiseError("Invalid key type for BaseKey.");
@@ -35,13 +33,7 @@ public class BaseKey implements BytesChangeable {
     }
 
     private boolean isTypeValid() {
-        if (!(this.hint.getType().equals(Constant.KEY_BTC_PRIVATE) || this.hint.getType().equals(Constant.KEY_BTC_PUBLIC) || this.hint.getType().equals(Constant.KEY_ETHER_PRIVATE)
-                || this.hint.getType().equals(Constant.KEY_ETHER_PUBLIC) || this.hint.getType().equals(Constant.KEY_STELLAR_PRIVATE)
-                || this.hint.getType().equals(Constant.KEY_STELLAR_PUBLIC))) {
-            return false;
-        }
-
-        return true;
+        return Util.isTypeValid(type);
     }
 
     public String getRawKey() {
@@ -49,15 +41,15 @@ public class BaseKey implements BytesChangeable {
     }
 
     public String getKey() {
-        return this.key + '~' + this.hint.getHint();
+        return this.key + this.type;
     }
 
     public String getType() {
-        return this.hint.getType();
+        return this.type;
     }
 
     public byte[] toBytes() {
-        return (this.key + '~' + this.hint.getType()).getBytes();
+        return getKey().getBytes();
     }
 
     public byte[] rawToBytes() {

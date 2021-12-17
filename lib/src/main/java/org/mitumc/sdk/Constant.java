@@ -30,12 +30,14 @@ public class Constant {
     public static final String MC_TRANSFERS_ITEM_MUL_AMOUNTS = "mitum-currency-transfers-item-multi-amounts";
     public static final String MC_TRANSFERS_ITEM_SIN_AMOUNT = "mitum-currency-transfers-item-single-amount";
 
-    public static final String KEY_BTC_PRIVATE = "btc-priv";
-    public static final String KEY_BTC_PUBLIC = "btc-pub";
-    public static final String KEY_ETHER_PRIVATE = "ether-priv";
-    public static final String KEY_ETHER_PUBLIC = "ether-pub";
-    public static final String KEY_STELLAR_PRIVATE = "stellar-priv";
-    public static final String KEY_STELLAR_PUBLIC = "stellar-pub";
+    public static final String KEY_PRIVATE = "mpr";
+    public static final String KEY_PUBLIC = "mpu";
+    // public static final String KEY_BTC_PRIVATE = "btc-priv";
+    // public static final String KEY_BTC_PUBLIC = "btc-pub";
+    // public static final String KEY_ETHER_PRIVATE = "ether-priv";
+    // public static final String KEY_ETHER_PUBLIC = "ether-pub";
+    // public static final String KEY_STELLAR_PRIVATE = "stellar-priv";
+    // public static final String KEY_STELLAR_PUBLIC = "stellar-pub";
 
     public static final String BASE_FACT_SIGN = "base-fact-sign";
     public static final String SEAL = "seal";

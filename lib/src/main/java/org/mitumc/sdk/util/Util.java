@@ -22,6 +22,19 @@ public class Util {
         return map;
     }
 
+    public static HashMap<String, String> parseType(String typed) {
+        if (typed.length() < 3) {
+            raiseError("Invalid typed string for parseType");
+
+        }
+
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("raw", typed.substring(0, typed.length() - 3));
+        map.put("type", typed.substring(typed.length() - 3));
+
+        return map;
+    }
+
     public static Hint getHintFromString(String hint) {
         int idx = hint.indexOf("-" + Constant.VERSION);
 
@@ -30,6 +43,17 @@ public class Util {
         }
 
         return new Hint(hint.substring(0, idx));
+    }
+
+    public static Boolean isTypeValid(String type) {
+        switch (type) {
+            case Constant.KEY_PRIVATE:
+            case Constant.KEY_PUBLIC:
+            case Constant.MC_ADDRESS:
+                return true;
+            default:
+                return false;
+        }
     }
 
     public static TimeStamp getDateTimeStamp() {
@@ -96,7 +120,7 @@ public class Util {
     public static String bytesToHexString(byte[] bytes) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for(byte b : bytes) {
+        for (byte b : bytes) {
             stringBuilder.append(String.format("%02X", b & 0xff));
         }
 
@@ -104,11 +128,11 @@ public class Util {
     }
 
     public static void printBytes(byte[] bytes) {
-        if(bytes == null) {
+        if (bytes == null) {
             return;
         }
-        for(byte b : bytes) {
-            System.out.print(""+ b + " ");
+        for (byte b : bytes) {
+            System.out.print("" + b + " ");
         }
         System.out.println();
     }
