@@ -14,13 +14,14 @@ public class Keypair {
         generatePublicKey();
     }
 
-    public static Keypair create() throws Exception {
+    public static Keypair create() {
         BTCKeyPair kp = new BTCKeyPair();
         return Keypair.fromSeed(kp.getPrivateKey());
     }
 
-    public static Keypair fromSeed(String seed) throws Exception {
-        throw new Exception("fromSeed; not yet implemented");
+    public static Keypair fromSeed(String seed) {
+        BTCKeyPair kp = new BTCKeyPair(seed, true);
+        return new Keypair(kp.getPrivateKey() + Constant.KEY_PRIVATE);
     }
 
     public static Keypair fromPrivateKey(String key) {
@@ -48,7 +49,7 @@ public class Keypair {
     }
 
     void generatePublicKey() {
-        this.keypair = new BTCKeyPair(this.privateKey.getRawKey());
+        this.keypair = new BTCKeyPair(this.privateKey.getRawKey(), false);
         this.publicKey = new BaseKey(this.keypair.getPublicKey(), Constant.KEY_PUBLIC);
     }
 
