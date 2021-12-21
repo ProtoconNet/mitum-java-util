@@ -13,13 +13,13 @@ public class SignDocumentsItem extends BlockSignItem {
     SignDocumentsItem(String owner, int documentId, String currencyId) {
         super(Item.ITEM_TYPE_SIGN_DOCUMENTS);
         this.owner = new Address(owner);
-        this.documentId = new BigInt(documentId);
+        this.documentId = new BigInt(Integer.toString(documentId));
         this.currencyId = currencyId;
     }
 
     @Override
     public byte[] toBytes() {
-        byte[] bdocumentId = this.documentId.toBytes(true);
+        byte[] bdocumentId = this.documentId.toBytes(BigInt.LITTLE_ENDIAN, true);
         byte[] bowner = this.owner.toBytes();
         byte[] bcurrencyId = this.currencyId.getBytes();
 
@@ -35,7 +35,7 @@ public class SignDocumentsItem extends BlockSignItem {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
-        hashMap.put("documentid", "" + this.documentId.getValue());
+        hashMap.put("documentid", this.documentId.getValue());
         hashMap.put("owner", this.owner.getAddress());
         hashMap.put("currency", this.currencyId);
 

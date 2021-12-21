@@ -4,7 +4,7 @@ import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Keys;
 
 public class OperationManager {
-    public static Amount newAmount(String currency, long amount) {
+    public static Amount newAmount(String currency, String amount) {
         return new Amount(currency, amount);
     }
 

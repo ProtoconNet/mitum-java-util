@@ -1,39 +1,21 @@
 package org.mitumc.sdk.util;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.math.BigInteger;
 
 import org.mitumc.sdk.BytesChangeable;
 
 public class BigInt implements BytesChangeable {
-    final public static String BIG_ENDIAN = "big";
-    final public static String LITTLE_ENDIAN = "little";
+    final public static String BIG_ENDIAN = "big-endian";
+    final public static String LITTLE_ENDIAN = "little-endian";
 
     final private int defaultByteLength = 8;
     final private String defaultEndian = BIG_ENDIAN;
     final private Boolean defaultTight = false;
 
-    private long num;
-    private long abs;
+    private BigInteger num;
 
-    public BigInt(int num) {
-        this(Long.valueOf(num));
-    }
-
-    public BigInt(long num) {
-        this.num = num;
-        this.abs = Math.abs(num);
-    }
-
-    private int byteLength(byte[] bytes) {
-
-        for(int i = 0; i < bytes.length; i++){
-            if(bytes[i] != 0) {
-                return bytes.length - i;
-            }
-        }
-        
-        return -1;
+    public BigInt(String num) {
+        this.num = new BigInteger(num);
     }
 
     private byte[] reverse(byte[] bytes) {
@@ -54,8 +36,8 @@ public class BigInt implements BytesChangeable {
         return bytes;
     }
 
-    public long getValue() {
-        return this.num;
+    public String getValue() {
+        return this.num.toString();
     }
 
     public byte[] toBytes() {
@@ -87,36 +69,34 @@ public class BigInt implements BytesChangeable {
     }
 
     public byte[] toBytes(int byteLength, String endian, boolean isTight) {
-        if(!(endian.equals(BIG_ENDIAN) || endian.equals(LITTLE_ENDIAN))) {
-            Util.raiseError("Invalid endian for BigInt.");
-        }
 
-        byte[] bytes = ByteBuffer.allocate(byteLength).order(ByteOrder.BIG_ENDIAN).putLong(this.abs).array();
-
-        boolean isAllZero = true;
-        for(byte b : bytes) {
-            if(b != 0) {
-                isAllZero = false;
+        if (this.num.equals(new BigInteger("0"))) {
+            if (isTight) {
+                return new byte[0];
+            } else {
+                return new byte[byteLength];
             }
         }
 
-        if(isTight) {
-            int len = byteLength(bytes);
+        /* tight big-endian */
+        byte[] bytes = reverse(this.num.toByteArray());
 
-            if(len == -1) {
-                if(isAllZero) {
-                    return new byte[0];
-                }
-
-                Util.raiseError("Invalid value for BigInt.");
+        /* byteLength is ignored */
+        if (isTight) {
+            if (endian.equals(BIG_ENDIAN)) {
+                return bytes;
+            } else if (endian.equals(LITTLE_ENDIAN)) {
+                return reverse(bytes);
             }
-
-            byte[] result = new byte[len];
-            System.arraycopy(bytes, bytes.length - len, result, 0, len);
-
-            return result;
         }
 
-        return reverse(bytes);
+        if(endian.equals(LITTLE_ENDIAN)) {
+            bytes = reverse(bytes);
+        }
+
+        byte[] result = new byte[byteLength];
+        System.arraycopy(bytes, 0, result, 0, bytes.length);
+
+        return result;
     }
 }

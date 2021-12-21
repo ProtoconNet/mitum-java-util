@@ -17,7 +17,7 @@ public class Key implements BytesChangeable, Dictionariable {
     public Key(String key, int weight) {
         this.hint = new Hint(Constant.MC_KEY);
         this.key = new BaseKey(key);
-        this.weight = new BigInt(weight);
+        this.weight = new BigInt(Integer.toString(weight));
 
         if (!isWeightValid()) {
             Util.raiseError("Invalid weight for Key.");
@@ -25,15 +25,15 @@ public class Key implements BytesChangeable, Dictionariable {
     }
 
     private boolean isWeightValid() {
-        if (this.weight.getValue() < 1 || this.weight.getValue() > 100) {
+        if (Integer.parseInt(this.weight.getValue()) < 1 || Integer.parseInt(this.weight.getValue()) > 100) {
             return false;
         }
 
         return true;
     }
 
-    public long getWeight() {
-        return this.weight.getValue();
+    public int getWeight() {
+        return Integer.parseInt(this.weight.getValue());
     }
 
     public String getKey() {
@@ -57,7 +57,7 @@ public class Key implements BytesChangeable, Dictionariable {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
-        hashMap.put("weight", this.weight.getValue());
+        hashMap.put("weight", Integer.parseInt(this.weight.getValue()));
         hashMap.put("key", this.key.getKey());
 
         return hashMap;

@@ -14,14 +14,14 @@ public class Amount implements BytesChangeable, Dictionariable {
     private String currency;
     private BigInt amount;
 
-    Amount(String currency, long amount) {
+    Amount(String currency, String amount) {
         this.hint = new Hint(Constant.MC_AMOUNT);
         this.currency = currency;
         this.amount = new BigInt(amount);
     }
 
     public byte[] toBytes() {
-        byte[] bamount = this.amount.toBytes(true);
+        byte[] bamount = this.amount.toBytes(BigInt.LITTLE_ENDIAN, true);
         byte[] bcurrency = this.currency.getBytes();
 
         if(bamount.length < 1) {
@@ -36,7 +36,7 @@ public class Amount implements BytesChangeable, Dictionariable {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
-        hashMap.put("amount", "" + this.amount.getValue());
+        hashMap.put("amount", this.amount.getValue());
         hashMap.put("currency", this.currency);
 
         return hashMap;

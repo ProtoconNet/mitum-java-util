@@ -31,7 +31,7 @@ public class Keys implements BytesChangeable, Dictionariable {
     }
 
     private boolean isThresholdValid() {
-        if (this.threshold.getValue() < 1 || this.threshold.getValue() > 100) {
+        if (Integer.parseInt(this.threshold.getValue()) < 1 || Integer.parseInt(this.threshold.getValue()) > 100) {
             return false;
         }
 
@@ -43,7 +43,7 @@ public class Keys implements BytesChangeable, Dictionariable {
     }
 
     public void setThreshold(int threshold) {
-        this.threshold = new BigInt(threshold);
+        this.threshold = new BigInt(Integer.toString(threshold));
 
         if (!isThresholdValid()) {
             Util.raiseError("Invalid threshold for Keys.");
@@ -72,7 +72,7 @@ public class Keys implements BytesChangeable, Dictionariable {
             sum += key.getWeight();
         }
 
-        if (sum < threshold.getValue()) {
+        if (sum < Integer.parseInt(threshold.getValue())) {
             return false;
         }
 
@@ -103,7 +103,7 @@ public class Keys implements BytesChangeable, Dictionariable {
         }
 
         hashMap.put("keys", _keys);
-        hashMap.put("threshold", this.threshold.getValue());
+        hashMap.put("threshold", Integer.parseInt(this.threshold.getValue()));
 
         return hashMap;
     }

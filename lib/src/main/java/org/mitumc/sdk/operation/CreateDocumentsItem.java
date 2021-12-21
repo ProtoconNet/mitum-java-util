@@ -20,10 +20,10 @@ public class CreateDocumentsItem extends BlockSignItem {
     CreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes) {
         super(Item.ITEM_TYPE_CREATE_DOCUMENTS);
         this.fileHash = fileHash;
-        this.documentId = new BigInt(documentId);
+        this.documentId = new BigInt(Integer.toString(documentId));
         this.signcode = signcode;
         this.title = title;
-        this.size = new BigInt(size);
+        this.size = new BigInt(Integer.toString(size));
         this.currencyId = currencyId;
         this.signers = new ArrayList<Address>(Arrays.stream(signers).map(item -> new Address(item)).toList());
         this.signcodes = new ArrayList<String>(Arrays.stream(signcodes).map(item -> item).toList());
@@ -32,10 +32,10 @@ public class CreateDocumentsItem extends BlockSignItem {
     @Override
     public byte[] toBytes() {
         byte[] bfileHash = this.fileHash.getBytes();
-        byte[] bdocumentId = this.documentId.toBytes(true);
+        byte[] bdocumentId = this.documentId.toBytes(BigInt.LITTLE_ENDIAN, true);
         byte[] bscode = this.signcode.getBytes();
         byte[] btitle = this.title.getBytes();
-        byte[] bsize = this.size.toBytes(true);
+        byte[] bsize = this.size.toBytes(BigInt.LITTLE_ENDIAN, true);
         byte[] bcurrencyId = this.currencyId.getBytes();
 
         byte[] bsigners = Util.<Address>concatItemArray(this.signers);
@@ -63,10 +63,10 @@ public class CreateDocumentsItem extends BlockSignItem {
 
         hashMap.put("_hint", this.hint.getHint());
         hashMap.put("filehash", this.fileHash);
-        hashMap.put("documentid", "" + this.documentId.getValue());
+        hashMap.put("documentid", this.documentId.getValue());
         hashMap.put("signcode", this.signcode);
         hashMap.put("title", this.title);
-        hashMap.put("size", "" + this.size.getValue());
+        hashMap.put("size", this.size.getValue());
 
         ArrayList<String> arr = new ArrayList<>();
         for(Address signer : this.signers) {
