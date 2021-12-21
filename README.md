@@ -132,7 +132,7 @@ The package provides `OperationManager` class to manage classes about operation.
 Methods that `OperationManager` supports are,
 
 ```java
-Amount newAmount(String currency, long amount);
+Amount newAmount(String currency, String amount);
 
 CreateAccountsItem newCreateAccountsItem(Keys keys, Amount[] amounts);
 TransfersItem newTransfersItem(String receiver, Amount[] amounts);
@@ -167,7 +167,7 @@ You can create a json file of generated operation object without `JSONParser`. H
 Methods that `JSONParser` supports are,
 
 ```java
-void createJSON(shadow.com.google.gson.JsonObject target, String fpName);
+void createJSON(JsonObject target, String fpName);
 void createJSON(HashMap target, String fpName);
 ```
 
@@ -196,10 +196,10 @@ Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
  * Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
  * keys.getAddress();
  * 
- * Then getAddress() will returns what you want, like "2mFPBWgASRvtuiJ6P9DuVF6f4kmnJxn7p4khjDLXBTmP:mca-v0.0.1".
+ * Then getAddress() will returns what you want, like "7nJehxR36EpTNDAFTNdEP6XekwqbaL9yk84yNBAAQCScmca".
  */
 
-Amount amount = OperationManager.newAmount("MCC", 1000);
+Amount amount = OperationManager.newAmount("MCC", "1000");
 CreateAccountsItem item = OperationManager.newCreateAccountsItem(keys, new Amount[]{amount});
 
 CreateAccountsFact fact = OperationManager.newCreateAccountsFact(sourceAddr, new CreateAccountsItem[]{item});
@@ -258,7 +258,7 @@ String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
 String targetAddr = "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca";
 
-Amount amount = OperationManager.newAmount("MCC", 1000);
+Amount amount = OperationManager.newAmount("MCC", "1000");
 TransfersItem item = OperationManager.newTransfersItem(targetAddr, new Amount[]{amount});
 
 TransfersFact fact = OperationManager.newTransfersFact(sourceAddr, new TransfersItem[]{item});
