@@ -8,10 +8,10 @@ import org.bitcoinj.core.Base58;
 
 import org.mitumc.sdk.util.Util;
 
-import shadow.com.google.gson.Gson;
-import shadow.com.google.gson.JsonArray;
-import shadow.com.google.gson.JsonElement;
-import shadow.com.google.gson.JsonObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.TimeStamp;

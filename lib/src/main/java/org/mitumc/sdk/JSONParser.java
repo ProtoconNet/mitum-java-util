@@ -6,19 +6,16 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.util.Util;
 
-import shadow.com.google.gson.Gson;
-import shadow.com.google.gson.GsonBuilder;
-import shadow.com.google.gson.JsonObject;
-import shadow.com.google.gson.JsonParser;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class JSONParser {
 
     public static JsonObject getObjectFromJSONFile(String fpName) {
         try {
-            JsonParser parser = new JsonParser();
-            Object obj = parser.parse(new FileReader(fpName));
-			JsonObject jsonObject = (JsonObject) obj;
-            return jsonObject;
+            return (JsonObject) JsonParser.parseReader(new FileReader(fpName));
         } catch (Exception e) {
             Util.raiseError("Fail to create JSON file... :(");
             return null;
