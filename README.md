@@ -28,12 +28,14 @@ javac 16.0.1
 ```
 [Download jar file](release/) and include the package to your project.
 
+The latest version is `mitum-java-util-1.2.1.jar`.
+
 #### Gradle
 ```sh
-implementation files('./lib/mitum-java-util-1.2.jar')
+implementation files('./lib/mitum-java-util-1.2.1.jar')
 ```
 
-Replace './lib/mitum-java-util-1.2.jar' with your own file path.
+Replace './lib/mitum-java-util-1.2.1.jar' with your own file path.
 
 ## Generate New Operation
 
