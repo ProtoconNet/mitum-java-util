@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.mitumc.sdk.LibraryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-12-21T05:06:52" hostname="ubuntu" time="0.031">
-  <properties/>
-  <testcase name="someLibraryMethodReturnsTrue()" classname="org.mitumc.sdk.LibraryTest" time="0.031"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
