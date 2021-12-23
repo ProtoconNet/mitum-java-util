@@ -99,11 +99,12 @@ Keypair pkp = Keypair.fromPrivateKey(key);
 String seed =  "This is a seed for the example; Keypair.fromSeed()";
 Keypair skp = Keypair.fromSeed(seed);
 
-byte[] bseed = new byte[] { 11, 22, 33, 44, 55 };
+byte[] bseed = new byte[32];
+/* copy your seed to bssed */
 Keypair skp = Keypair.fromSeed(bseed);
 ```
 
-Be careful that mitum allows seeds longer than or equal to `36`.
+Be careful that mitum allows string seeds longer than or equal to `36`.
 
 ### KeyManager (org.mitumc.sdk.key.KeyManager);
 
