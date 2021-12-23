@@ -15,12 +15,25 @@ public class Keypair {
     }
 
     public static Keypair create() {
-        BTCKeyPair kp = new BTCKeyPair();
+        BTCKeyPair kp = BTCKeyPair.create();
         return Keypair.fromSeed(kp.getPrivateKey());
     }
 
     public static Keypair fromSeed(String seed) {
-        BTCKeyPair kp = new BTCKeyPair(seed, true);
+        if(seed.length() < 36) {
+            Util.raiseError("seed length must be longer than or equal to 36. now, seed.length() is " + seed.length());
+        }
+
+        BTCKeyPair kp = BTCKeyPair.fromSeed(seed);
+        return new Keypair(kp.getPrivateKey() + Constant.KEY_PRIVATE);
+    }
+
+    public static Keypair fromSeed(byte[] seed) {
+        if(seed.length != 32) {
+            Util.raiseError("seed length must be longer than or equal to 32. now, seed.length is " + seed.length);
+        }
+        
+        BTCKeyPair kp = BTCKeyPair.fromSeed(seed);
         return new Keypair(kp.getPrivateKey() + Constant.KEY_PRIVATE);
     }
 
@@ -49,7 +62,7 @@ public class Keypair {
     }
 
     void generatePublicKey() {
-        this.keypair = new BTCKeyPair(this.privateKey.getRawKey(), false);
+        this.keypair = BTCKeyPair.fromPrivateKey(this.privateKey.getRawKey());
         this.publicKey = new BaseKey(this.keypair.getPublicKey(), Constant.KEY_PUBLIC);
     }
 
