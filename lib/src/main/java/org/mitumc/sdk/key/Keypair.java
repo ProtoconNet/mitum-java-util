@@ -29,8 +29,8 @@ public class Keypair {
     }
 
     public static Keypair fromSeed(byte[] seed) {
-        if(seed.length != 32) {
-            Util.raiseError("seed length must be longer than or equal to 32. now, seed.length is " + seed.length);
+        if(new String(seed).length() < 36) {
+            Util.raiseError("seed length must be longer than or equal to 36. now, new String(seed).length() is " + seed.length);
         }
         
         BTCKeyPair kp = BTCKeyPair.fromSeed(seed);

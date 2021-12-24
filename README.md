@@ -28,14 +28,14 @@ javac 16.0.1
 ```
 [Download jar file](release/) and include the package to your project.
 
-The latest version is `mitum-java-util-1.2.2.jar`.
+The latest version is `mitum-java-util-1.2.3.jar`.
 
 #### Gradle
 ```sh
-implementation files('./lib/mitum-java-util-1.2.2.jar')
+implementation files('./lib/mitum-java-util-1.2.3.jar')
 ```
 
-Replace './lib/mitum-java-util-1.2.2.jar' with your own file path.
+Replace `./lib/mitum-java-util-1.2.3.jar` with your file path.
 
 ## Generate New Operation
 
@@ -77,13 +77,13 @@ Note that the package root of 'mitum-java-util' is `org.mitumc.sdk`.
 
 `Keypair.create()` returns new keypair for mitum.
 
-You can use `Keypair.fromPrivateKey(key)` when you already have a private key.
+You can use `Keypair.fromPrivateKey(String key)` when you already have a private key.
 
-If you have seed of your private key, just use `Keypair.fromSeed(seed)`. Before the process, `Keypair.fromSeed(seed)` hash your seed with sha3 if the seed type is String.
+If you have seed of your private key, just use `Keypair.fromSeed(String seed)`.
 
-Or, you can use byte[] seed. But in this case, your seed will not be hashed.
+Or, you can use `Keypair.fromSeed(byte[] seed)`.
 
-!! byte[] seed must be 32 byte exactly !!
+`new String(seed).length()` should be longer than or equal to 36.
 
 ```java
 import org.mitumc.sdk.key.Keypair;
@@ -99,12 +99,9 @@ Keypair pkp = Keypair.fromPrivateKey(key);
 String seed =  "This is a seed for the example; Keypair.fromSeed()";
 Keypair skp = Keypair.fromSeed(seed);
 
-byte[] bseed = new byte[32];
-/* copy your seed to bssed */
+byte[] bseed = seed.getBytes();
 Keypair skp = Keypair.fromSeed(bseed);
 ```
-
-Be careful that mitum allows string seeds longer than or equal to `36`.
 
 ### KeyManager (org.mitumc.sdk.key.KeyManager);
 
