@@ -16,7 +16,7 @@ public class Keypair {
 
     public static Keypair create() {
         BTCKeyPair kp = BTCKeyPair.create();
-        return Keypair.fromSeed(kp.getPrivateKey());
+        return fromPrivateKey(kp.getPrivateKey() + Constant.KEY_PRIVATE);
     }
 
     public static Keypair fromSeed(String seed) {
@@ -25,7 +25,7 @@ public class Keypair {
         }
 
         BTCKeyPair kp = BTCKeyPair.fromSeed(seed);
-        return new Keypair(kp.getPrivateKey() + Constant.KEY_PRIVATE);
+        return fromPrivateKey(kp.getPrivateKey() + Constant.KEY_PRIVATE);
     }
 
     public static Keypair fromSeed(byte[] seed) {
@@ -34,7 +34,7 @@ public class Keypair {
         }
         
         BTCKeyPair kp = BTCKeyPair.fromSeed(seed);
-        return new Keypair(kp.getPrivateKey() + Constant.KEY_PRIVATE);
+        return fromPrivateKey(kp.getPrivateKey() + Constant.KEY_PRIVATE);
     }
 
     public static Keypair fromPrivateKey(String key) {
