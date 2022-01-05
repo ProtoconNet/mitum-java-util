@@ -1,11 +1,11 @@
-package org.mitumc.sdk.operation;
+package org.mitumc.sdk.key;
 
-import org.mitumc.sdk.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesChangeable;
 
 public class Address implements BytesChangeable {
     private String address;
 
-    Address(String address) {
+    public Address(String address) {
         this.address = address;
     }
 

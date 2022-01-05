@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.mitumc.sdk.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesChangeable;
 import org.mitumc.sdk.Constant;
 
 public class Util {

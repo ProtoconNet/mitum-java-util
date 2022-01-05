@@ -3,11 +3,14 @@ package org.mitumc.sdk.sign;
 import java.util.HashMap;
 
 import org.bitcoinj.core.Base58;
-import org.mitumc.sdk.BytesChangeable;
+
+import org.mitumc.sdk.interfaces.BytesChangeable;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.TimeStamp;
 import org.mitumc.sdk.util.Util;
+import org.mitumc.sdk.key.Keypair;
+
 
 public class FactSign implements BytesChangeable {
     private Hint hint;
@@ -15,11 +18,19 @@ public class FactSign implements BytesChangeable {
     private byte[] signature;
     private TimeStamp signedAt;
 
-    FactSign(String signer, byte[] signature) {
+    private FactSign(String signer, byte[] signature) {
         this.hint = new Hint(Constant.BASE_FACT_SIGN);
         this.signer = signer;
         this.signature = Util.copyByteArray(signature);
         this.signedAt = Util.getDateTimeStamp();
+    }
+
+    public static FactSign createSign(byte[] target, String signKey) {
+        Keypair keypair = Keypair.fromPrivateKey(signKey);
+        byte[] signature = keypair.sign(target);
+        String signer = keypair.getPublicKey();
+
+        return new FactSign(signer, signature);
     }
 
     public byte[] toBytes() {

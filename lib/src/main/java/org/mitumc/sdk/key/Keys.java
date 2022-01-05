@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import org.mitumc.sdk.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesChangeable;
+import org.mitumc.sdk.interfaces.Dictionariable;
 import org.mitumc.sdk.Constant;
-import org.mitumc.sdk.Dictionariable;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Hint;

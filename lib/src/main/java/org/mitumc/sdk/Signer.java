@@ -16,9 +16,18 @@ import com.google.gson.JsonObject;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.TimeStamp;
 import org.mitumc.sdk.sign.FactSign;
-import org.mitumc.sdk.sign.SignManager;
 
 public class Signer {
+    String id;
+
+    private Signer(String id) {
+        this.id = id;
+    }
+
+    public static Signer get(String id) {
+        return new Signer(id);
+    }
+
     private static byte[] factSignToBytes(JsonObject factSign) {
         byte[] bsigner = factSign.get("signer").getAsString().getBytes();
         byte[] bsign = Base58.decode(factSign.get("signature").getAsString());
@@ -46,8 +55,7 @@ public class Signer {
         return bytes;
     }
 
-    public static HashMap<String, Object> addSignToOperation(String signKey, JsonObject operation,
-            String networkId) {
+    public HashMap<String, Object> addSignToOperation(String signKey, JsonObject operation) {
         HashMap<String, Object> signedOper = new HashMap<>();
 
         String factHash = operation.getAsJsonObject("fact").get("hash").getAsString();
@@ -60,7 +68,7 @@ public class Signer {
         while (iterator.hasNext()) {
             factSigns.add(iterator.next().getAsJsonObject());
         }
-        FactSign newFactSign = SignManager.getFactSignWithSignKey(Util.concatByteArray(bfactHash, networkId.getBytes()), signKey);
+        FactSign newFactSign = FactSign.createSign(Util.concatByteArray(bfactHash, this.id.getBytes()), signKey);
         factSigns.add(new Gson().toJsonTree(newFactSign.toDict()).getAsJsonObject());
 
         byte[] bfactSigns = factSignsToBytes(factSigns);
@@ -76,16 +84,7 @@ public class Signer {
         return signedOper;
     }
 
-    public static HashMap<String, Object> addSignToOperation(String signKey, JsonObject operation) {
-        return addSignToOperation(signKey, operation, Constant.NETWORK_ID);
-    }
-
-    public static HashMap<String, Object> addSignToOperation(String signKey, String operationPath, String networkId) {
-        JsonObject operation = JSONParser.getObjectFromJSONFile(operationPath);
-        return addSignToOperation(signKey, operation, networkId);
-    }
-
-    public static HashMap<String, Object> addSignToOperation(String signKey, String operationPath) {
-        return addSignToOperation(signKey, operationPath, Constant.NETWORK_ID);
+    public HashMap<String, Object> addSignToOperation(String signKey, String operationPath) {
+        return addSignToOperation(signKey, operationPath);
     }
 }

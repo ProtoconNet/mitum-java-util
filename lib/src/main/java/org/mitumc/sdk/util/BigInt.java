@@ -2,7 +2,7 @@ package org.mitumc.sdk.util;
 
 import java.math.BigInteger;
 
-import org.mitumc.sdk.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesChangeable;
 
 public class BigInt implements BytesChangeable {
     final public static String BIG_ENDIAN = "big-endian";

@@ -1,4 +1,4 @@
-package org.mitumc.sdk;
+package org.mitumc.sdk.interfaces;
 
 import java.util.HashMap;
 

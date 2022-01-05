@@ -1,12 +1,14 @@
-package org.mitumc.sdk.operation;
+package org.mitumc.sdk.operation.currency;
 
 import java.util.Base64;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Keys;
+import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Util;
+import org.mitumc.sdk.operation.OperationFact;
 
 public class KeyUpdaterFact extends OperationFact {
     private Address target;

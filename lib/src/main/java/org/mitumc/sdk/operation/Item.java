@@ -2,13 +2,15 @@ package org.mitumc.sdk.operation;
 
 import java.util.HashMap;
 
-import org.mitumc.sdk.BytesChangeable;
-import org.mitumc.sdk.Dictionariable;
+import org.mitumc.sdk.interfaces.BytesChangeable;
+import org.mitumc.sdk.interfaces.Dictionariable;
 import org.mitumc.sdk.util.Hint;
 
-abstract class Item implements BytesChangeable, Dictionariable{
+abstract public class Item implements BytesChangeable, Dictionariable {
+    // mitum currency item type
     public static final String ITEM_TYPE_CREATE_ACCOUNTS = "item-create-accounts";
     public static final String ITEM_TYPE_TRANSFERS = "item-transfers";
+    // mitum blocksign item type
     public static final String ITEM_TYPE_CREATE_DOCUMENTS = "item-create-documents";
     public static final String ITEM_TYPE_SIGN_DOCUMENTS = "item-sign-documents";
     public static final String ITEM_TYPE_TRANSFER_DOCUMENTS = "item-transfer-documents";
@@ -20,7 +22,7 @@ abstract class Item implements BytesChangeable, Dictionariable{
         this.itemType = itemType;
     }
 
-    abstract void updateItemType();
+    abstract public void updateItemType();
 
     abstract public byte[] toBytes();
 

@@ -1,4 +1,4 @@
-package org.mitumc.sdk.operation;
+package org.mitumc.sdk.operation.blocksign;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Util;
+import org.mitumc.sdk.key.Address;
 
 public class CreateDocumentsItem extends BlockSignItem {
     private String fileHash;
@@ -18,7 +19,7 @@ public class CreateDocumentsItem extends BlockSignItem {
     private ArrayList<String> signcodes;
 
     CreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes) {
-        super(Item.ITEM_TYPE_CREATE_DOCUMENTS);
+        super(ITEM_TYPE_CREATE_DOCUMENTS);
         this.fileHash = fileHash;
         this.documentId = new BigInt(Integer.toString(documentId));
         this.signcode = signcode;

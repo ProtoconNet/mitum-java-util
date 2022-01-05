@@ -1,8 +1,9 @@
 package org.mitumc.sdk.key;
 
-import org.mitumc.sdk.Constant;
-
 import com.wuin.ecdsakeyj.*;
+
+import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.util.Util;
 
 public class Keypair {
     private BaseKey privateKey;

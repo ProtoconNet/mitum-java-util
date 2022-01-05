@@ -1,4 +1,4 @@
-package org.mitumc.sdk.operation;
+package org.mitumc.sdk.operation.currency;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
+import org.mitumc.sdk.operation.Item;
 
 abstract class CurrencyItem extends Item {
     protected ArrayList<Amount> amounts;
@@ -17,7 +18,7 @@ abstract class CurrencyItem extends Item {
     }
 
     @Override
-    void updateItemType() {
+    public void updateItemType() {
         switch (this.itemType) {
             case ITEM_TYPE_CREATE_ACCOUNTS:
                 if (this.amounts.size() > 1) {

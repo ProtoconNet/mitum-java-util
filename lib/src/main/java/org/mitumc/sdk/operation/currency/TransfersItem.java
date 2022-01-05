@@ -1,15 +1,16 @@
-package org.mitumc.sdk.operation;
+package org.mitumc.sdk.operation.currency;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mitumc.sdk.util.Util;
+import org.mitumc.sdk.key.Address;
 
 public class TransfersItem extends CurrencyItem {
     private Address receiver;
 
     TransfersItem(String receiver, Amount[] amounts) {
-        super(Item.ITEM_TYPE_TRANSFERS, amounts);
+        super(ITEM_TYPE_TRANSFERS, amounts);
         this.receiver = new Address(receiver);
     }
 

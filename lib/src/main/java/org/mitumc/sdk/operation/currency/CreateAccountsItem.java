@@ -1,4 +1,4 @@
-package org.mitumc.sdk.operation;
+package org.mitumc.sdk.operation.currency;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ public class CreateAccountsItem extends CurrencyItem {
     private Keys keys;
 
     CreateAccountsItem(Keys keys, Amount[] amounts) {
-        super(Item.ITEM_TYPE_CREATE_ACCOUNTS, amounts);
+        super(ITEM_TYPE_CREATE_ACCOUNTS, amounts);
         this.keys = keys;
     }
 

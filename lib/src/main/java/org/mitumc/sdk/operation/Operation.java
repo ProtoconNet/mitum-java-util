@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bitcoinj.core.Base58;
-import org.mitumc.sdk.BytesChangeable;
+
+import org.mitumc.sdk.interfaces.BytesChangeable;
+import org.mitumc.sdk.interfaces.Dictionariable;
 import org.mitumc.sdk.Constant;
-import org.mitumc.sdk.Dictionariable;
 import org.mitumc.sdk.sign.FactSign;
-import org.mitumc.sdk.sign.SignManager;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
@@ -22,11 +22,11 @@ public class Operation implements BytesChangeable, Dictionariable {
 
     private String networkId;
 
-    Operation(OperationFact fact) {
+    public Operation(OperationFact fact) {
         this("", fact);
     }
 
-    Operation(String memo, OperationFact fact) {
+    public Operation(String memo, OperationFact fact) {
         this.memo = memo;
         this.fact = fact;
         this.factSigns = new ArrayList<FactSign>();
@@ -34,11 +34,11 @@ public class Operation implements BytesChangeable, Dictionariable {
         // generateHash();
     }
 
-    Operation(OperationFact fact, String NetworkId) {
+    public Operation(OperationFact fact, String NetworkId) {
         this("", fact, NetworkId);
     }
 
-    Operation(String memo, OperationFact fact, String networkId) {
+    public Operation(String memo, OperationFact fact, String networkId) {
         this(memo, fact);
         this.networkId = networkId;
     }
@@ -74,7 +74,7 @@ public class Operation implements BytesChangeable, Dictionariable {
 
     public void addSign(String signKey) {
         this.factSigns.add(
-            SignManager.getFactSignWithSignKey(
+            FactSign.createSign(
                 Util.concatByteArray(
                     this.fact.hash.getSha3Digest(), 
                     this.networkId != null ? this.networkId.getBytes() : Constant.NETWORK_ID.getBytes()), 

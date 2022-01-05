@@ -2,7 +2,7 @@ package org.mitumc.sdk.key;
 
 import java.util.HashMap;
 
-import org.mitumc.sdk.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesChangeable;
 import org.mitumc.sdk.util.Util;
 
 public class BaseKey implements BytesChangeable {

@@ -1,9 +1,10 @@
-package org.mitumc.sdk.operation;
+package org.mitumc.sdk.operation.blocksign;
 
 import java.util.HashMap;
 
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Util;
+import org.mitumc.sdk.key.Address;
 
 public class TransferDocumentsItem extends BlockSignItem {
     private Address owner;
@@ -12,7 +13,7 @@ public class TransferDocumentsItem extends BlockSignItem {
     private String currencyId;
 
     TransferDocumentsItem(String owner, String receiver, int documentId, String currencyId) {
-        super(Item.ITEM_TYPE_TRANSFER_DOCUMENTS);
+        super(ITEM_TYPE_TRANSFER_DOCUMENTS);
 
         this.owner = new Address(owner);
         this.receiver = new Address(receiver);

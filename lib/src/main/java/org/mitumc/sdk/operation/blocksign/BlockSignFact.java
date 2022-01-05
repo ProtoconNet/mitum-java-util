@@ -1,4 +1,4 @@
-package org.mitumc.sdk.operation;
+package org.mitumc.sdk.operation.blocksign;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Util;
+import org.mitumc.sdk.key.Address;
+import org.mitumc.sdk.operation.OperationFact;
 
 public class BlockSignFact<T extends BlockSignItem> extends OperationFact {
     private Address sender;

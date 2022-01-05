@@ -1,4 +1,4 @@
-package org.mitumc.sdk.operation;
+package org.mitumc.sdk.operation.currency;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,19 +8,22 @@ import java.util.HashMap;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Util;
+import org.mitumc.sdk.key.Address;
+import org.mitumc.sdk.operation.OperationFact;
 
-public class TransfersFact extends OperationFact {
+public class CreateAccountsFact extends OperationFact {
     private Address sender;
-    private ArrayList<TransfersItem> items;
+    private ArrayList<CreateAccountsItem> items;
 
-    TransfersFact(String sender) {
-        this(sender, new TransfersItem[0]);
+    CreateAccountsFact(String sender) {
+        this(sender, new CreateAccountsItem[0]);
     }
 
-    TransfersFact(String sender, TransfersItem[] items) {
-        super(Constant.MC_TRANSFERS_OPERATION_FACT);
+    CreateAccountsFact(String sender, CreateAccountsItem[] items) {
+        super(Constant.MC_CREATE_ACCOUNTS_OPERATION_FACT);
         this.sender = new Address(sender);
-        this.items = new ArrayList<TransfersItem>(Arrays.asList(items));
+        this.items = new ArrayList<CreateAccountsItem>(Arrays.asList(items));
+        
         generateHash();
     }
 
@@ -28,12 +31,17 @@ public class TransfersFact extends OperationFact {
         this.hash = new Hash(toBytes());
     }
 
+    public void addItem(CreateAccountsItem item) {
+        items.add(item);
+        generateHash();
+    }
+
     @Override
     public byte[] toBytes() {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] bsender = this.sender.toBytes();
-        byte[] bitems = Util.<TransfersItem>concatItemArray(this.items);
-        
+        byte[] bitems = Util.<CreateAccountsItem>concatItemArray(this.items);
+
         return Util.concatByteArray(btoken, bsender, bitems);
     }
 
@@ -47,7 +55,7 @@ public class TransfersFact extends OperationFact {
         hashMap.put("sender", this.sender.getAddress());
 
         ArrayList<Object> arr = new ArrayList<>();
-        for(TransfersItem item : this.items) {
+        for(CreateAccountsItem item : items) {
             arr.add(item.toDict());
         }
         hashMap.put("items", arr);
