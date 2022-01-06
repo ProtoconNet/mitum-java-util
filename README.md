@@ -28,14 +28,14 @@ javac 16.0.1
 ```
 [Download jar file](release/) and include the package to your project.
 
-The latest version is `mitum-java-util-1.2.3.jar`.
+The latest version is `mitum-java-util-1.3.0.jar`.
 
 #### Gradle
 ```sh
-implementation files('./lib/mitum-java-util-1.2.3.jar')
+implementation files('./lib/mitum-java-util-1.3.0.jar')
 ```
 
-Replace `./lib/mitum-java-util-1.2.3.jar` with your file path.
+Replace `./lib/mitum-java-util-1.3.0.jar` with your file path.
 
 ## Generate New Operation
 
@@ -73,7 +73,19 @@ Note that the package root of 'mitum-java-util' is `org.mitumc.sdk`.
 
 * Every key, address, and keypair must be that of mitum-currency.
 
-### Keypair (org.mitumc.sdk.key.Keypair) - create / fromSeed / fromPrivateKey
+### Generate Keypairs
+
+`mitum-java-util` supports to generate keypair from private key and seed.
+
+And you can just get a new keypair by `Keypair.create()`.
+
+There are fixed type suffixes for private key, public key and address.
+
+* private key -> mpr
+* public key -> mpu
+* account address -> mca
+
+#### Keypair (org.mitumc.sdk.key.Keypair) - create / fromSeed / fromPrivateKey
 
 `Keypair.create()` returns new keypair for mitum.
 
@@ -86,8 +98,9 @@ Or, you can use `Keypair.fromSeed(byte[] seed)`.
 `new String(seed).length()` should be longer than or equal to 36.
 
 ```java
+/*
 import org.mitumc.sdk.key.Keypair;
-
+*/
 Keypair kp = Keypair.create();
 
 kp.getPrivateKey(); // returns private key of the keypair
@@ -103,49 +116,41 @@ byte[] bseed = seed.getBytes();
 Keypair skp = Keypair.fromSeed(bseed);
 ```
 
-### KeyManager (org.mitumc.sdk.key.KeyManager);
+### Generate Operation and Seal
 
-The package provides `KeyManager` class to manage classes about key.
+`mitum-java-util` supports to generate operations of `mitum-currency` and `mitum-data-blocksign`.
 
-Methods that `KeyManager` supports are,
+#### Generator (org.mitumc.sdk.Generator)
+
+You can use `Generator` by this library.
+
+First of all, set network id by `Generator.get(id)`.
+
+For `mitum-currency`, use `Generator.currency()`.
+
+Or, for `mitum-data-blocksign`, use `Generator.blockSign()`.
+
+```java
+String id = 'mitum';
+Generator generator = Generator.get(id);
+
+CurrencyGenerator cgn = generator.currency(); // org.mitumc.sdk.operation.currency.CurrencyGenerator;
+BlockSignGenerator bgn = generator.blockSign(); // org.mitumc.sdk.operation.blocksign.BlockSignGenerator;
+```
+
+#### CurrencyGenerator (org.mitumc.sdk.operation.currency.CurrencyGenerator)
+
+Using `CurrencyGenerator`, below methods are available.
 
 ```java
 Key newKey(String key, int weight);
 Keys newKeys(int threshold);
 Keys newKeys(Key[] keys, int threshold); 
-```
 
-#### KeyManager - newKey / newKeys
-
-`newKey()` returns Key object including [public key, weight], and `newKeys()` returns Keys object including a list of [public key, weight] pairs and threshold. 
-
-```java
-import org.mitumc.sdk.key.KeyManager.newKey;
-import org.mitumc.sdk.key.KeyManager.newKeys;
-
-Key key = newKey("24TbbrNYVngpPEdq6Zc5rD1PQSTGQpqwabB9nVmmonXjqmpu", 100);
-Keys keys = newKeys(100);
-keys.addKey(key);
-
-Keys keys2 = newKeys(new Key[]{key}, 100);
-```
-
-Note that 'keys' and 'keys2' work same.
-
-### OperationManager (org.mitumc.sdk.operation.OperationManager)
-
-The package provides `OperationManager` class to manage classes about operation.
-
-Methods that `OperationManager` supports are,
-
-```java
 Amount newAmount(String currency, String amount);
 
 CreateAccountsItem newCreateAccountsItem(Keys keys, Amount[] amounts);
 TransfersItem newTransfersItem(String receiver, Amount[] amounts);
-CreateDocumentsItem newCreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes);
-SignDocumentsItem newSignDocumentsItem(String owner, int documentId, String currencyId);
-TransferDocumentsItem newTransferDocumentsItem(String owner, String receiver, int documentId, String currencyId);
 
 CreateAccountsFact newCreateAccountsFact(String sender);
 CreateAccountsFact newCreateAccountsFact(String sender, CreateAccountsItem[] items);
@@ -154,20 +159,68 @@ KeyUpdaterFact newKeyUpdaterFact(String target, String currencyId, Keys keys);
 
 TransfersFact newTransfersFact(String sender);
 TransfersFact newTransfersFact(String sender, TransfersItem[] items);
+```
+
+#### BlockSignGenerator (org.mitumc.sdk.operation.blocksign.BlockSignGenerator)
+
+Using `BlockSignGenerator`, below methods are available.
+
+```java
+CreateDocumentsItem newCreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes);
+SignDocumentsItem newSignDocumentsItem(String owner, int documentId, String currencyId);
+TransferDocumentsItem newTransferDocumentsItem(String owner, String receiver, int documentId, String currencyId);
 
 BlockSignFact newBlockSignFact(String sender, CreateDocumentsItem[] items);
 BlockSignFact newBlockSignFact(String sender, SignDocumentsItem[] items);
 BlockSignFact newBlockSignFact(String sender, TransferDocumentsItem[] items);
-
-Operation newOperation(OperationFact fact);
-Operation newOperation(String memo, OperationFact fact);
-Operation newOperation(OperationFact fact, String networkId);
-Operation newOperation(String memo, OperationFact fact, String networkId);
 ```
 
-The usage of OperationManager will be introduces in the next section.
+#### Generate Operation by Generator
 
-### JSONParser (org.mitumc.sdk.JSONParser)
+`Generator` provides methods for generating operation and seal.
+
+```java
+Operation newOperation(OperationFact fact);
+Operation newOperation(String memo, OperationFact fact);
+HashMap<String, Object> newSeal(String signKey, Operation[] operations);
+```
+
+The usage of those methods will be introduced in the next section.
+
+### Get Address from Keys
+
+You can calculate the address of the account by its keys.
+
+Each key in the account has a corresponding weight(1 <= weight <= 100).
+
+And, the account has threshold(1 <= threshold <= 100) which should be smaller than or equal to the sum of all weights of account keys.
+
+To get address, use `CurrencyGenerator`.
+
+#### How to Get Address
+
+```java
+/*
+import org.mitumc.sdk.Generator
+import org.mitumc.key.Key
+import org.mitumc.key.Keys
+*/
+Generator generator = Generator.get('mitum');
+
+Key key = generator.currency().newKey("24TbbrNYVngpPEdq6Zc5rD1PQSTGQpqwabB9nVmmonXjqmpu", 100);
+Keys keys = generator.currency().newKeys(100);
+keys.addKey(key);
+
+Keys keys2 = newKeys(new Key[]{key}, 100);
+
+String address = keys.getAddress(); // your address
+```
+
+Note that 'keys' and 'keys2' work same.
+
+### Generate JSON File from Operation and Seal
+
+#### JSONParser (org.mitumc.sdk.JSONParser)
 
 You can create a json file of generated operation object without `JSONParser`. However, I recommend to use `JSONParser` for convenience.
 
@@ -187,31 +240,29 @@ For new account, `currency id` and `initial amount` must be set. With source acc
 #### Usage
 
 ```java
+/*
 import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.currency.*;
+*/
 
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
 String targetPub = "knW2wVXH399P9Xg8aVjAGuMkk3uTBZwcSpcy4aR3UjiAmpu";
 
-Key key = KeyManager.newKey(targetPub, 100);
-Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
+Generator gn = Generator.get('mitum');
 
-/* If you want to get address from Keys, try below.
- *
- * Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
- * keys.getAddress();
- * 
- * Then getAddress() will returns what you want, like "7nJehxR36EpTNDAFTNdEP6XekwqbaL9yk84yNBAAQCScmca".
- */
+Key key = gn.currency().newKey(targetPub, 100);
+Keys keys = gn.currency().newKeys(new Key[]{key}, 100);
 
-Amount amount = OperationManager.newAmount("MCC", "1000");
-CreateAccountsItem item = OperationManager.newCreateAccountsItem(keys, new Amount[]{amount});
+Amount amount = gn.currency().newAmount("MCC", "1000");
+CreateAccountsItem item = gn.currency().newCreateAccountsItem(keys, new Amount[]{amount});
 
-CreateAccountsFact fact = OperationManager.newCreateAccountsFact(sourceAddr, new CreateAccountsItem[]{item});
+CreateAccountsFact fact = gn.currency().newCreateAccountsFact(sourceAddr, new CreateAccountsItem[]{item});
 
-Operation operation = OperationManager.newOperation(fact);
+Operation operation = gn.newOperation(fact);
 operation.addSign(sourcePriv);
 
 JSONParser.createJSON(operation.toDict(), "createaccounts.json");
@@ -230,19 +281,25 @@ Key-Updater literally supports to update source public key to something else.
 #### Usage
 
 ```java
+/*
 import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.currency.*;
+*/
+
+Generator gn = Generator.get('mitum');
 
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
 String targetPub = "27uxAwUpvdc9sbRgztW8LrNoHnBmwgKavGuU6KvWzCgnimpu";
 
-Key key = KeyManager.newKey(targetPub, 100);
-Keys keys = KeyManager.newKeys(new Key[]{key}, 100);
+Key key = gn.currency().newKey(targetPub, 100);
+Keys keys = gn.currency().newKeys(new Key[]{key}, 100);
 
-KeyUpdaterFact fact = OperationManager.newKeyUpdaterFact(sourceAddr, "MCC", keys);
-Operation operation = OperationManager.newOperation(fact);
+KeyUpdaterFact fact = gn.currency().newKeyUpdaterFact(sourceAddr, "MCC", keys);
+Operation operation = gn.newOperation(fact);
 operation.addSign(sourcePriv);
 
 JSONParser.createJSON(operation.toDict(), "keyupdater.json");
@@ -257,18 +314,22 @@ To generate an operation, you must prepare target address, not public key. Trans
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
-
+/*
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.currency.*;
+*/
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
 String targetAddr = "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca";
 
-Amount amount = OperationManager.newAmount("MCC", "1000");
-TransfersItem item = OperationManager.newTransfersItem(targetAddr, new Amount[]{amount});
+Generator gn = Generator.get('mitum');
 
-TransfersFact fact = OperationManager.newTransfersFact(sourceAddr, new TransfersItem[]{item});
+Amount amount = gn.currency().newAmount("MCC", "1000");
+TransfersItem item = gn.currency().newTransfersItem(targetAddr, new Amount[]{amount});
+
+TransfersFact fact = gn.currency().newTransfersFact(sourceAddr, new TransfersItem[]{item});
 
 Operation operation = OperationManager.newOperation(fact);
 operation.addSign(sourcePriv);
@@ -283,16 +344,20 @@ To generate an operation, you must prepare file-hash. Create-Document supports t
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
-
+/*
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.blocksign.*;
+*/
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
-CreateDocumentsItem item = OperationManager.newCreateDocumentsItem("absscd:mbfh-v0.0.1", 300, "user03", "title300", 1234, "MCC", new String[0], new String[]{"user04"});
-BlockSignFact<CreateDocumentsItem> fact = OperationManager.newBlockSignFact(sourceAddr, new CreateDocumentsItem[]{item});
+Generator gn = Generator.get('mitum');
 
-Operation operation = OperationManager.newOperation(fact);
+CreateDocumentsItem item = gn.blockSign().newCreateDocumentsItem("absscd:mbfh-v0.0.1", 300, "user03", "title300", 1234, "MCC", new String[0], new String[]{"user04"});
+BlockSignFact<CreateDocumentsItem> fact = gn.blockSign().newBlockSignFact(sourceAddr, new CreateDocumentsItem[]{item});
+
+Operation operation = gn.newOperation(fact);
 operation.addSign(sourcePriv);
 
 JSONParser.createJSON(operation.toDict(), "createdocuments.json");
@@ -305,16 +370,20 @@ To generate an operation, you must prepare owner and document id. Sign-Document 
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
-
+/*
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.blocksign.*;
+*/
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
-SignDocumentsItem item = OperationManager.newSignDocumentsItem(sourceAddr, 0, "MCC");
-BlockSignFact<SignDocumentsItem> fact = OperationManager.newBlockSignFact(sourceAddr, new SignDocumentsItem[]{item});
+Generator gn = Generator.get('mitum');
 
-Operation operation = OperationManager.newOperation(fact);
+SignDocumentsItem item = gn.blockSign().newSignDocumentsItem(sourceAddr, 0, "MCC");
+BlockSignFact<SignDocumentsItem> fact = gn.blockSign().newBlockSignFact(sourceAddr, new SignDocumentsItem[]{item});
+
+Operation operation = gn.newOperation(fact);
 operation.addSign(sourcePriv);
 
 JSONParser.createJSON(operation.toDict(), "signdocuments.json");
@@ -329,18 +398,22 @@ __This operation is not supported anymore.__
 #### Usage
 
 ```java
-import org.mitumc.sdk.key.*;
-import org.mitumc.sdk.operation.*;
-
+/*
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.blocksign.*;
+*/
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
 String targetAddr = "Bz4LPnkSrvGaMwKediXjxTkB6JZkQdbqQHyQbLVcWHprmca";
 
-TransferDocumentsItem item = OperationManager.newTransferDocumentsItem(sourceAddr, targetAddr, 0, "MCC");
-BlockSignFact<TransferDocumentsItem> fact = OperationManager.newBlockSignFact(sourceAddr, new TransferDocumentsItem[]{item});
+Generator gn = Generator.get('mitum');
 
-Operation operation = OperationManager.newOperation(fact);
+TransferDocumentsItem item = gn.blockSign().newTransferDocumentsItem(sourceAddr, targetAddr, 0, "MCC");
+BlockSignFact<TransferDocumentsItem> fact = gn.blockSign().newBlockSignFact(sourceAddr, new TransferDocumentsItem[]{item});
+
+Operation operation = gn.newOperation(fact);
 operation.addSign(sourcePriv);
 
 JSONParser.createJSON(operation.toDict(), "transferdocuments.json");
@@ -348,7 +421,7 @@ JSONParser.createJSON(operation.toDict(), "transferdocuments.json");
 
 ## Generate New Seal
 
-Supports you to generate a seal json file such that the seal is able to consist of several operations. Those operations can be any type 'mitum-java-util' provides.
+`mitum-java-util` supports you to generate a seal json file such that the seal is able to consist of several operations. Those operations can be any type 'mitum-java-util' provides.
 
 ### Prerequisite
 
@@ -359,33 +432,25 @@ To generate a seal, 'mitum-java-util' requires,
 
 Registration of `signing key` to the network is not necessary.
 
-### SealManager (org.mitumc.sdk.SealManager)
+#### Usage
 
-`SealManager` class supports to generate Seal Object as HashMap.
-
-If you would like to use your own network id, use `newSeal(signKey, operations, networkId)` instead of `newSeal(signKey, operations)`.
+First of all, suppose that every operation is that generated by `Generator`. (createAccounts, keyUpdater, Transfers and etc)
 
 ```java
-HashMap<String, Object> newSeal(String signKey, Operation[] operations); // default network id: 'mitum'
-HashMap<String, Object> newSeal(String signKey, Operation[] operations, String networkId);
-```
-
-### Usage
-
-First of all, suppose that every operation is that generated by `OperationManager`. (createAccounts, keyUpdater, Transfers and etc)
-
-```java
-import org.mitumc.sdk.SealManager;
+/*
+import org.mitumc.sdk.Generator;
 import org.mitumc.sdk.JSONParser;
-
+*/
 ... omitted
-''' Create each operation [createAccounts, keyUpdater, transfers, etc] with OperationManager. See above sections.
+''' Create each operation [createAccounts, keyUpdater, transfers, etc] with Generator. See above sections.
 '''
 ...
 
+Generator gn = Generator('mitum');
+
 String signKey = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 
-HashMap<String, Object> seal = SealManager.newSeal(signKey, new Operation[]{operation}, "mitum");
+HashMap<String, Object> seal = gn.newSeal(signKey, new Operation[]{operations});
 JSONParser.createJSON(seal, "seal.json");
 ```
 
@@ -393,9 +458,9 @@ Then the result format of `createJSON(seal, fileName)` will be like [this](examp
 
 ## Send Messages to Network
 
-Send created json files to the network by 'mitum-data-blocksign'.
+Send created json files to the network by 'mitum-currency' and 'mitum-data-blocksign'.
 
-See [mitum-data-blocksign](https://github.com/ProtoconNet/mitum-data-blocksign).
+See [mitum-currency](https://github.com/ProtoconNet/mitum-currency) and [mitum-data-blocksign](https://github.com/ProtoconNet/mitum-data-blocksign).
 
 ## Sign Message
 
@@ -424,22 +489,24 @@ After adding a fact signature, operation hash is always changed.
 ### Signer (org.mitumc.sdk.Signer)
 
 ```java
-HashMap<String, Object> addSignToOperation(String signKey, JsonObject operation, String networkId);
-HashMap<String, Object> addSignToOperation(String signKey, JsonObject operation);
-HashMap<String, Object> addSignToOperation(String signKey, String operationPath, String networkId);
-HashMap<String, Object> addSignToOperation(String signKey, String operationPath);
+HashMap<String, Object> addSignToOperation(JsonObject operation);
+HashMap<String, Object> addSignToOperation(String operationPath);
 ```
 
 ### Usage
 
 ```java
+/*
 import org.mitumc.sdk.Signer;
 import org.mitumc.sdk.JSONParser;
-
+*/
+String id = 'mitum';
 String key = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 
-HashMap<string, Object> newOper = Signer.addSignToOperation(key, "operation.json", "mitum");
-JSONParser.createJSON(newOper, "newOperation.json");
+Signer signer = Signer.get(id, key);
+
+HashMap<string, Object> signed = signer.addSignToOperation("operation.json");
+JSONParser.createJSON(signed, "newOperation.json");
 ```
 
 Signer class itself doesn't create json file of new operation.

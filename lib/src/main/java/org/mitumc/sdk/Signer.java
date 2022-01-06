@@ -18,14 +18,16 @@ import org.mitumc.sdk.util.TimeStamp;
 import org.mitumc.sdk.sign.FactSign;
 
 public class Signer {
-    String id;
+    private String id;
+    private String signKey;
 
-    private Signer(String id) {
+    private Signer(String id, String signKey) {
         this.id = id;
+        this.signKey = signKey;
     }
 
-    public static Signer get(String id) {
-        return new Signer(id);
+    public static Signer get(String id, String signKey) {
+        return new Signer(id, signKey);
     }
 
     private static byte[] factSignToBytes(JsonObject factSign) {
@@ -55,7 +57,7 @@ public class Signer {
         return bytes;
     }
 
-    public HashMap<String, Object> addSignToOperation(String signKey, JsonObject operation) {
+    public HashMap<String, Object> addSignToOperation(JsonObject operation) {
         HashMap<String, Object> signedOper = new HashMap<>();
 
         String factHash = operation.getAsJsonObject("fact").get("hash").getAsString();
@@ -68,7 +70,7 @@ public class Signer {
         while (iterator.hasNext()) {
             factSigns.add(iterator.next().getAsJsonObject());
         }
-        FactSign newFactSign = FactSign.createSign(Util.concatByteArray(bfactHash, this.id.getBytes()), signKey);
+        FactSign newFactSign = FactSign.createSign(Util.concatByteArray(bfactHash, this.id.getBytes()), this.signKey);
         factSigns.add(new Gson().toJsonTree(newFactSign.toDict()).getAsJsonObject());
 
         byte[] bfactSigns = factSignsToBytes(factSigns);
@@ -84,7 +86,7 @@ public class Signer {
         return signedOper;
     }
 
-    public HashMap<String, Object> addSignToOperation(String signKey, String operationPath) {
-        return addSignToOperation(signKey, operationPath);
+    public HashMap<String, Object> addSignToOperation(String operationPath) {
+        return addSignToOperation(operationPath);
     }
 }
