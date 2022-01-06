@@ -37,6 +37,96 @@ implementation files('./lib/mitum-java-util-1.3.0.jar')
 
 Replace `./lib/mitum-java-util-1.3.0.jar` with your file path.
 
+## Index
+
+||Title|
+|---|---|
+|1|[Generate Keypairs](#generate-keypairs)|
+|2|[Generate New Operation](#generate-new-operation)|
+|2-1|[Generate Operation and Seal](#generate-operation-and-seal)|
+|2-2|[Get Address from Keys](#get-address-from-keys)|
+|2-3|[Generate JSON File from Operation and Seal](#generate-json-file-from-operation-and-seal)|
+|2-4|[Generate Create-Accounts](#generate-create-accounts)|
+|2-5|[Generate Key-Updater](#generate-key-updater)|
+|2-6|[Generate Transfers](#generate-transfers)|
+|2-7|[Generate Create-Documents](#generate-create-documents)|
+|2-8|[Generate Sign-Documents](#generate-sign-documents)|
+|2-9|[Generate Transfer-Documents](#generate-transfer-documents)|
+|3|[Generate New Seal](#generate-new-seal)|
+|4|[Send Messages to Network](#send-messages-to-network)|
+|5|[Sign Message](#sign-message)|
+|6|[Add Fact Signature to Operation](#add-fact-signature-to-operation)|
+
+<br />
+
+|Class|
+|---|
+|[Keypair](#keypair)|
+|[Generator](#generator)|
+|[CurrencyGenerator](#currencygenerator)|
+|[BlockSignGenerator](#blocksigngenerator)|
+|[JSONParser](#jsonparser)|
+|[Signer](#signer)|
+
+<br />
+
+|Appendix|
+|---|
+|[About Time Stamp](#about-time-stamp)|
+
+## Generate Keypairs
+
+`mitum-java-util` supports to generate keypair from private key and seed.
+
+And you can just get a new keypair by `Keypair.create()`.
+
+There are fixed type suffixes for private key, public key and address.
+
+* private key -> mpr
+* public key -> mpu
+* account address -> mca
+
+### Keypair
+
+* `org.mitumc.sdk.key.Keypair`
+
+`Keypair.create()` returns new keypair for mitum.
+
+You can use `Keypair.fromPrivateKey(String key)` when you already have a private key.
+
+If you have seed of your private key, just use `Keypair.fromSeed(String seed)`.
+
+Or, you can use `Keypair.fromSeed(byte[] seed)`.
+
+`new String(seed).length()` should be longer than or equal to 36.
+
+```java
+Keypair create();
+Keypair fromSeed(seed);
+Keypair fromPrivateKey(privKey);
+```
+
+#### Usage
+
+```java
+/*
+import org.mitumc.sdk.key.Keypair;
+*/
+Keypair kp = Keypair.create();
+
+kp.getPrivateKey(); // returns private key of the keypair
+kp.getPublicKey(); // returns public key of the keypair
+
+String key = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
+Keypair pkp = Keypair.fromPrivateKey(key);
+
+String seed =  "This is a seed for the example; Keypair.fromSeed()";
+Keypair skp = Keypair.fromSeed(seed);
+
+byte[] bseed = seed.getBytes();
+Keypair skp = Keypair.fromSeed(bseed);
+```
+
 ## Generate New Operation
 
 ### Operations
@@ -73,54 +163,13 @@ Note that the package root of 'mitum-java-util' is `org.mitumc.sdk`.
 
 * Every key, address, and keypair must be that of mitum-currency.
 
-### Generate Keypairs
-
-`mitum-java-util` supports to generate keypair from private key and seed.
-
-And you can just get a new keypair by `Keypair.create()`.
-
-There are fixed type suffixes for private key, public key and address.
-
-* private key -> mpr
-* public key -> mpu
-* account address -> mca
-
-#### Keypair (org.mitumc.sdk.key.Keypair) - create / fromSeed / fromPrivateKey
-
-`Keypair.create()` returns new keypair for mitum.
-
-You can use `Keypair.fromPrivateKey(String key)` when you already have a private key.
-
-If you have seed of your private key, just use `Keypair.fromSeed(String seed)`.
-
-Or, you can use `Keypair.fromSeed(byte[] seed)`.
-
-`new String(seed).length()` should be longer than or equal to 36.
-
-```java
-/*
-import org.mitumc.sdk.key.Keypair;
-*/
-Keypair kp = Keypair.create();
-
-kp.getPrivateKey(); // returns private key of the keypair
-kp.getPublicKey(); // returns public key of the keypair
-
-String key = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
-Keypair pkp = Keypair.fromPrivateKey(key);
-
-String seed =  "This is a seed for the example; Keypair.fromSeed()";
-Keypair skp = Keypair.fromSeed(seed);
-
-byte[] bseed = seed.getBytes();
-Keypair skp = Keypair.fromSeed(bseed);
-```
-
 ### Generate Operation and Seal
 
 `mitum-java-util` supports to generate operations of `mitum-currency` and `mitum-data-blocksign`.
 
-#### Generator (org.mitumc.sdk.Generator)
+#### Generator
+
+* `org.mitumc.sdk.Generator`
 
 You can use `Generator` by this library.
 
@@ -131,14 +180,16 @@ For `mitum-currency`, use `Generator.currency()`.
 Or, for `mitum-data-blocksign`, use `Generator.blockSign()`.
 
 ```java
-String id = 'mitum';
+String id = "mitum";
 Generator generator = Generator.get(id);
 
 CurrencyGenerator cgn = generator.currency(); // org.mitumc.sdk.operation.currency.CurrencyGenerator;
 BlockSignGenerator bgn = generator.blockSign(); // org.mitumc.sdk.operation.blocksign.BlockSignGenerator;
 ```
 
-#### CurrencyGenerator (org.mitumc.sdk.operation.currency.CurrencyGenerator)
+#### CurrencyGenerator
+
+* `org.mitumc.sdk.operation.currency.CurrencyGenerator`
 
 Using `CurrencyGenerator`, below methods are available.
 
@@ -161,7 +212,9 @@ TransfersFact newTransfersFact(String sender);
 TransfersFact newTransfersFact(String sender, TransfersItem[] items);
 ```
 
-#### BlockSignGenerator (org.mitumc.sdk.operation.blocksign.BlockSignGenerator)
+#### BlockSignGenerator
+
+* `org.mitumc.sdk.operation.blocksign.BlockSignGenerator`
 
 Using `BlockSignGenerator`, below methods are available.
 
@@ -205,13 +258,13 @@ import org.mitumc.sdk.Generator
 import org.mitumc.key.Key
 import org.mitumc.key.Keys
 */
-Generator generator = Generator.get('mitum');
+Generator generator = Generator.get("mitum");
 
 Key key = generator.currency().newKey("24TbbrNYVngpPEdq6Zc5rD1PQSTGQpqwabB9nVmmonXjqmpu", 100);
 Keys keys = generator.currency().newKeys(100);
 keys.addKey(key);
 
-Keys keys2 = newKeys(new Key[]{key}, 100);
+Keys keys2 = generator.currency().newKeys(new Key[]{key}, 100);
 
 String address = keys.getAddress(); // your address
 ```
@@ -220,7 +273,9 @@ Note that 'keys' and 'keys2' work same.
 
 ### Generate JSON File from Operation and Seal
 
-#### JSONParser (org.mitumc.sdk.JSONParser)
+#### JSONParser
+
+* `org.mitumc.sdk.JSONParser`
 
 You can create a json file of generated operation object without `JSONParser`. However, I recommend to use `JSONParser` for convenience.
 
@@ -244,6 +299,7 @@ For new account, `currency id` and `initial amount` must be set. With source acc
 import org.mitumc.sdk.key.*;
 import org.mitumc.sdk.Generator;
 import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.operation.currency.*;
 */
 
@@ -252,7 +308,7 @@ String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
 String targetPub = "knW2wVXH399P9Xg8aVjAGuMkk3uTBZwcSpcy4aR3UjiAmpu";
 
-Generator gn = Generator.get('mitum');
+Generator gn = Generator.get("mitum");
 
 Key key = gn.currency().newKey(targetPub, 100);
 Keys keys = gn.currency().newKeys(new Key[]{key}, 100);
@@ -285,10 +341,10 @@ Key-Updater literally supports to update source public key to something else.
 import org.mitumc.sdk.key.*;
 import org.mitumc.sdk.Generator;
 import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.operation.currency.*;
 */
-
-Generator gn = Generator.get('mitum');
+Generator gn = Generator.get("mitum");
 
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
@@ -317,6 +373,7 @@ To generate an operation, you must prepare target address, not public key. Trans
 /*
 import org.mitumc.sdk.Generator;
 import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.operation.currency.*;
 */
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
@@ -324,14 +381,14 @@ String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
 String targetAddr = "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca";
 
-Generator gn = Generator.get('mitum');
+Generator gn = Generator.get("mitum");
 
 Amount amount = gn.currency().newAmount("MCC", "1000");
 TransfersItem item = gn.currency().newTransfersItem(targetAddr, new Amount[]{amount});
 
 TransfersFact fact = gn.currency().newTransfersFact(sourceAddr, new TransfersItem[]{item});
 
-Operation operation = OperationManager.newOperation(fact);
+Operation operation = gn.newOperation(fact);
 operation.addSign(sourcePriv);
 
 JSONParser.createJSON(operation.toDict(), "transfers.json");
@@ -347,12 +404,13 @@ To generate an operation, you must prepare file-hash. Create-Document supports t
 /*
 import org.mitumc.sdk.Generator;
 import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.operation.blocksign.*;
 */
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
-Generator gn = Generator.get('mitum');
+Generator gn = Generator.get("mitum");
 
 CreateDocumentsItem item = gn.blockSign().newCreateDocumentsItem("absscd:mbfh-v0.0.1", 300, "user03", "title300", 1234, "MCC", new String[0], new String[]{"user04"});
 BlockSignFact<CreateDocumentsItem> fact = gn.blockSign().newBlockSignFact(sourceAddr, new CreateDocumentsItem[]{item});
@@ -373,12 +431,13 @@ To generate an operation, you must prepare owner and document id. Sign-Document 
 /*
 import org.mitumc.sdk.Generator;
 import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.operation.blocksign.*;
 */
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
-Generator gn = Generator.get('mitum');
+Generator gn = Generator.get("mitum");
 
 SignDocumentsItem item = gn.blockSign().newSignDocumentsItem(sourceAddr, 0, "MCC");
 BlockSignFact<SignDocumentsItem> fact = gn.blockSign().newBlockSignFact(sourceAddr, new SignDocumentsItem[]{item});
@@ -401,6 +460,7 @@ __This operation is not supported anymore.__
 /*
 import org.mitumc.sdk.Generator;
 import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.operation.blocksign.*;
 */
 String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
@@ -408,7 +468,7 @@ String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
 String targetAddr = "Bz4LPnkSrvGaMwKediXjxTkB6JZkQdbqQHyQbLVcWHprmca";
 
-Generator gn = Generator.get('mitum');
+Generator gn = Generator.get("mitum");
 
 TransferDocumentsItem item = gn.blockSign().newTransferDocumentsItem(sourceAddr, targetAddr, 0, "MCC");
 BlockSignFact<TransferDocumentsItem> fact = gn.blockSign().newBlockSignFact(sourceAddr, new TransferDocumentsItem[]{item});
@@ -446,11 +506,11 @@ import org.mitumc.sdk.JSONParser;
 '''
 ...
 
-Generator gn = Generator('mitum');
+Generator gn = Generator("mitum");
 
 String signKey = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 
-HashMap<String, Object> seal = gn.newSeal(signKey, new Operation[]{operations});
+HashMap<String, Object> seal = gn.newSeal(signKey, new Operation[]{/*operations*/});
 JSONParser.createJSON(seal, "seal.json");
 ```
 
@@ -486,7 +546,9 @@ Use `Signer.addSignToOperation(key, targetOperation)` to add new fact signature 
 
 After adding a fact signature, operation hash is always changed.
 
-### Signer (org.mitumc.sdk.Signer)
+### Signer
+
+* `org.mitumc.sdk.Signer`
 
 ```java
 HashMap<String, Object> addSignToOperation(JsonObject operation);
@@ -500,15 +562,99 @@ HashMap<String, Object> addSignToOperation(String operationPath);
 import org.mitumc.sdk.Signer;
 import org.mitumc.sdk.JSONParser;
 */
-String id = 'mitum';
+String id = "mitum";
 String key = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
 
 Signer signer = Signer.get(id, key);
 
-HashMap<string, Object> signed = signer.addSignToOperation("operation.json");
+HashMap<String, Object> signed = signer.addSignToOperation("operation.json");
 JSONParser.createJSON(signed, "newOperation.json");
 ```
 
 Signer class itself doesn't create json file of new operation.
 
 Use `JSONParser` if you need.
+
+## Appendix
+
+### __About Time Stamp__
+
+#### __Expression of Time Stamp__
+
+For blocks, seals, signatures and etc, mitum uses `yyyy-MM-dd HH:mm:ss.* +0000 UTC` expression and `yyyy-MM-ddTHH:mm:ss.*Z` as standard.
+
+All other timezones are not allowed! You must use only +0000 timezone for mitum.
+
+For example,
+
+1. When converting timestamp to byte format for generating block/seal/fact_sign hash
+    - converting the string `2021-11-16 01:53:30.518 +0000 UTC` to bytes format
+
+2. When putting timestamp in block, seal, fact_sign or etc
+    - converting the timestamp to `2021-11-16T01:53:30.518Z` and put it in json
+
+To generate operation hash, mitum concatenates byte arrays of network id, fact hash and byte arrays of fact_signs.
+
+And to generate the byte array of a fact_sign, mitum concatenates byte arrays of signer, signature digest and signed_at.
+
+Be careful that the format of `signed_at` after converted to bytes is like `yyyy-MM-dd HH:mm:ss.* +0000 UTC` but it will be expressed as `yyyy-MM-ddTHH:mm:ss.*Z` when putted in json.
+
+#### __How many decimal places to be expressed?__
+
+There is one more thing to note.
+
+First at all, you don't have to care about decimal points of second(ss.*) in timestamp.## Appendix
+
+### __About Time Stamp__
+
+#### __Expression of Time Stamp__
+
+For blocks, seals, signatures and etc, mitum uses `yyyy-MM-dd HH:mm:ss.* +0000 UTC` expression and `yyyy-MM-ddTHH:mm:ss.*Z` as standard.
+
+All other timezones are not allowed! You must use only +0000 timezone for mitum.
+
+For example,
+
+1. When converting timestamp to byte format for generating block/seal/fact_sign hash
+    - converting the string `2021-11-16 01:53:30.518 +0000 UTC` to bytes format
+
+2. When putting timestamp in block, seal, fact_sign or etc
+    - converting the timestamp to `2021-11-16T01:53:30.518Z` and put it in json
+
+To generate operation hash, mitum concatenates byte arrays of network id, fact hash and byte arrays of fact_signs.
+
+And to generate the byte array of a fact_sign, mitum concatenates byte arrays of signer, signature digest and signed_at.
+
+Be careful that the format of `signed_at` after converted to bytes is like `yyyy-MM-dd HH:mm:ss.* +0000 UTC` but it will be expressed as `yyyy-MM-ddTHH:mm:ss.*Z` when putted in json.
+
+#### __How many decimal places to be expressed?__
+
+There is one more thing to note.
+
+First at all, you don't have to care about decimal points of second(ss.*) in timestamp.
+
+Moreover, you can write timestamp without `.` and any number under `.`.
+
+However, you should not put any unnecessary zeros(0) in the float expression of second(ss.*) when converting timestamp to bytes format.
+
+For example,
+
+1. `2021-11-16T01:53:30.518Z` is converted to `2021-11-16 01:53:30.518 +0000 UTC` without any change of the time itself.
+
+2. `2021-11-16T01:53:30.510Z` must be converted to `2021-11-16 01:53:30.51 +0000 UTC` when generating hash.
+
+3. `2021-11-16T01:53:30.000Z` must be converted to `2021-11-16T01:53:30 +0000 UTC` when generating hash.
+
+Any timestamp with some unnecessary zeros putted in json doesn't affect to effectiveness of the block, seal, or operation. Just pay attention when convert the format.
+
+However, you should not put any unnecessary zeros(0) in the float expression of second(ss.*) when converting timestamp to bytes format.
+
+For example,
+
+1. `2021-11-16T01:53:30.518Z` is converted to `2021-11-16 01:53:30.518 +0000 UTC` without any change of the time itself.
+
+2. `2021-11-16T01:53:30.510Z` must be converted to `2021-11-16 01:53:30.51 +0000 UTC` when generating hash.
+
+3. `2021-11-16T01:53:30.000Z` must be converted to `2021-11-16T01:53:30 +0000 UTC` when generating hash.
+
+Any timestamp with some unnecessary zeros putted in json doesn't affect to effectiveness of the block, seal, or operation. Just pay attention when convert the format.

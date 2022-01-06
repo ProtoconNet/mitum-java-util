@@ -87,6 +87,7 @@ public class Signer {
     }
 
     public HashMap<String, Object> addSignToOperation(String operationPath) {
-        return addSignToOperation(operationPath);
+        JsonObject operation = JSONParser.getObjectFromJSONFile(operationPath);
+        return addSignToOperation(operation);
     }
 }
