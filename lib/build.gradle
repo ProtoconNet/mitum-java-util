@@ -30,6 +30,8 @@ dependencies {
 
     implementation 'net.sf.jopt-simple:jopt-simple:5.0.4'
 
+    implementation 'org.bouncycastle:bcprov-jdk15to18:1.70'
+
     implementation 'com.github.projectpai:bitcoinj:0.14.7'
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation files('./src/lib/ecdsa-keygen-java-1.4-jdk1.8.jar')
