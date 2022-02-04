@@ -10,7 +10,7 @@ public class TransfersItem extends CurrencyItem {
     private Address receiver;
 
     TransfersItem(String receiver, Amount[] amounts) {
-        super(ITEM_TYPE_TRANSFERS, amounts);
+        super(ITEM_TYPE_C_TRANSFERS, amounts);
         this.receiver = new Address(receiver);
     }
 

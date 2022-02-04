@@ -10,7 +10,7 @@ public class CreateAccountsItem extends CurrencyItem {
     private Keys keys;
 
     CreateAccountsItem(Keys keys, Amount[] amounts) {
-        super(ITEM_TYPE_CREATE_ACCOUNTS, amounts);
+        super(ITEM_TYPE_C_CREATE_ACCOUNTS, amounts);
         this.keys = keys;
     }
 

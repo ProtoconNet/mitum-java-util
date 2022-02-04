@@ -21,19 +21,11 @@ public class BlockSignGenerator extends OperationGenerator {
         return new SignDocumentsItem(owner, documentId, currencyId);
     }
 
-    public TransferDocumentsItem newTransferDocumentsItem(String owner, String receiver, int documentId, String currencyId) {
-        return new TransferDocumentsItem(owner, receiver, documentId, currencyId);
-    }
-
     public BlockSignFact<CreateDocumentsItem> newBlockSignFact(String sender, CreateDocumentsItem[] items) {
         return new BlockSignFact<CreateDocumentsItem>(Constant.MBS_CREATE_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 
     public BlockSignFact<SignDocumentsItem> newBlockSignFact(String sender, SignDocumentsItem[] items) {
         return new BlockSignFact<SignDocumentsItem>(Constant.MBS_SIGN_DOCUMENTS_OPERATION_FACT, sender, items);
-    }
-
-    public BlockSignFact<TransferDocumentsItem> newBlockSignFact(String sender, TransferDocumentsItem[] items) {
-        return new BlockSignFact<TransferDocumentsItem>(Constant.MBS_TRANSFER_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 }

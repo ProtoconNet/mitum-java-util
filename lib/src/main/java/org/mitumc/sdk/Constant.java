@@ -52,6 +52,30 @@ public class Constant {
     public static final String MBS_SIGN_DOCUMENTS_OPERATION_FACT = "mitum-blocksign-sign-documents-operation-fact";
     public static final String MBS_SIGN_DOCUMENTS_OPERATION = "mitum-blocksign-sign-documents-operation";
 
+    public static final String MBC_USER_DATA = "cui";
+    public static final String MBC_LAND_DATA = "cli";
+    public static final String MBC_VOTE_DATA = "cvi";
+
+    public static final String MBC_CREATE_DOCUMENTS_ITEM = "mitum-blockcity-create-documents-item";
+    public static final String MBC_CREATE_DOCUMENTS_OPERATION_FACT = "mitum-blockcity-create-documents-operation-fact";
+    public static final String MBC_CREATE_DOCUMENTS_OPERATION = "mitum-blockcity-create-documents-operation";
+    public static final String MBC_UPDATE_DOCUMENTS_ITEM = "mitum-blockcity-update-documents-item";
+    public static final String MBC_UPDATE_DOCUMENTS_OPERATION_FACT = "mitum-blockcity-update-documents-operation-fact";
+    public static final String MBC_UPDATE_DOCUMENTS_OPERATION = "mitum-blockcity-update-documents-operation";
+
+    public static final String MBC_DOCTYPE_USER_DATA = "mitum-blockcity-document-user-data";
+    public static final String MBC_DOCTYPE_LAND_DATA = "mitum-blockcity-document-land-data";
+    public static final String MBC_DOCTYPE_VOTE_DATA = "mitum-blockcity-document-voting-data";
+
+    public static final String MBC_DOCUMENT_INFO = "mitum-blockcity-document-info";
+
+    public static final String MBC_USER_DOCUMENT_ID = "mitum-blockcity-user-document-id";
+    public static final String MBC_LAND_DOCUMENT_ID = "mitum-blockcity-land-document-id";
+    public static final String MBC_VOTE_DOCUMENT_ID = "mitum-blockcity-voting-document-id";
+
+    public static final String MBC_USER_STATISTICS = "mitum-blockcity-user-statistics";
+    public static final String MBC_VOTING_CANDIDATE = "mitum-blockcity-voting-candidate";
+
     // public Constant() {
     //     // try {
     //     //     this.configProps = loadConfig();

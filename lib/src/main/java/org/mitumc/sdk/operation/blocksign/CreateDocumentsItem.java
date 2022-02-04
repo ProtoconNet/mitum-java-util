@@ -19,7 +19,7 @@ public class CreateDocumentsItem extends BlockSignItem {
     private ArrayList<String> signcodes;
 
     CreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes) {
-        super(ITEM_TYPE_CREATE_DOCUMENTS);
+        super(ITEM_TYPE_BS_CREATE_DOCUMENTS);
         this.fileHash = fileHash;
         this.documentId = new BigInt(Integer.toString(documentId));
         this.signcode = signcode;
