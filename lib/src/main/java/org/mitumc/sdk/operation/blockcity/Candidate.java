@@ -26,13 +26,19 @@ public class Candidate implements BytesChangeable, Dictionariable {
 
     @Override
     public byte[] toBytes() {
-        // TODO Auto-generated method stub
-        return null;
+        byte[] baddress = this.address.toBytes();
+        byte[] bmanifest = this.manifest.getBytes();
+        return Util.concatByteArray(baddress, bmanifest);
     }
 
     @Override
     public HashMap<String, Object> toDict() {
-        // TODO Auto-generated method stub
-        return null;
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("_hint", this.hint.getHint());
+        hashMap.put("address", this.address.getAddress());
+        hashMap.put("manifest", this.manifest);
+
+        return hashMap;
     }
 }

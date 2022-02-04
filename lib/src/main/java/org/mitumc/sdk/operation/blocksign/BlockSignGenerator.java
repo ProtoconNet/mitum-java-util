@@ -13,19 +13,19 @@ public class BlockSignGenerator extends OperationGenerator {
         return new BlockSignGenerator(id);
     }
 
-    public CreateDocumentsItem newCreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes) {
+    public CreateDocumentsItem getCreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes) {
         return new CreateDocumentsItem(fileHash, documentId, signcode, title, size, currencyId, signers, signcodes);
     }
 
-    public SignDocumentsItem newSignDocumentsItem(String owner, int documentId, String currencyId) {
+    public SignDocumentsItem getSignDocumentsItem(String owner, int documentId, String currencyId) {
         return new SignDocumentsItem(owner, documentId, currencyId);
     }
 
-    public BlockSignFact<CreateDocumentsItem> newBlockSignFact(String sender, CreateDocumentsItem[] items) {
+    public BlockSignFact<CreateDocumentsItem> getBlockSignFact(String sender, CreateDocumentsItem[] items) {
         return new BlockSignFact<CreateDocumentsItem>(Constant.MBS_CREATE_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 
-    public BlockSignFact<SignDocumentsItem> newBlockSignFact(String sender, SignDocumentsItem[] items) {
+    public BlockSignFact<SignDocumentsItem> getBlockSignFact(String sender, SignDocumentsItem[] items) {
         return new BlockSignFact<SignDocumentsItem>(Constant.MBS_SIGN_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 }

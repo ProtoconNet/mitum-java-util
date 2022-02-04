@@ -25,13 +25,24 @@ public class Util {
     public static HashMap<String, String> parseType(String typed) {
         if (typed.length() < 3) {
             raiseError("Invalid typed string for parseType");
-
         }
 
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("raw", typed.substring(0, typed.length() - 3));
         map.put("type", typed.substring(typed.length() - 3));
 
+        return map;
+    }
+
+    public static HashMap<String, String> parseDocumentId(String documentId) {
+        if (documentId.length() < 3) {
+            raiseError("Invalid suffix string for parseDocumentId");
+        }
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id", documentId.substring(0, documentId.length() - 3));
+        map.put("suffix", documentId.substring(documentId.length() - 3));
+        
         return map;
     }
 

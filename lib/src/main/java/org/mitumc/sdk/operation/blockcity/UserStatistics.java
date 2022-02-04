@@ -7,6 +7,7 @@ import org.mitumc.sdk.interfaces.BytesChangeable;
 import org.mitumc.sdk.interfaces.Dictionariable;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Hint;
+import org.mitumc.sdk.util.Util;
 
 public class UserStatistics implements BytesChangeable, Dictionariable {
     private Hint hint;
@@ -32,13 +33,30 @@ public class UserStatistics implements BytesChangeable, Dictionariable {
 
     @Override
     public byte[] toBytes() {
-        // TODO Auto-generated method stub
-        return null;
+        byte[] bhp = this.hp.toBytes();
+        byte[] bstr = this.str.toBytes();
+        byte[] bagi = this.agi.toBytes();
+        byte[] bdex = this.dex.toBytes();
+        byte[] bcha = this.cha.toBytes();
+        byte[] bintel = this.intel.toBytes();
+        byte[] bvital = this.vital.toBytes();
+
+        return Util.concatByteArray(bhp, bstr, bagi, bdex, bcha, bintel, bvital);
     }
 
     @Override
     public HashMap<String, Object> toDict() {
-        // TODO Auto-generated method stub
-        return null;
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("_hint", this.hint.getHint());
+        hashMap.put("hp", Integer.parseInt(this.hp.getValue()));
+        hashMap.put("strength", Integer.parseInt(this.str.getValue()));
+        hashMap.put("agility", Integer.parseInt(this.agi.getValue()));
+        hashMap.put("dexterity", Integer.parseInt(this.dex.getValue()));
+        hashMap.put("charisma", Integer.parseInt(this.cha.getValue()));
+        hashMap.put("intelligence", Integer.parseInt(this.intel.getValue()));
+        hashMap.put("vital", Integer.parseInt(this.vital.getValue()));
+
+        return hashMap;
     }
 }

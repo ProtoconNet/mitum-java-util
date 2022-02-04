@@ -7,9 +7,9 @@ import org.mitumc.sdk.operation.Item;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
-public class BlockCityItem extends Item {
+public class BlockCityItem<T extends Document> extends Item {
     private String docType;
-    private Document document;
+    private T document;
     private String currencyId;
 
     private BlockCityItem(String itemType) {
@@ -17,7 +17,7 @@ public class BlockCityItem extends Item {
         updateItemType();
     }
 
-    public BlockCityItem(String itemType, String docType, Document document, String currencyId) {
+    BlockCityItem(String itemType, String docType, T document, String currencyId) {
         this(itemType);
         this.docType = docType;
         this.document = document;
@@ -40,11 +40,21 @@ public class BlockCityItem extends Item {
 
     @Override
     public byte[] toBytes() {
-        return null;
+        byte[] bdocType = this.docType.getBytes();
+        byte[] bdocument = this.document.toBytes();
+        byte[] bcurrencyId = this.currencyId.getBytes();
+        return Util.concatByteArray(bdocType, bdocument, bcurrencyId);
     }
 
     @Override
     public HashMap<String, Object> toDict() {
-        return null;
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("_hint", this.hint.getHint());
+        hashMap.put("doctype", this.docType);
+        hashMap.put("doc", this.document.toDict());
+        hashMap.put("currency", this.currencyId);
+        
+        return hashMap;
     }
 }

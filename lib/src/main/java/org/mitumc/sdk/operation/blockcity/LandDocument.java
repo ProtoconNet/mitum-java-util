@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.util.BigInt;
+import org.mitumc.sdk.util.Util;
 
 public class LandDocument extends Document {
     private Address lender;
@@ -21,13 +22,25 @@ public class LandDocument extends Document {
 
     @Override
     public byte[] toBytes() {
-        // TODO Auto-generated method stub
-        return null;
+        byte[] binfo = this.info.toBytes();
+        byte[] bowner = this.owner.toBytes();
+        byte[] blender = this.lender.toBytes();
+        byte[] bstartTime = this.startTime.getBytes();
+        byte[] bperiod = this.period.toBytes();
+        return Util.concatByteArray(binfo, bowner, blender, bstartTime, bperiod);
     }
 
     @Override
     public HashMap<String, Object> toDict() {
-        // TODO Auto-generated method stub
-        return null;
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("_hint", this.hint.getHint());
+        hashMap.put("info", this.info.toDict());
+        hashMap.put("owner", this.owner.getAddress());
+        hashMap.put("lender", this.lender.getAddress());
+        hashMap.put("starttime", this.startTime);
+        hashMap.put("periodday", Integer.parseInt(this.period.getValue()));
+
+        return hashMap;
     }
 }
