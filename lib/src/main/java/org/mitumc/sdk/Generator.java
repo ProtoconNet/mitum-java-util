@@ -12,6 +12,7 @@ import org.mitumc.sdk.util.TimeStamp;
 import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.operation.OperationFact;
+import org.mitumc.sdk.operation.blockcity.BlockCityGenerator;
 import org.mitumc.sdk.operation.currency.CurrencyGenerator;
 import org.mitumc.sdk.operation.blocksign.BlockSignGenerator;
 
@@ -20,11 +21,13 @@ public class Generator {
     private String id;
     private CurrencyGenerator currencyGenerator;
     private BlockSignGenerator blockSignGenerator;
+    private BlockCityGenerator blockCityGenerator;
 
     private Generator(String id) {
         this.id = id;
         this.currencyGenerator = CurrencyGenerator.get(id);
         this.blockSignGenerator = BlockSignGenerator.get(id);
+        this.blockCityGenerator = BlockCityGenerator.get(id);
     }
 
     public static Generator get(String id) {
@@ -35,6 +38,7 @@ public class Generator {
         this.id = id;
         this.currencyGenerator = CurrencyGenerator.get(id);
         this.blockSignGenerator = BlockSignGenerator.get(id);
+        this.blockCityGenerator = BlockCityGenerator.get(id);
     }
 
     public CurrencyGenerator currency() {
@@ -45,15 +49,19 @@ public class Generator {
         return this.blockSignGenerator;
     }
 
-    public Operation newOperation(OperationFact fact) {
+    public BlockCityGenerator blockCity() {
+        return this.blockCityGenerator;
+    }
+
+    public Operation getOperation(OperationFact fact) {
         return new Operation(fact);
     }
 
-    public Operation newOperation(String memo, OperationFact fact) {
+    public Operation getOperation(String memo, OperationFact fact) {
         return new Operation(memo, fact);
     }
 
-    public HashMap<String, Object> newSeal(String signKey, Operation[] operations) {
+    public HashMap<String, Object> getSeal(String signKey, Operation[] operations) {
         Keypair keypair = Keypair.fromPrivateKey(signKey);
 
         TimeStamp signedAt = Util.getDateTimeStamp();

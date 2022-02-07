@@ -14,47 +14,50 @@ public class CurrencyGenerator extends OperationGenerator {
         return new CurrencyGenerator(id);
     }
 
-    public Key newKey(String key, int weight) {
+    public Key key(String key, int weight) {
         return new Key(key, weight);
     }
 
-    public Keys newKeys(int threshold) {
+    @Deprecated
+    public Keys keys(int threshold) {
         return new Keys(threshold);
     }
 
-    public Keys newKeys(Key[] keys, int threshold) {
+    public Keys keys(Key[] keys, int threshold) {
         return new Keys(keys, threshold);
     }
 
-    public Amount newAmount(String currency, String amount) {
+    public Amount amount(String currency, String amount) {
         return new Amount(currency, amount);
     }
 
-    public CreateAccountsItem newCreateAccountsItem(Keys keys, Amount[] amounts) {
+    public CreateAccountsItem getCreateAccountsItem(Keys keys, Amount[] amounts) {
         return new CreateAccountsItem(keys, amounts);
     }
 
-    public TransfersItem newTransfersItem(String receiver, Amount[] amounts) {
+    public TransfersItem getTransfersItem(String receiver, Amount[] amounts) {
         return new TransfersItem(receiver, amounts);
     }
 
-    public CreateAccountsFact newCreateAccountsFact(String sender) {
+    @Deprecated
+    public CreateAccountsFact getCreateAccountsFact(String sender) {
         return new CreateAccountsFact(sender);
     }
 
-    public CreateAccountsFact newCreateAccountsFact(String sender, CreateAccountsItem[] items) {
+    public CreateAccountsFact getCreateAccountsFact(String sender, CreateAccountsItem[] items) {
         return new CreateAccountsFact(sender, items);
     }
 
-    public KeyUpdaterFact newKeyUpdaterFact(String target, String currencyId, Keys keys) {
+    public KeyUpdaterFact getKeyUpdaterFact(String target, String currencyId, Keys keys) {
         return new KeyUpdaterFact(target, currencyId, keys); 
     }
 
-    public TransfersFact newTransfersFact(String sender) {
+    @Deprecated
+    public TransfersFact getTransfersFact(String sender) {
         return new TransfersFact(sender);
     }
 
-    public TransfersFact newTransfersFact(String sender, TransfersItem[] items) {
+    public TransfersFact getTransfersFact(String sender, TransfersItem[] items) {
         return new TransfersFact(sender, items);
     }
 }

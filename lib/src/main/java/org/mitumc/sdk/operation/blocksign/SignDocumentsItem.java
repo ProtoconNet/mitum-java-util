@@ -12,7 +12,7 @@ public class SignDocumentsItem extends BlockSignItem {
     private String currencyId;
 
     SignDocumentsItem(String owner, int documentId, String currencyId) {
-        super(ITEM_TYPE_SIGN_DOCUMENTS);
+        super(ITEM_TYPE_BS_SIGN_DOCUMENTS);
         this.owner = new Address(owner);
         this.documentId = new BigInt(Integer.toString(documentId));
         this.currencyId = currencyId;

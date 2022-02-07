@@ -15,6 +15,7 @@ public class CreateAccountsFact extends OperationFact {
     private Address sender;
     private ArrayList<CreateAccountsItem> items;
 
+    @Deprecated
     CreateAccountsFact(String sender) {
         this(sender, new CreateAccountsItem[0]);
     }
@@ -31,6 +32,7 @@ public class CreateAccountsFact extends OperationFact {
         this.hash = new Hash(toBytes());
     }
 
+    @Deprecated
     public void addItem(CreateAccountsItem item) {
         items.add(item);
         generateHash();

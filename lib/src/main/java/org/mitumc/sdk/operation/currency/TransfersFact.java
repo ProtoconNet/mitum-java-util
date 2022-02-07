@@ -15,6 +15,7 @@ public class TransfersFact extends OperationFact {
     private Address sender;
     private ArrayList<TransfersItem> items;
 
+    @Deprecated
     TransfersFact(String sender) {
         this(sender, new TransfersItem[0]);
     }
@@ -30,6 +31,7 @@ public class TransfersFact extends OperationFact {
         this.hash = new Hash(toBytes());
     }
 
+    @Deprecated
     public void addItem(TransfersItem item) {
         items.add(item);
         generateHash();

@@ -20,14 +20,14 @@ abstract class CurrencyItem extends Item {
     @Override
     public void updateItemType() {
         switch (this.itemType) {
-            case ITEM_TYPE_CREATE_ACCOUNTS:
+            case ITEM_TYPE_C_CREATE_ACCOUNTS:
                 if (this.amounts.size() > 1) {
                     this.hint = new Hint(Constant.MC_CREATE_ACCOUNTS_MUL_AMOUNTS);
                 } else {
                     this.hint = new Hint(Constant.MC_CREATE_ACCOUNTS_SIN_AMOUNT);
                 }
                 break;
-            case ITEM_TYPE_TRANSFERS:
+            case ITEM_TYPE_C_TRANSFERS:
                 if (this.amounts.size() > 1) {
                     this.hint = new Hint(Constant.MC_TRANSFERS_ITEM_MUL_AMOUNTS);
                 } else {

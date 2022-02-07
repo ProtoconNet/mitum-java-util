@@ -20,6 +20,7 @@ public class Keys implements BytesChangeable, Dictionariable {
     private BigInt threshold;
     private Hash hash;
 
+    @Deprecated
     public Keys(int threshold) {
         this(new Key[0], threshold);
     }
@@ -52,6 +53,7 @@ public class Keys implements BytesChangeable, Dictionariable {
         generateHash();
     }
 
+    @Deprecated
     public void addKey(Key key) {
         this.keys.add(key);
         generateHash();
