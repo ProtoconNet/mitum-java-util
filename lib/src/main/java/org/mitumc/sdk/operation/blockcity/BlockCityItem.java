@@ -7,9 +7,9 @@ import org.mitumc.sdk.operation.Item;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
-public class BlockCityItem<T extends Document> extends Item {
+public class BlockCityItem extends Item {
     private String docType;
-    private T document;
+    private Document document;
     private String currencyId;
 
     private BlockCityItem(String itemType) {
@@ -17,7 +17,7 @@ public class BlockCityItem<T extends Document> extends Item {
         updateItemType();
     }
 
-    BlockCityItem(String itemType, String docType, T document, String currencyId) {
+    BlockCityItem(String itemType, String docType, Document document, String currencyId) {
         this(itemType);
         this.docType = docType;
         this.document = document;

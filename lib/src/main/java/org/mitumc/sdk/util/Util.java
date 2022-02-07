@@ -24,7 +24,7 @@ public class Util {
 
     public static HashMap<String, String> parseType(String typed) {
         if (typed.length() < 3) {
-            raiseError("Invalid typed string for parseType");
+            raiseError("Invalid typed string for parseType.");
         }
 
         HashMap<String, String> map = new HashMap<String, String>();
@@ -36,7 +36,17 @@ public class Util {
 
     public static HashMap<String, String> parseDocumentId(String documentId) {
         if (documentId.length() < 3) {
-            raiseError("Invalid suffix string for parseDocumentId");
+            raiseError("Invalid suffix string for parseDocumentId.");
+        }
+
+        String suffix = documentId.substring(documentId.length() - 3);
+
+        switch(suffix) {
+            case Constant.MBC_USER_DATA:
+            case Constant.MBC_LAND_DATA:
+            case Constant.MBC_VOTE_DATA:
+                break;
+            default: raiseError("Invalid suffix string for parseDocumentId.");
         }
 
         HashMap<String, String> map = new HashMap<>();

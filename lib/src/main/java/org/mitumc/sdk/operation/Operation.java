@@ -60,8 +60,11 @@ public class Operation implements BytesChangeable, Dictionariable {
         else if(type.equals(Constant.MBS_SIGN_DOCUMENTS_OPERATION_FACT)) {
             this.hint = new Hint(Constant.MBS_SIGN_DOCUMENTS_OPERATION);
         }
-        else if(type.equals(Constant.MBS_TRANSFER_DOCUMENTS_OPERATION_FACT)) {
-            this.hint = new Hint(Constant.MBS_TRANSFER_DOCUMENTS_OPERATION);
+        else if(type.equals(Constant.MBC_CREATE_DOCUMENTS_OPERATION_FACT)) {
+            this.hint = new Hint(Constant.MBC_CREATE_DOCUMENTS_OPERATION);
+        }
+        else if(type.equals(Constant.MBC_UPDATE_DOCUMENTS_OPERATION_FACT)) {
+            this.hint = new Hint(Constant.MBC_UPDATE_DOCUMENTS_OPERATION);
         }
         else {
             Util.raiseError("Invalid fact type for Operation.");

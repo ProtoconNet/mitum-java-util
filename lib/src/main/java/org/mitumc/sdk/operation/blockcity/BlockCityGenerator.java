@@ -40,19 +40,19 @@ public class BlockCityGenerator extends OperationGenerator {
         return new VoteDocument(info, owner, round, candidates);
     }
 
-    public <T extends Document> BlockCityItem<T> getCreateDocumentsItem(T document, String currencyId) {
-        return new BlockCityItem<T>(Item.ITEM_TYPE_BC_CREATE_DOCUMENTS, document.getDocType(), document, currencyId);
+    public BlockCityItem getCreateDocumentsItem(Document document, String currencyId) {
+        return new BlockCityItem(Item.ITEM_TYPE_BC_CREATE_DOCUMENTS, document.getDocType(), document, currencyId);
     }
 
-    public <T extends Document> BlockCityItem<T> getUpdateDocumentsItem(T document, String currencyId) {
-        return new BlockCityItem<T>(Item.ITEM_TYPE_BC_UPDATE_DOCUMENTS, document.getDocType(), document, currencyId);
+    public BlockCityItem getUpdateDocumentsItem(Document document, String currencyId) {
+        return new BlockCityItem(Item.ITEM_TYPE_BC_UPDATE_DOCUMENTS, document.getDocType(), document, currencyId);
     }
 
-    public <T extends Document> BlockCityFact<T> getCreateDocumentsFact(String sender, BlockCityItem<T>[] items) {
-        return new BlockCityFact<T>(Constant.MBC_CREATE_DOCUMENTS_OPERATION_FACT, sender, items);
+    public BlockCityFact getCreateDocumentsFact(String sender, BlockCityItem[] items) {
+        return new BlockCityFact(Constant.MBC_CREATE_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 
-    public <T extends Document> BlockCityFact<T> getUpdateDocumentsFact(String sender, BlockCityItem<T>[] items) {
-        return new BlockCityFact<T>(Constant.MBC_UPDATE_DOCUMENTS_OPERATION_FACT, sender, items);
+    public BlockCityFact getUpdateDocumentsFact(String sender, BlockCityItem[] items) {
+        return new BlockCityFact(Constant.MBC_UPDATE_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 }

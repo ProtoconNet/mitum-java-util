@@ -45,9 +45,6 @@ public class Constant {
     public static final String MBS_CREATE_DOCUMENTS_SINGLE_FILE = "mitum-blocksign-create-documents-single-file";
     public static final String MBS_CREATE_DOCUMENTS_OPERATION_FACT = "mitum-blocksign-create-documents-operation-fact";
     public static final String MBS_CREATE_DOCUMENTS_OPERATION = "mitum-blocksign-create-documents-operation";
-    public static final String MBS_TRANSFER_ITEM_SINGLE_DOCUMENT = "mitum-blocksign-transfer-item-single-document";
-    public static final String MBS_TRANSFER_DOCUMENTS_OPERATION_FACT = "mitum-blocksign-transfer-documents-operation-fact";
-    public static final String MBS_TRANSFER_DOCUMENTS_OPERATION = "mitum-blocksign-transfer-documents-operation";
     public static final String MBS_SIGN_ITEM_SINGLE_DOCUMENT = "mitum-blocksign-sign-item-single-document";
     public static final String MBS_SIGN_DOCUMENTS_OPERATION_FACT = "mitum-blocksign-sign-documents-operation-fact";
     public static final String MBS_SIGN_DOCUMENTS_OPERATION = "mitum-blocksign-sign-documents-operation";
