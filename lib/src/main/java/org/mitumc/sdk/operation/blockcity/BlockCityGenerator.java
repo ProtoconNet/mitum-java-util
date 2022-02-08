@@ -32,12 +32,12 @@ public class BlockCityGenerator extends OperationGenerator {
         return new UserDocument(info, owner, gold, bankGold, statistics);
     }
 
-    public Document document(Info info, String owner, String lender, String startTime, int period) {
-        return new LandDocument(info, owner, lender, startTime, period);
+    public Document document(Info info, String owner, String address, String area, String renter, String account, String rentDate, int period) {
+        return new LandDocument(info, owner, address, area, renter, account, rentDate, period);
     }
 
-    public Document document(Info info, String owner, int round, Candidate[] candidates) {
-        return new VoteDocument(info, owner, round, candidates);
+    public Document document(Info info, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office) {
+        return new VoteDocument(info, owner, round, endTime, candidates, bossName, account, office);
     }
 
     public BlockCityItem getCreateDocumentsItem(Document document, String currencyId) {

@@ -6,19 +6,28 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Util;
 
 public class VoteDocument extends Document {
     private BigInt round;
+    private String endTime;
     private ArrayList<Candidate> candidates;
+    private String bossName;
+    private Address account;
+    private String office;
 
-    VoteDocument(Info info, String owner, int round, Candidate[] candidates) {
+    VoteDocument(Info info, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office) {
         super(Constant.MBC_DOCTYPE_VOTE_DATA, info, owner);
 
         this.round = new BigInt("" + round);
-        this.candidates = new ArrayList<Candidate>();
+        this.endTime = endTime;
+        this.bossName = bossName;
+        this.account = new Address(account);
+        this.office = office;
 
+        this.candidates = new ArrayList<Candidate>();
         for(Candidate candidate : candidates) {
             this.candidates.add(candidate);
         }
@@ -28,12 +37,16 @@ public class VoteDocument extends Document {
     public byte[] toBytes() {
         this.candidates.sort(new CandidateComparator());
 
-        byte[] binfo = this.info.toBytes();
-        byte[] bowner = this.owner.toBytes();
-        byte[] bround = this.round.toBytes();
-        byte[] bcandidates = Util.<Candidate>concatItemArray(this.candidates);
-
-        return Util.concatByteArray(binfo, bowner, bround, bcandidates);
+        byte[] bInfo = this.info.toBytes();
+        byte[] bOwner = this.owner.toBytes();
+        byte[] bRound = this.round.toBytes();
+        byte[] bEndTime = this.endTime.getBytes();
+        byte[] bBossName = this.bossName.getBytes();
+        byte[] bAccount = this.account.toBytes();
+        byte[] bOffice = this.office.getBytes();
+        byte[] bCandidates = Util.<Candidate>concatItemArray(this.candidates);
+        
+        return Util.concatByteArray(bInfo, bOwner, bRound, bEndTime, bBossName, bAccount, bOffice, bCandidates);
     }
 
     @Override
@@ -44,12 +57,17 @@ public class VoteDocument extends Document {
         hashMap.put("info", this.info.toDict());
         hashMap.put("owner", this.owner.getAddress());
         hashMap.put("round", Integer.parseInt(this.round.getValue()));
-        
+        hashMap.put("endvotetime", this.endTime);
+
         ArrayList<Object> arr = new ArrayList<>();
         for(Candidate candidate : this.candidates) {
             arr.add(candidate.toDict());
         }
         hashMap.put("candidates", arr);
+
+        hashMap.put("bossname", this.bossName);
+        hashMap.put("account", this.account.getAddress());
+        hashMap.put("termofoffice", this.office);
 
         return hashMap;
     }

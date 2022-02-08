@@ -8,26 +8,36 @@ import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Util;
 
 public class LandDocument extends Document {
-    private Address lender;
-    private String startTime;
+    private String address;
+    private String area;
+    private String renter;
+    private Address account;
+    private String rentDate;
     private BigInt period;
 
-    LandDocument(Info info, String owner, String lender, String startTime, int period) {
+    LandDocument(Info info, String owner, String address, String area, String renter, String account, String rentDate, int period) {
         super(Constant.MBC_DOCTYPE_LAND_DATA, info, owner);
 
-        this.lender = new Address(lender);
-        this.startTime = startTime;
+        this.address = address;
+        this.area = area;
+        this.renter = renter;
+        this.account = new Address(account);
+        this.rentDate = rentDate;
         this.period = new BigInt("" + period);
     }
 
     @Override
     public byte[] toBytes() {
-        byte[] binfo = this.info.toBytes();
-        byte[] bowner = this.owner.toBytes();
-        byte[] blender = this.lender.toBytes();
-        byte[] bstartTime = this.startTime.getBytes();
-        byte[] bperiod = this.period.toBytes();
-        return Util.concatByteArray(binfo, bowner, blender, bstartTime, bperiod);
+        byte[] bInfo = this.info.toBytes();
+        byte[] bOwner = this.owner.toBytes();
+        byte[] bAddress = this.address.getBytes();
+        byte[] bArea = this.area.getBytes();
+        byte[] bRenter = this.renter.getBytes();
+        byte[] bAccount = this.account.toBytes();
+        byte[] bRentDate = this.rentDate.getBytes();
+        byte[] bPeriod = this.period.toBytes();
+
+        return Util.concatByteArray(bInfo, bOwner, bAddress, bArea, bRenter, bAccount, bRentDate, bPeriod);
     }
 
     @Override
@@ -37,8 +47,11 @@ public class LandDocument extends Document {
         hashMap.put("_hint", this.hint.getHint());
         hashMap.put("info", this.info.toDict());
         hashMap.put("owner", this.owner.getAddress());
-        hashMap.put("lender", this.lender.getAddress());
-        hashMap.put("starttime", this.startTime);
+        hashMap.put("address", this.address);
+        hashMap.put("area", this.area);
+        hashMap.put("renter", this.renter);
+        hashMap.put("account", this.account.getAddress());
+        hashMap.put("rentdate", this.rentDate);
         hashMap.put("periodday", Integer.parseInt(this.period.getValue()));
 
         return hashMap;
