@@ -3,6 +3,7 @@ package org.mitumc.sdk.operation.blocksign;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Util;
@@ -26,8 +27,8 @@ public class CreateDocumentsItem extends BlockSignItem {
         this.title = title;
         this.size = new BigInt(Integer.toString(size));
         this.currencyId = currencyId;
-        this.signers = new ArrayList<Address>(Arrays.stream(signers).map(item -> new Address(item)).toList());
-        this.signcodes = new ArrayList<String>(Arrays.stream(signcodes).map(item -> item).toList());
+        this.signers = new ArrayList<Address>(Arrays.stream(signers).map(item -> new Address(item)).collect(Collectors.toList()));
+        this.signcodes = new ArrayList<String>(Arrays.stream(signcodes).map(item -> item).collect(Collectors.toList()));
     }
 
     @Override

@@ -3,7 +3,11 @@ package org.mitumc.sdk.util;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import org.bitcoinj.core.Base58;
+
+import org.bouncycastle.jcajce.provider.digest.SHA3.Digest256;
+import org.bouncycastle.jcajce.provider.digest.SHA3.DigestSHA3;
 
 public class Hash {
     private String msg;
@@ -26,23 +30,21 @@ public class Hash {
     }
 
     private void sha256() {
-        try{
+        try {
             MessageDigest hasher = MessageDigest.getInstance("SHA-256");
             this.sha256Digest = hasher.digest(this.target);
             this.sha256Hash = Base58.encode(this.sha256Digest);
-        } catch(NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             Util.raiseError("No such algorithm; sha-256");
         }
     }
 
     private void sha3() {
-        try {
-            MessageDigest hasher = MessageDigest.getInstance("SHA3-256");
-            this.sha3Digest = hasher.digest(this.target);
-            this.sha3Hash = Base58.encode(this.sha3Digest);
-        } catch(NoSuchAlgorithmException e) {
-            Util.raiseError("No such algorithm; sha3-256");
-        }
+        DigestSHA3 sha3 = new Digest256();
+        sha3.update(this.target);
+
+        this.sha3Digest = sha3.digest();
+        this.sha3Hash = Base58.encode(this.sha3Digest);
     }
 
     public void setter(String msg) {
