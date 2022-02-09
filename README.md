@@ -247,8 +247,8 @@ Info info(String docType, String documentId);
 UserStatistics userStatistics(int hp, int strength, int agility, int dexterity, int charisma, int intelligence, int vital);
 
 Document document(Info info, String owner, String gold, String bankGold, UserStatistics statistics);
-Document document(Info info, String owner, String lender, String startTime, int period);
-Document document(Info info, String owner, int round, Candidate[] candidates);
+Document document(Info info, String owner, String address, String area, String renter, String account, String rentDate, int period);
+Document document(Info info, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office);
 
 BlockCityItem getCreateDocumentsItem(T document, String currencyId);
 BlockCityItem getUpdateDocumentsItem(T document, String currencyId);
@@ -546,8 +546,11 @@ What you must prepare are,
 
 * document id
 * document owner
-* lender
-* start time and period
+* address to rent
+* area to rent
+* renter
+* account who rents
+* rent date and period
 
 #### Usage
 
@@ -556,7 +559,7 @@ What you must prepare are,
 import org.mitumc.sdk.operation.blockcity.*;
 */
 Info info = generator.blockCity().info(Document.DOCTYPE_LAND_DATA, "4cli");
-Document document = bg.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", "8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "2021-10-10", 10);
+Document document = bg.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", "abcd", "city1", "foo", "8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "2021-10-10", 10);
 ```
 
 If you wonder what value needs for each parameter, see [Generator](#generator).
@@ -569,6 +572,10 @@ What you must prepare are,
 * candidates and their manifests
 * document id
 * document owner
+* end date for voting
+* boss name
+* account
+* termofoffice
 
 #### Usage
 
@@ -580,7 +587,7 @@ Info info = generator.blockCity().info(Document.DOCTYPE_VOTE_DATA, "5cvi");
 Candidate c1 = generator.blockCity().candidate("8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "");
 Candidate c2 = generator.blockCity().candidate("Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "");
 
-Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", 1, new Candidate[]{ c1, c2 });
+Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", 1, "2022-01-02", new Candidate[]{ c1, c2 }, "foo", "Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "2022");
 ```
 
 If you wonder what value needs for each parameter, see [Generator](#generator).

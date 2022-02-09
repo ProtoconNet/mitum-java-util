@@ -30,7 +30,7 @@ dependencies {
 
     implementation 'com.github.projectpai:bitcoinj:0.14.7'
     implementation 'com.google.code.gson:gson:2.8.9'
-    implementation files('./src/lib/ecdsa-keygen-java-1.4.jar')
+    implementation files('./src/lib/ecdsa-keygen-java-1.4-jdk17.jar')
 }
 
 tasks.named('test') {
