@@ -28,14 +28,14 @@ javac 17.0.1
 ```
 [Download jar file](release/) and include the package to your project.
 
-The latest version is `mitum-java-util-2.0.0.jar`.
+The latest version is `mitum-java-util-2.1.0-jdk17.jar`.
 
 #### Gradle
 ```sh
-implementation files('./lib/mitum-java-util-2.0.0.jar')
+implementation files('./lib/mitum-java-util-2.1.0-jdk17.jar')
 ```
 
-Replace `./lib/mitum-java-util-2.0.0.jar` with your file path.
+Replace `./lib/mitum-java-util-2.1.0-jdk17.jar` with your file path.
 
 ## Index
 
@@ -57,8 +57,9 @@ Replace `./lib/mitum-java-util-2.0.0.jar` with your file path.
 |5-1|[Generate User Document](#generate-user-document)|
 |5-2|[Generate Land Document](#generate-land-document)|
 |5-3|[Generate Vote Document](#generate-vote-document)|
-|5-4|[Generate BlockCity Create-Documents](#generate-blockcity-create-documents)|
-|5-5|[Generate BlockCity Update-Documents](#generate-blockcity-update-documents)|
+|5-4|[Generate History Document](#generate-history-document)|
+|5-5|[Generate BlockCity Create-Documents](#generate-blockcity-create-documents)|
+|5-6|[Generate BlockCity Update-Documents](#generate-blockcity-update-documents)|
 |6|[Generate New Seal](#generate-new-seal)|
 |7|[Send Messages to Network](#send-messages-to-network)|
 |8|[Sign Message](#sign-message)|
@@ -249,6 +250,7 @@ UserStatistics userStatistics(int hp, int strength, int agility, int dexterity, 
 Document document(Info info, String owner, String gold, String bankGold, UserStatistics statistics);
 Document document(Info info, String owner, String address, String area, String renter, String account, String rentDate, int period);
 Document document(Info info, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office);
+Document document(Info info, String owner, String name, String account, String date, String usage, String app);
 
 BlockCityItem getCreateDocumentsItem(T document, String currencyId);
 BlockCityItem getUpdateDocumentsItem(T document, String currencyId);
@@ -311,6 +313,8 @@ You can create a json file of generated operation object without `JSONParser`. H
 Methods that `JSONParser` supports are,
 
 ```java
+JsonObject getObjectFromJSONFile(String fpName);
+JsonObject getObjectFromMap(HashMap<String, Object> target, String fpName);
 void createJSON(JsonObject target, String fpName);
 void createJSON(HashMap target, String fpName);
 ```
@@ -516,6 +520,7 @@ Note a document id for each document type has a unique suffix.
 * user data: cui
 * land data: cli
 * vote data: cvi
+* history data: chi
 
 ### Generate User Document
 
@@ -588,6 +593,30 @@ Candidate c1 = generator.blockCity().candidate("8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQ
 Candidate c2 = generator.blockCity().candidate("Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "");
 
 Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", 1, "2022-01-02", new Candidate[]{ c1, c2 }, "foo", "Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "2022");
+```
+
+If you wonder what value needs for each parameter, see [Generator](#generator).
+
+### Generate History Document
+
+What you must prepare are,
+
+* document id
+* document owner
+* name
+* account
+* date
+* usage
+* application
+
+#### Usage
+
+```java
+/*
+import org.mitumc.sdk.operation.blockcity.*;
+*/
+Info info = generator.blockCity().info(Document.DOCTYPE_HISTORY_DATA, "1000chi");
+Document document = generator.blockCity().document(info, "8iRVFAPiHKaeznfN3CmNjtFtjYSPMPKLuL6qkaJz8RLumca", "abcd", "8iRVFAPiHKaeznfN3CmNjtFtjYSPMPKLuL6qkaJz8RLumca", "2022-02-01T00:00:00.000+09:00", "bob", "foo");
 ```
 
 If you wonder what value needs for each parameter, see [Generator](#generator).

@@ -45,6 +45,7 @@ public class Util {
             case Constant.MBC_USER_DATA:
             case Constant.MBC_LAND_DATA:
             case Constant.MBC_VOTE_DATA:
+            case Constant.MBC_HISTORY_DATA:
                 break;
             default: raiseError("Invalid suffix string for parseDocumentId.");
         }

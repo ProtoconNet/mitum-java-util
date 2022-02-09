@@ -21,6 +21,7 @@ public class BlockCityGenerator extends OperationGenerator {
         // Document.DOCTYPE_USER_DATA
         // Document.DOCTYPE_LANG_DATA
         // Document.DOCTYPE_VOTE_DATA
+        // Document.DOCTY
         return new Info(docType, documentId);
     }
 
@@ -38,6 +39,10 @@ public class BlockCityGenerator extends OperationGenerator {
 
     public Document document(Info info, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office) {
         return new VoteDocument(info, owner, round, endTime, candidates, bossName, account, office);
+    }
+
+    public Document document(Info info, String owner, String name, String account, String date, String usage, String app) {
+        return new HistoryDocument(info, owner, name, account, date, usage, app);
     }
 
     public BlockCityItem getCreateDocumentsItem(Document document, String currencyId) {

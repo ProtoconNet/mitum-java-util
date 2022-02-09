@@ -10,6 +10,7 @@ abstract public class Document implements BytesChangeable, Dictionariable {
     public final static String DOCTYPE_USER_DATA = Constant.MBC_DOCTYPE_USER_DATA;
     public final static String DOCTYPE_LAND_DATA = Constant.MBC_DOCTYPE_LAND_DATA;
     public final static String DOCTYPE_VOTE_DATA = Constant.MBC_DOCTYPE_VOTE_DATA;
+    public final static String DOCTYPE_HISTORY_DATA = Constant.MBC_DOCTYPE_HISTORY_DATA;
 
     protected Hint hint;
     protected Info info;

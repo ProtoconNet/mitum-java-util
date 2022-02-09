@@ -22,6 +22,10 @@ public class JSONParser {
         }
     }
 
+    public static JsonObject getObjectFromMap(HashMap<String, Object> target, String fpName) {
+        return new Gson().toJsonTree(target).getAsJsonObject();
+    }
+
     public static void createJSON(JsonObject target, String fpName) {
         FileWriter writer;
 

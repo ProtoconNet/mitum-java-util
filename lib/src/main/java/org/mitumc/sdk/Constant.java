@@ -52,6 +52,7 @@ public class Constant {
     public static final String MBC_USER_DATA = "cui";
     public static final String MBC_LAND_DATA = "cli";
     public static final String MBC_VOTE_DATA = "cvi";
+    public static final String MBC_HISTORY_DATA = "chi";
 
     public static final String MBC_CREATE_DOCUMENTS_ITEM = "mitum-blockcity-create-documents-item";
     public static final String MBC_CREATE_DOCUMENTS_OPERATION_FACT = "mitum-blockcity-create-documents-operation-fact";
@@ -63,12 +64,14 @@ public class Constant {
     public static final String MBC_DOCTYPE_USER_DATA = "mitum-blockcity-document-user-data";
     public static final String MBC_DOCTYPE_LAND_DATA = "mitum-blockcity-document-land-data";
     public static final String MBC_DOCTYPE_VOTE_DATA = "mitum-blockcity-document-voting-data";
+    public static final String MBC_DOCTYPE_HISTORY_DATA = "mitum-blockcity-document-history-data";
 
     public static final String MBC_DOCUMENT_INFO = "mitum-blockcity-document-info";
 
     public static final String MBC_USER_DOCUMENT_ID = "mitum-blockcity-user-document-id";
     public static final String MBC_LAND_DOCUMENT_ID = "mitum-blockcity-land-document-id";
     public static final String MBC_VOTE_DOCUMENT_ID = "mitum-blockcity-voting-document-id";
+    public static final String MBC_HISTORY_DOCUMENT_ID = "mitum-blockcity-history-document-id";
 
     public static final String MBC_USER_STATISTICS = "mitum-blockcity-user-statistics";
     public static final String MBC_VOTING_CANDIDATE = "mitum-blockcity-voting-candidate";
