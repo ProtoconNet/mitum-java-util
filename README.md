@@ -538,9 +538,9 @@ What you must prepare before generate a user document are,
 import org.mitumc.sdk.operation.blockcity.*;
 */
 Info info = generator.blockCity().info(Document.DOCTYPE_USER_DATA, "4cui");
-UserStatistics userStatic = bg.blockCity().userStatistics(1, 1, 1, 1, 1, 1, 1);
+UserStatistics userStatic = generator.blockCity().userStatistics(1, 1, 1, 1, 1, 1, 1);
     
-Document document = bg.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", "10", "10", userStatic);       
+Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", "10", "10", userStatic);       
 ```
 
 If you wonder what value needs for each parameter, see [Generator](#generator).
@@ -564,7 +564,7 @@ What you must prepare are,
 import org.mitumc.sdk.operation.blockcity.*;
 */
 Info info = generator.blockCity().info(Document.DOCTYPE_LAND_DATA, "4cli");
-Document document = bg.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", "abcd", "city1", "foo", "8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "2021-10-10", 10);
+Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", "abcd", "city1", "foo", "8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "2021-10-10", 10);
 ```
 
 If you wonder what value needs for each parameter, see [Generator](#generator).
