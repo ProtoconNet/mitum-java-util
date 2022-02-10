@@ -45,6 +45,9 @@ public class Info implements BytesChangeable, Dictionariable {
             case Constant.MBC_DOCTYPE_VOTE_DATA:
                 docid.put("_hint", new Hint(Constant.MBC_VOTE_DOCUMENT_ID).getHint());
                 break;
+            case Constant.MBC_DOCTYPE_HISTORY_DATA:
+                docid.put("_hint", new Hint(Constant.MBC_HISTORY_DOCUMENT_ID).getHint());
+                break;
             default:
                 Util.raiseError("Wrong document type for Info.toDict()");
         }
