@@ -21,7 +21,7 @@ public class BlockCityGenerator extends OperationGenerator {
         // Document.DOCTYPE_USER_DATA
         // Document.DOCTYPE_LANG_DATA
         // Document.DOCTYPE_VOTE_DATA
-        // Document.DOCTY
+        // Document.DOCTYPE_HISTORY_DATA
         return new Info(docType, documentId);
     }
 

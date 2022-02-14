@@ -13,10 +13,16 @@ public class UserDocument extends Document {
 
     UserDocument(Info info, String owner, String gold, String bankGold, UserStatistics statistics) {
         super(Constant.MBC_DOCTYPE_USER_DATA, info, owner);
-        
+        assertnfo(info);
         this.gold = new BigInt(gold);
         this.bankGold = new BigInt(bankGold);
         this.statistics = statistics;
+    }
+
+    private void assertnfo(Info info) {
+        if(!info.getDocType().equals(DOCTYPE_USER_DATA)) {
+            Util.raiseError("Invalid docType of Info; UserDocument.");
+        }
     }
 
     @Override

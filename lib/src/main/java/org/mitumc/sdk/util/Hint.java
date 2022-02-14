@@ -11,20 +11,15 @@ public class Hint {
     }
 
     public Hint(String type, String version) {
+        assertVersion(version);
         this.type = type;
         this.version = version;
-
-        if(!isVersionValid()) {
-            Util.raiseError("Invalid version for Hint.");
-        }
     }
 
-    private boolean isVersionValid() {
+    private void assertVersion(String version) {
         if(!version.equals(Constant.VERSION)) {
-            return false;
+            Util.raiseError("Invalid version; Hint.");
         }
-
-        return true;
     }
 
     public String getHint() {

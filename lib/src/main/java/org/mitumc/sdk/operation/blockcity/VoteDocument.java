@@ -20,7 +20,7 @@ public class VoteDocument extends Document {
 
     VoteDocument(Info info, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office) {
         super(Constant.MBC_DOCTYPE_VOTE_DATA, info, owner);
-
+        assertInfo(info);
         this.round = new BigInt("" + round);
         this.endTime = endTime;
         this.bossName = bossName;
@@ -33,6 +33,12 @@ public class VoteDocument extends Document {
         }
     }
     
+    private void assertInfo(Info info) {
+        if(!info.getDocType().equals(DOCTYPE_VOTE_DATA)) {
+            Util.raiseError("Invalid docType of Info; VoteDocument.");
+        }
+    }
+
     @Override
     public byte[] toBytes() {
         this.candidates.sort(new CandidateComparator());

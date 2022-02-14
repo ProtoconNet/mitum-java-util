@@ -21,18 +21,14 @@ public class Keypair {
     }
 
     public static Keypair fromSeed(String seed) {
-        if(seed.length() < 36) {
-            Util.raiseError("seed length must be longer than or equal to 36. now, seed.length() is " + seed.length());
-        }
+        assertSeed(seed);
 
         BTCKeyPair kp = BTCKeyPair.fromSeed(seed);
         return fromPrivateKey(kp.getPrivateKey() + Constant.KEY_PRIVATE);
     }
 
     public static Keypair fromSeed(byte[] seed) {
-        if(new String(seed).length() < 36) {
-            Util.raiseError("seed length must be longer than or equal to 36. now, new String(seed).length() is " + seed.length);
-        }
+        assertSeed(new String(seed));
         
         BTCKeyPair kp = BTCKeyPair.fromSeed(seed);
         return fromPrivateKey(kp.getPrivateKey() + Constant.KEY_PRIVATE);
@@ -40,6 +36,12 @@ public class Keypair {
 
     public static Keypair fromPrivateKey(String key) {
         return new Keypair(key);
+    }
+
+    private static void assertSeed(String seed) {
+        if(seed.length() < 36) {
+            Util.raiseError("seed length must be longer than or equal to 36. now, seed.length() is " + seed.length() + "; Keypair.");
+        }
     }
 
     public String getRawPrivateKey() {

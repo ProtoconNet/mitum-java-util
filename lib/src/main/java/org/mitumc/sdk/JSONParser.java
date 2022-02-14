@@ -17,7 +17,7 @@ public class JSONParser {
         try {
             return (JsonObject) JsonParser.parseReader(new FileReader(fpName));
         } catch (Exception e) {
-            Util.raiseError("Fail to create JSON file... :(");
+            Util.raiseError("Fail to create JSON file; JSONParser.");
             return null;
         }
     }
@@ -38,14 +38,14 @@ public class JSONParser {
                 writer.flush();
                 writer.close();
             } catch (Exception e) {
-                Util.raiseError("Fail to Flush JSON file writer.");
+                Util.raiseError("Fail to Flush JSON file writer; JSONParser.");
                 return;
             }
         } catch (Exception e) {
-            Util.log("Fail to create JSON file... :(");
+            Util.log("Fail to create JSON file; JSONParser.");
             return;
         }
-        Util.log("Success to generate JSON file. :D");
+        Util.log("Success to create JSON file - " + fpName + ".");
     }
 
     public static void createJSON(HashMap<String, Object> target, String fpName) {

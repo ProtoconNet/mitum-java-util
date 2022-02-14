@@ -17,6 +17,7 @@ public class HistoryDocument extends Document {
 
     HistoryDocument(Info info, String owner, String name, String account, String date, String usage, String app) {
         super(Constant.MBC_DOCTYPE_HISTORY_DATA, info, owner);
+        assertInfo(info);
         this.info = info;
         this.owner = new Address(owner);
         this.name = name;
@@ -24,6 +25,12 @@ public class HistoryDocument extends Document {
         this.date = date;
         this.usage = usage;
         this.app = app;
+    }
+
+    private void assertInfo(Info info) {
+        if(!info.getDocType().equals(DOCTYPE_HISTORY_DATA)) {
+            Util.raiseError("Invalid docType of Info; HistoryDocument.");
+        }
     }
 
     @Override

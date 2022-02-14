@@ -21,7 +21,7 @@ abstract class BlockSignItem extends Item {
                 this.hint = new Hint(Constant.MBS_SIGN_ITEM_SINGLE_DOCUMENT);
                 break;
             default:
-                Util.raiseError("Invalid item type for Item.");
+                Util.raiseError("Invalid item type; BlockSignItem.");
         }
     }
 }

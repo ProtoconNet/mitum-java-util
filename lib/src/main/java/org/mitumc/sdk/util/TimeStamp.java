@@ -28,7 +28,7 @@ public class TimeStamp {
         int z = timestamp.indexOf("Z");
 
         if(t < 0 || z < 0) {
-            Util.raiseError("Invalid timestamp for TimeStamp.");
+            Util.raiseError("Invalid timestamp; TimeStamp.");
             return;
         }
         formatTimestamp();

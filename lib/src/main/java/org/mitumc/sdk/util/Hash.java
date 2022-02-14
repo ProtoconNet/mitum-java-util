@@ -31,7 +31,7 @@ public class Hash {
             this.sha256Digest = hasher.digest(this.target);
             this.sha256Hash = Base58.encode(this.sha256Digest);
         } catch(NoSuchAlgorithmException e) {
-            Util.raiseError("No such algorithm; sha-256");
+            Util.raiseError("No such algorithm - sha-256; Hash.");
         }
     }
 
@@ -41,7 +41,7 @@ public class Hash {
             this.sha3Digest = hasher.digest(this.target);
             this.sha3Hash = Base58.encode(this.sha3Digest);
         } catch(NoSuchAlgorithmException e) {
-            Util.raiseError("No such algorithm; sha3-256");
+            Util.raiseError("No such algorithm - sha3-256; Hash.");
         }
     }
 

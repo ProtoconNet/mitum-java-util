@@ -15,13 +15,16 @@ public class Candidate implements BytesChangeable, Dictionariable {
     private String manifest;
 
     Candidate(String address, String manifest) {
-        if (manifest.length() > 100) {
-            Util.raiseError("manifest length is over 100! (manifest.length() <= 100");
-        }
-
+        assertManifest(manifest);
         this.hint = new Hint(Constant.MBC_VOTING_CANDIDATE);
         this.address = new Address(address);
         this.manifest = manifest;
+    }
+
+    private void assertManifest(String manifest) {
+        if (manifest.length() > 100) {
+            Util.raiseError("manifest length is over 100! (manifest.length() <= 100; Candidate.");
+        }
     }
 
     @Override

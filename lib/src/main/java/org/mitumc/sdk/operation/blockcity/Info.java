@@ -6,6 +6,7 @@ import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.interfaces.BytesChangeable;
 import org.mitumc.sdk.interfaces.Dictionariable;
 import org.mitumc.sdk.util.Hint;
+import org.mitumc.sdk.util.RegExp;
 import org.mitumc.sdk.util.Util;
 
 public class Info implements BytesChangeable, Dictionariable {
@@ -14,6 +15,24 @@ public class Info implements BytesChangeable, Dictionariable {
     private DocumentId documentId;
 
     Info(String docType, String documentId) {
+        switch(docType) {
+            case Document.DOCTYPE_USER_DATA:
+                RegExp.assertUserData(documentId);
+                break;
+            case Document.DOCTYPE_LAND_DATA:
+                RegExp.assertLandData(documentId);
+                break;
+            case Document.DOCTYPE_VOTE_DATA:
+                RegExp.assertVoteData(documentId);
+                break;
+            case Document.DOCTYPE_HISTORY_DATA:
+                RegExp.assertHistoryData(documentId);
+                break;
+            default:
+                RegExp.assertBlockCityDocumentId(documentId);
+                Util.raiseError("Invalid document type; Info.");
+        }
+
         this.hint = new Hint(Constant.MBC_DOCUMENT_INFO);
         this.docType = docType;
         this.documentId = new DocumentId(documentId);
@@ -49,7 +68,7 @@ public class Info implements BytesChangeable, Dictionariable {
                 docid.put("_hint", new Hint(Constant.MBC_HISTORY_DOCUMENT_ID).getHint());
                 break;
             default:
-                Util.raiseError("Wrong document type for Info.toDict()");
+                Util.raiseError("Invalid document type; Info");
         }
         docid.put("id", this.documentId.getDocumentId());
 
