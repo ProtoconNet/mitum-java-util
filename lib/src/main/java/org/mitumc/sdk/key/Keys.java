@@ -22,35 +22,44 @@ public class Keys implements BytesChangeable, Dictionariable {
 
     @Deprecated
     public Keys(int threshold) {
-        this(new Key[0], threshold);
+        assertThreshold(threshold);
+        this.hint = new Hint(Constant.MC_KEYS);
+        this.keys =  new ArrayList<Key>();
+        this.threshold = new BigInt(Integer.toString(threshold));
     }
 
     public Keys(Key[] keys, int threshold) {
+        assertThreshold(threshold);
+        assertOverThreshold(keys, threshold);
         this.hint = new Hint(Constant.MC_KEYS);
         this.keys = new ArrayList<Key>(Arrays.asList(keys));
-        setThreshold(threshold);
+        this.threshold = new BigInt(Integer.toString(threshold));
+        generateHash();
     }
 
-    private boolean isThresholdValid() {
-        if (Integer.parseInt(this.threshold.getValue()) < 1 || Integer.parseInt(this.threshold.getValue()) > 100) {
-            return false;
+    private void assertThreshold(int threshold) {
+        if (threshold < 1 || threshold > 100) {
+            Util.raiseError("Invalid threshold; Keys.");
+        }
+    }
+
+    private void assertOverThreshold(Key[] keys, int threshold) {
+        long sum = 0;
+
+        for(Key key : keys) {
+            sum += key.getWeight();
         }
 
-        return true;
+        if(sum < threshold) {
+            Util.raiseError("The sum of all weights doesn't satisfy the condition: sum(weights) >= threshold; Keys.");
+        }
     }
 
     private void generateHash() {
-        this.hash = new Hash(toBytes());
-    }
-
-    public void setThreshold(int threshold) {
-        this.threshold = new BigInt(Integer.toString(threshold));
-
-        if (!isThresholdValid()) {
-            Util.raiseError("Invalid threshold for Keys.");
+        if(this.keys.size() <= 0) {
+            Util.raiseError("No keys; Keys.");
         }
-
-        generateHash();
+        this.hash = new Hash(toBytes());
     }
 
     @Deprecated
@@ -67,6 +76,7 @@ public class Keys implements BytesChangeable, Dictionariable {
         return this.hash.getSha3Hash();
     }
 
+    @Deprecated
     public boolean isOverThreshold() {
         long sum = 0;
 

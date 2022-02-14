@@ -17,6 +17,7 @@ public class HistoryDocument extends Document {
 
     HistoryDocument(Info info, String owner, String name, String account, String date, String usage, String app) {
         super(Constant.MBC_DOCTYPE_HISTORY_DATA, info, owner);
+        assertInfo(info);
         this.info = info;
         this.owner = new Address(owner);
         this.name = name;
@@ -26,17 +27,23 @@ public class HistoryDocument extends Document {
         this.app = app;
     }
 
+    private void assertInfo(Info info) {
+        if(!info.getDocType().equals(DOCTYPE_HISTORY_DATA)) {
+            Util.raiseError("Invalid docType of Info; HistoryDocument.");
+        }
+    }
+
     @Override
     public byte[] toBytes() {
-        byte[] bInfo = this.info.toBytes();
-        byte[] bOwner = this.owner.toBytes();
-        byte[] bName = this.name.getBytes();
-        byte[] bAccount = this.account.toBytes();
-        byte[] bDate = this.date.getBytes();
-        byte[] bUsage = this.usage.getBytes();
-        byte[] bApp = this.app.getBytes();
+        byte[] binfo = this.info.toBytes();
+        byte[] bowner = this.owner.toBytes();
+        byte[] bname = this.name.getBytes();
+        byte[] baccount = this.account.toBytes();
+        byte[] bdate = this.date.getBytes();
+        byte[] busage = this.usage.getBytes();
+        byte[] bapp = this.app.getBytes();
 
-        return Util.concatByteArray(bInfo, bOwner, bName, bAccount, bDate, bUsage, bApp);
+        return Util.concatByteArray(binfo, bowner, bname, baccount, bdate, busage, bapp);
     }
 
     @Override

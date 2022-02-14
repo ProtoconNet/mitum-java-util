@@ -34,7 +34,7 @@ public class BlockCityItem extends Item {
                 this.hint = new Hint(Constant.MBC_UPDATE_DOCUMENTS_ITEM);
                 break;
             default:
-                Util.raiseError("Invalid item type for Item.");
+                Util.raiseError("Invalid item type; BlockCityItem.");
         }
     }
 

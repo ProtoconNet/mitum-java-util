@@ -12,7 +12,7 @@ public class Util {
     public static HashMap<String, String> parseHint(String hinted) {
         int idx = hinted.indexOf('~');
         if (idx == -1) {
-            raiseError("Invalid hinted string for parseHint.");
+            raiseError("Invalid hinted string; Util.parseHint(String hinted).");
         }
 
         HashMap<String, String> map = new HashMap<String, String>();
@@ -23,9 +23,7 @@ public class Util {
     }
 
     public static HashMap<String, String> parseType(String typed) {
-        if (typed.length() < 3) {
-            raiseError("Invalid typed string for parseType.");
-        }
+        RegExp.assertLongEnough(typed);
 
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("raw", typed.substring(0, typed.length() - 3));
@@ -35,20 +33,7 @@ public class Util {
     }
 
     public static HashMap<String, String> parseDocumentId(String documentId) {
-        if (documentId.length() < 3) {
-            raiseError("Invalid suffix string for parseDocumentId.");
-        }
-
-        String suffix = documentId.substring(documentId.length() - 3);
-
-        switch(suffix) {
-            case Constant.MBC_USER_DATA:
-            case Constant.MBC_LAND_DATA:
-            case Constant.MBC_VOTE_DATA:
-            case Constant.MBC_HISTORY_DATA:
-                break;
-            default: raiseError("Invalid suffix string for parseDocumentId.");
-        }
+        RegExp.assertBlockCityDocumentId(documentId);
 
         HashMap<String, String> map = new HashMap<>();
         map.put("id", documentId.substring(0, documentId.length() - 3));
@@ -61,12 +46,13 @@ public class Util {
         int idx = hint.indexOf("-" + Constant.VERSION);
 
         if (idx == -1) {
-            raiseError("Invalid hint for getHintFromString.");
+            raiseError("Invalid hint; Util.getHintFromString(String hint).");
         }
 
         return new Hint(hint.substring(0, idx));
     }
 
+    @Deprecated
     public static Boolean isTypeValid(String type) {
         switch (type) {
             case Constant.KEY_PRIVATE:
@@ -122,7 +108,7 @@ public class Util {
     }
 
     public static void raiseError(String msg) {
-        System.out.println(msg);
+        System.out.println("error; " + msg);
         System.exit(1);
     }
 

@@ -11,12 +11,18 @@ public class UserDocument extends Document {
     private BigInt bankGold;
     private UserStatistics statistics;
 
-    UserDocument(Info info, String owner, String gold, String bankGold, UserStatistics statistics) {
+    UserDocument(Info info, String owner, int gold, int bankGold, UserStatistics statistics) {
         super(Constant.MBC_DOCTYPE_USER_DATA, info, owner);
-        
-        this.gold = new BigInt(gold);
-        this.bankGold = new BigInt(bankGold);
+        assertnfo(info);
+        this.gold = new BigInt("" + gold);
+        this.bankGold = new BigInt("" + bankGold);
         this.statistics = statistics;
+    }
+
+    private void assertnfo(Info info) {
+        if(!info.getDocType().equals(DOCTYPE_USER_DATA)) {
+            Util.raiseError("Invalid docType of Info; UserDocument.");
+        }
     }
 
     @Override
@@ -36,8 +42,8 @@ public class UserDocument extends Document {
         hashMap.put("_hint", this.hint.getHint());
         hashMap.put("info", this.info.toDict());
         hashMap.put("owner", this.owner.getAddress());
-        hashMap.put("gold", this.gold.getValue());
-        hashMap.put("bankgold", this.bankGold.getValue());
+        hashMap.put("gold", Integer.parseInt(this.gold.getValue())); 
+        hashMap.put("bankgold", Integer.parseInt(this.bankGold.getValue()));
         hashMap.put("statistics", this.statistics.toDict());
 
         return hashMap;

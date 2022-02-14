@@ -35,7 +35,7 @@ abstract class CurrencyItem extends Item {
                 }
                 break;
             default:
-                Util.raiseError("Invalid item type for Item.");
+                Util.raiseError("Invalid item type; CurrencyItem.");
         }
     }
 }

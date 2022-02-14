@@ -3,6 +3,7 @@ package org.mitumc.sdk.key;
 import java.util.HashMap;
 
 import org.mitumc.sdk.interfaces.BytesChangeable;
+import org.mitumc.sdk.util.RegExp;
 import org.mitumc.sdk.util.Util;
 
 public class BaseKey implements BytesChangeable {
@@ -14,26 +15,16 @@ public class BaseKey implements BytesChangeable {
     }
 
     BaseKey(String key, String type) {
+        RegExp.assertKey(key + type);
         this.key = key;
         this.type = type;
-
-        if(!isTypeValid()) {
-            Util.raiseError("Invalid key type for BaseKey.");
-        }
     }
 
     private void setType(String typed) {
+        RegExp.assertKey(typed);
         HashMap<String, String> parsed = Util.parseType(typed);
         this.key = parsed.get("raw");
         this.type = parsed.get("type");
-
-        if(!isTypeValid()) {
-            Util.raiseError("Invalid key type for BaseKey.");
-        }
-    }
-
-    private boolean isTypeValid() {
-        return Util.isTypeValid(type);
     }
 
     public String getRawKey() {

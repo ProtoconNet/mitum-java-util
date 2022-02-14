@@ -12,23 +12,29 @@ import org.mitumc.sdk.util.Util;
 public class Candidate implements BytesChangeable, Dictionariable {
     private Hint hint;
     private Address address;
+    private String nickname;
     private String manifest;
 
-    Candidate(String address, String manifest) {
-        if (manifest.length() > 100) {
-            Util.raiseError("manifest length is over 100! (manifest.length() <= 100");
-        }
-
+    Candidate(String address, String nickname, String manifest) {
+        assertManifest(manifest);
         this.hint = new Hint(Constant.MBC_VOTING_CANDIDATE);
         this.address = new Address(address);
+        this.nickname = nickname;
         this.manifest = manifest;
+    }
+
+    private void assertManifest(String manifest) {
+        if (manifest.length() > 100) {
+            Util.raiseError("manifest length is over 100! (manifest.length() <= 100; Candidate.");
+        }
     }
 
     @Override
     public byte[] toBytes() {
         byte[] baddress = this.address.toBytes();
+        byte[] bnickname = this.nickname.getBytes();
         byte[] bmanifest = this.manifest.getBytes();
-        return Util.concatByteArray(baddress, bmanifest);
+        return Util.concatByteArray(baddress, bnickname, bmanifest);
     }
 
     @Override
@@ -37,6 +43,7 @@ public class Candidate implements BytesChangeable, Dictionariable {
 
         hashMap.put("_hint", this.hint.getHint());
         hashMap.put("address", this.address.getAddress());
+        hashMap.put("nickname", this.nickname);
         hashMap.put("manifest", this.manifest);
 
         return hashMap;

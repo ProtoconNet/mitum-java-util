@@ -15,21 +15,16 @@ public class Key implements BytesChangeable, Dictionariable {
     private BigInt weight;
 
     public Key(String key, int weight) {
+        assertWeight(weight);
         this.hint = new Hint(Constant.MC_KEY);
         this.key = new BaseKey(key);
         this.weight = new BigInt(Integer.toString(weight));
-
-        if (!isWeightValid()) {
-            Util.raiseError("Invalid weight for Key.");
-        }
     }
 
-    private boolean isWeightValid() {
-        if (Integer.parseInt(this.weight.getValue()) < 1 || Integer.parseInt(this.weight.getValue()) > 100) {
-            return false;
+    private void assertWeight(int weight) {
+        if (weight < 1 || weight > 100) {
+            Util.raiseError("Invalid weight; Key.");
         }
-
-        return true;
     }
 
     public int getWeight() {

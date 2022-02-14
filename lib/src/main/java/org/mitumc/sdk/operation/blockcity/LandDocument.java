@@ -17,13 +17,19 @@ public class LandDocument extends Document {
 
     LandDocument(Info info, String owner, String address, String area, String renter, String account, String rentDate, int period) {
         super(Constant.MBC_DOCTYPE_LAND_DATA, info, owner);
-
+        assertInfo(info);
         this.address = address;
         this.area = area;
         this.renter = renter;
         this.account = new Address(account);
         this.rentDate = rentDate;
         this.period = new BigInt("" + period);
+    }
+
+    private void assertInfo(Info info) {
+        if(!info.getDocType().equals(DOCTYPE_LAND_DATA)) {
+            Util.raiseError("Invalid docType of Info; LandDocument.");
+        }
     }
 
     @Override

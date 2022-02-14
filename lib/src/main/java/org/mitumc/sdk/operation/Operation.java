@@ -67,7 +67,7 @@ public class Operation implements BytesChangeable, Dictionariable {
             this.hint = new Hint(Constant.MBC_UPDATE_DOCUMENTS_OPERATION);
         }
         else {
-            Util.raiseError("Invalid fact type for Operation.");
+            Util.raiseError("Invalid fact type; Operation.");
         }
     }
 
@@ -96,7 +96,7 @@ public class Operation implements BytesChangeable, Dictionariable {
     @Override
     public byte[] toBytes() {
         if(this.factSigns.size() < 1) {
-            Util.raiseError("Fact Sign is empty.");
+            Util.raiseError("Fact Sign is empty; Operation.");
         }
         
         byte[] bfactHash = this.fact.hash.getSha3Digest();
@@ -109,7 +109,7 @@ public class Operation implements BytesChangeable, Dictionariable {
     @Override
     public HashMap<String,Object> toDict() {
         if(this.factSigns.size() < 1) {
-            Util.raiseError("Fact Sign is empty.");
+            Util.raiseError("Fact Sign is empty; Operation.");
         }
 
         HashMap<String, Object> hashMap = new HashMap<>();
