@@ -35,15 +35,15 @@ public class HistoryDocument extends Document {
 
     @Override
     public byte[] toBytes() {
-        byte[] bInfo = this.info.toBytes();
-        byte[] bOwner = this.owner.toBytes();
-        byte[] bName = this.name.getBytes();
-        byte[] bAccount = this.account.toBytes();
-        byte[] bDate = this.date.getBytes();
-        byte[] bUsage = this.usage.getBytes();
-        byte[] bApp = this.app.getBytes();
+        byte[] binfo = this.info.toBytes();
+        byte[] bowner = this.owner.toBytes();
+        byte[] bname = this.name.getBytes();
+        byte[] baccount = this.account.toBytes();
+        byte[] bdate = this.date.getBytes();
+        byte[] busage = this.usage.getBytes();
+        byte[] bapp = this.app.getBytes();
 
-        return Util.concatByteArray(bInfo, bOwner, bName, bAccount, bDate, bUsage, bApp);
+        return Util.concatByteArray(binfo, bowner, bname, baccount, bdate, busage, bapp);
     }
 
     @Override

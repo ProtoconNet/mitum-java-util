@@ -13,8 +13,8 @@ public class BlockCityGenerator extends OperationGenerator {
         return new BlockCityGenerator(id);
     }
 
-    public Candidate candidate(String address, String manifest) {
-        return new Candidate(address, manifest);
+    public Candidate candidate(String address, String nickname, String manifest) {
+        return new Candidate(address, nickname, manifest);
     }
 
     public Info info(String docType, String documentId) {
@@ -29,7 +29,7 @@ public class BlockCityGenerator extends OperationGenerator {
         return new UserStatistics(hp, strength, agility, dexterity, charisma, intelligence, vital);
     }
 
-    public Document document(Info info, String owner, String gold, String bankGold, UserStatistics statistics) {
+    public Document document(Info info, String owner, int gold, int bankGold, UserStatistics statistics) {
         return new UserDocument(info, owner, gold, bankGold, statistics);
     }
 

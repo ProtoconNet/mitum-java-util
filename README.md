@@ -243,11 +243,11 @@ BlockSignFact getBlockSignFact(String sender, SignDocumentsItem[] items);
 Using `BlockCityGenerator`, below methods are available.
 
 ```java
-Candidate candidate(String address, String manifest);
+Candidate candidate(String address, String nickname, String manifest);
 Info info(String docType, String documentId);
 UserStatistics userStatistics(int hp, int strength, int agility, int dexterity, int charisma, int intelligence, int vital);
 
-Document document(Info info, String owner, String gold, String bankGold, UserStatistics statistics);
+Document document(Info info, String owner, int gold, int bankGold, UserStatistics statistics);
 Document document(Info info, String owner, String address, String area, String renter, String account, String rentDate, int period);
 Document document(Info info, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office);
 Document document(Info info, String owner, String name, String account, String date, String usage, String app);
@@ -514,6 +514,7 @@ Supported document types are
 * User Data
 * Land Data
 * Voting Data
+* History Data
 
 Note a document id for each document type has a unique suffix.
 
@@ -540,7 +541,7 @@ import org.mitumc.sdk.operation.blockcity.*;
 Info info = generator.blockCity().info(Document.DOCTYPE_USER_DATA, "4cui");
 UserStatistics userStatic = generator.blockCity().userStatistics(1, 1, 1, 1, 1, 1, 1);
     
-Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", "10", "10", userStatic);       
+Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", 10, 10, userStatic);       
 ```
 
 If you wonder what value needs for each parameter, see [Generator](#generator).
@@ -589,8 +590,8 @@ What you must prepare are,
 import org.mitumc.sdk.operation.blockcity.*;
 */
 Info info = generator.blockCity().info(Document.DOCTYPE_VOTE_DATA, "5cvi");
-Candidate c1 = generator.blockCity().candidate("8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "");
-Candidate c2 = generator.blockCity().candidate("Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "");
+Candidate c1 = generator.blockCity().candidate("8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "foo", "");
+Candidate c2 = generator.blockCity().candidate("Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "foo2", "");
 
 Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", 1, "2022-01-02", new Candidate[]{ c1, c2 }, "foo", "Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "2022");
 ```
