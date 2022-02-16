@@ -13,13 +13,13 @@ public class UserDocument extends Document {
 
     UserDocument(Info info, String owner, int gold, int bankGold, UserStatistics statistics) {
         super(Constant.MBC_DOCTYPE_USER_DATA, info, owner);
-        assertnfo(info);
+        assertInfo(info);
         this.gold = new BigInt("" + gold);
         this.bankGold = new BigInt("" + bankGold);
         this.statistics = statistics;
     }
 
-    private void assertnfo(Info info) {
+    private void assertInfo(Info info) {
         if(!info.getDocType().equals(DOCTYPE_USER_DATA)) {
             Util.raiseError("Invalid docType of Info; UserDocument.");
         }
@@ -29,8 +29,8 @@ public class UserDocument extends Document {
     public byte[] toBytes() {
         byte[] binfo = this.info.toBytes();
         byte[] bowner = this.owner.toBytes();
-        byte[] bgold = this.gold.toBytes(BigInt.LITTLE_ENDIAN, true);;
-        byte[] bbankGold = this.bankGold.toBytes(BigInt.LITTLE_ENDIAN, true);;
+        byte[] bgold = this.gold.toBytes();
+        byte[] bbankGold = this.bankGold.toBytes();
         byte[] bstatistics = this.statistics.toBytes();
         return Util.concatByteArray(binfo, bowner, bgold, bbankGold, bstatistics);
     }
