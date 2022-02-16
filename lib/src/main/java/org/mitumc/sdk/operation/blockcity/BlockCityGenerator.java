@@ -13,8 +13,13 @@ public class BlockCityGenerator extends OperationGenerator {
         return new BlockCityGenerator(id);
     }
 
+    @Deprecated
     public Candidate candidate(String address, String nickname, String manifest) {
         return new Candidate(address, nickname, manifest);
+    }
+
+    public Candidate candidate(String address, String nickname, String manifest, int count) {
+        return new Candidate(address, nickname, manifest, count);
     }
 
     public Info info(String docType, String documentId) {

@@ -28,14 +28,14 @@ javac 17.0.1
 ```
 [Download jar file](release/) and include the package to your project.
 
-The latest version is `mitum-java-util-2.1.0-jdk17.jar`.
+The latest version is `mitum-java-util-2.2.2-jdk17.jar`.
 
 #### Gradle
 ```sh
-implementation files('./lib/mitum-java-util-2.1.0-jdk17.jar')
+implementation files('./lib/mitum-java-util-2.2.2-jdk17.jar')
 ```
 
-Replace `./lib/mitum-java-util-2.1.0-jdk17.jar` with your file path.
+Replace `./lib/mitum-java-util-2.2.2-jdk17.jar` with your file path.
 
 ## Index
 
@@ -243,7 +243,8 @@ BlockSignFact getBlockSignFact(String sender, SignDocumentsItem[] items);
 Using `BlockCityGenerator`, below methods are available.
 
 ```java
-Candidate candidate(String address, String nickname, String manifest);
+@Deprecated Candidate candidate(String address, String nickname, String manifest);
+Candidate candidate(String address, String nickname String manifest, int count);
 Info info(String docType, String documentId);
 UserStatistics userStatistics(int hp, int strength, int agility, int dexterity, int charisma, int intelligence, int vital);
 
@@ -590,8 +591,8 @@ What you must prepare are,
 import org.mitumc.sdk.operation.blockcity.*;
 */
 Info info = generator.blockCity().info(Document.DOCTYPE_VOTE_DATA, "5cvi");
-Candidate c1 = generator.blockCity().candidate("8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "foo", "");
-Candidate c2 = generator.blockCity().candidate("Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "foo2", "");
+Candidate c1 = generator.blockCity().candidate("8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "foo", "", 1);
+Candidate c2 = generator.blockCity().candidate("Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "foo2", "", 2);
 
 Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", 1, "2022-01-02", new Candidate[]{ c1, c2 }, "foo", "Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "2022");
 ```

@@ -43,7 +43,6 @@ public class Key implements BytesChangeable, Dictionariable {
     public byte[] toBytes() {
         byte[] bkey = this.key.toBytes();
         byte[] bweight = this.weight.toBytes();
-
         return Util.concatByteArray(bkey, bweight);
     }
 
