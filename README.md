@@ -28,14 +28,14 @@ javac 17.0.1
 ```
 [Download jar file](release/) and include the package to your project.
 
-The latest version is `mitum-java-util-2.2.2-jdk17.jar`.
+The latest version is `mitum-java-util-2.2.3-jdk17.jar`.
 
 #### Gradle
 ```sh
-implementation files('./lib/mitum-java-util-2.2.2-jdk17.jar')
+implementation files('./lib/mitum-java-util-2.2.3-jdk17.jar')
 ```
 
-Replace `./lib/mitum-java-util-2.2.2-jdk17.jar` with your file path.
+Replace `./lib/mitum-java-util-2.2.3-jdk17.jar` with your file path.
 
 ## Index
 

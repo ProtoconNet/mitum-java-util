@@ -54,19 +54,19 @@ public class Constant {
     public static final String MBC_VOTE_DATA = "cvi";
     public static final String MBC_HISTORY_DATA = "chi";
 
-    public static final String MBC_CREATE_DOCUMENTS_ITEM = "mitum-blockcity-create-documents-item";
-    public static final String MBC_CREATE_DOCUMENTS_OPERATION_FACT = "mitum-blockcity-create-documents-operation-fact";
-    public static final String MBC_CREATE_DOCUMENTS_OPERATION = "mitum-blockcity-create-documents-operation";
-    public static final String MBC_UPDATE_DOCUMENTS_ITEM = "mitum-blockcity-update-documents-item";
-    public static final String MBC_UPDATE_DOCUMENTS_OPERATION_FACT = "mitum-blockcity-update-documents-operation-fact";
-    public static final String MBC_UPDATE_DOCUMENTS_OPERATION = "mitum-blockcity-update-documents-operation";
+    public static final String MBC_CREATE_DOCUMENTS_ITEM = "mitum-create-documents-item";
+    public static final String MBC_CREATE_DOCUMENTS_OPERATION_FACT = "mitum-create-documents-operation-fact";
+    public static final String MBC_CREATE_DOCUMENTS_OPERATION = "mitum-create-documents-operation";
+    public static final String MBC_UPDATE_DOCUMENTS_ITEM = "mitum-update-documents-item";
+    public static final String MBC_UPDATE_DOCUMENTS_OPERATION_FACT = "mitum-update-documents-operation-fact";
+    public static final String MBC_UPDATE_DOCUMENTS_OPERATION = "mitum-update-documents-operation";
 
-    public static final String MBC_DOCTYPE_USER_DATA = "mitum-blockcity-document-user-data";
-    public static final String MBC_DOCTYPE_LAND_DATA = "mitum-blockcity-document-land-data";
-    public static final String MBC_DOCTYPE_VOTE_DATA = "mitum-blockcity-document-voting-data";
-    public static final String MBC_DOCTYPE_HISTORY_DATA = "mitum-blockcity-document-history-data";
+    public static final String MBC_DOCTYPE_USER_DATA = "mitum-document-user-data";
+    public static final String MBC_DOCTYPE_LAND_DATA = "mitum-document-land-data";
+    public static final String MBC_DOCTYPE_VOTE_DATA = "mitum-document-voting-data";
+    public static final String MBC_DOCTYPE_HISTORY_DATA = "mitum-document-history-data";
 
-    public static final String MBC_DOCUMENT_INFO = "mitum-blockcity-document-info";
+    public static final String MBC_DOCUMENT_INFO = "mitum-document-info";
 
     public static final String MBC_USER_DOCUMENT_ID = "mitum-blockcity-user-document-id";
     public static final String MBC_LAND_DOCUMENT_ID = "mitum-blockcity-land-document-id";
