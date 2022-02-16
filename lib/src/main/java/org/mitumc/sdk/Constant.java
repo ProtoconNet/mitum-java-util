@@ -61,10 +61,10 @@ public class Constant {
     public static final String MBC_UPDATE_DOCUMENTS_OPERATION_FACT = "mitum-update-documents-operation-fact";
     public static final String MBC_UPDATE_DOCUMENTS_OPERATION = "mitum-update-documents-operation";
 
-    public static final String MBC_DOCTYPE_USER_DATA = "mitum-document-user-data";
-    public static final String MBC_DOCTYPE_LAND_DATA = "mitum-document-land-data";
-    public static final String MBC_DOCTYPE_VOTE_DATA = "mitum-document-voting-data";
-    public static final String MBC_DOCTYPE_HISTORY_DATA = "mitum-document-history-data";
+    public static final String MBC_DOCTYPE_USER_DATA = "mitum-blockcity-document-user-data";
+    public static final String MBC_DOCTYPE_LAND_DATA = "mitum-blockcity-document-land-data";
+    public static final String MBC_DOCTYPE_VOTE_DATA = "mitum-blockcity-document-voting-data";
+    public static final String MBC_DOCTYPE_HISTORY_DATA = "mitum-blockcity-document-history-data";
 
     public static final String MBC_DOCUMENT_INFO = "mitum-document-info";
 
