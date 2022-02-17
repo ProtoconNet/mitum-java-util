@@ -48,16 +48,22 @@ public class TimeStamp {
             int dot = this.time.indexOf(".");
             String decimal = this.time.substring(dot + 1);
 
+            boolean isAllZero = true;
             int zero = decimal.length();
             for(int i = decimal.length() - 1; i > -1; i--) {
                 if(decimal.charAt(i) != '0') {
+                    isAllZero = false;
                     break;
                 }
                 zero = i;
             }
 
-            String rdecimal = decimal.substring(0, zero);
+            if(isAllZero) {
+                this.UTCtimestamp = this.date + " " + this.time.substring(0, dot) + " +0000 UTC";
+                return;
+            }
 
+            String rdecimal = decimal.substring(0, zero);
             this.UTCtimestamp = this.date + " " + this.time.substring(0, dot) + "." + rdecimal + " +0000 UTC";
         }
     }
