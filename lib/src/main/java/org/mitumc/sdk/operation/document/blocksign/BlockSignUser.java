@@ -1,0 +1,48 @@
+package org.mitumc.sdk.operation.document.blocksign;
+
+import java.util.HashMap;
+
+import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.interfaces.BytesConvertible;
+import org.mitumc.sdk.interfaces.HashMapConvertible;
+import org.mitumc.sdk.key.Address;
+import org.mitumc.sdk.util.Hint;
+import org.mitumc.sdk.util.Util;
+
+public class BlockSignUser implements BytesConvertible, HashMapConvertible {
+    private Hint hint;
+    private Address address;
+    private String signCode;
+    private boolean signed;
+    
+    public BlockSignUser(String address, String signCode, boolean signed) {
+        this.hint = new Hint(Constant.MBS_USER);
+        this.address = new Address(address);
+        this.signCode = signCode;
+        this.signed = signed;
+    }
+
+    public Address getAddress() {
+        return this.address;
+    }
+
+    @Override
+    public byte[] toBytes() {
+        byte[] bAddress = this.address.toBytes();
+        byte[] bSignCode = this.signCode.getBytes();
+        byte[] bSigned = this.signed ? new byte[]{ 1 } : new byte[]{ 0 };
+        return Util.concatByteArray(bAddress, bSignCode, bSigned);
+    }
+
+    @Override
+    public HashMap<String, Object> toDict() {
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("_hint", this.hint.getHint());
+        hashMap.put("address", this.address.getAddress());
+        hashMap.put("signcode", this.signCode);
+        hashMap.put("signed", this.signed);
+
+        return hashMap;
+    }
+}

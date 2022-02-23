@@ -5,12 +5,12 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Keys;
+import org.mitumc.sdk.operation.base.PurposedOperationFact;
 import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Util;
-import org.mitumc.sdk.operation.OperationFact;
 
-public class KeyUpdaterFact extends OperationFact {
+
+public class KeyUpdaterFact extends PurposedOperationFact {
     private Address target;
     private String currencyId;
     private Keys keys;
@@ -22,10 +22,6 @@ public class KeyUpdaterFact extends OperationFact {
         this.keys = keys;
 
         generateHash();
-    }
-
-    private void generateHash() {
-        this.hash = new Hash(toBytes());
     }
 
     @Override

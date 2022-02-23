@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.mitumc.sdk.interfaces.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.Constant;
 
 public class Util {
@@ -33,7 +33,7 @@ public class Util {
     }
 
     public static HashMap<String, String> parseDocumentId(String documentId) {
-        RegExp.assertBlockCityDocumentId(documentId);
+        RegExp.assertLongEnough(documentId);
 
         HashMap<String, String> map = new HashMap<>();
         map.put("id", documentId.substring(0, documentId.length() - 3));
@@ -86,7 +86,7 @@ public class Util {
 
         int byteLen = 0;
         for (T obj : objs) {
-            byte[] temp = ((BytesChangeable) obj).toBytes();
+            byte[] temp = ((BytesConvertible) obj).toBytes();
             arr.add(temp);
             byteLen += temp.length;
         }

@@ -2,9 +2,9 @@ package org.mitumc.sdk.util;
 
 import java.math.BigInteger;
 
-import org.mitumc.sdk.interfaces.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesConvertible;
 
-public class BigInt implements BytesChangeable {
+public class BigInt implements BytesConvertible {
     final public static String BIG_ENDIAN = "big-endian";
     final public static String LITTLE_ENDIAN = "little-endian";
 

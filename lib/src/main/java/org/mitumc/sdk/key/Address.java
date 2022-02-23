@@ -1,9 +1,9 @@
 package org.mitumc.sdk.key;
 
-import org.mitumc.sdk.interfaces.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.util.RegExp;
 
-public class Address implements BytesChangeable {
+public class Address implements BytesConvertible {
     private String address;
 
     public Address(String address) {

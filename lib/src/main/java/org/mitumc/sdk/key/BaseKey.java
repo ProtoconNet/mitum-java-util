@@ -2,11 +2,11 @@ package org.mitumc.sdk.key;
 
 import java.util.HashMap;
 
-import org.mitumc.sdk.interfaces.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.util.RegExp;
 import org.mitumc.sdk.util.Util;
 
-public class BaseKey implements BytesChangeable {
+class BaseKey implements BytesConvertible {
     private String type;
     private String key;
 

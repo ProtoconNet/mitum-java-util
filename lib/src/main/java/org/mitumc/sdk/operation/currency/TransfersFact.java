@@ -6,34 +6,18 @@ import java.util.Base64;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
-import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.operation.OperationFact;
+import org.mitumc.sdk.operation.base.GeneralOperationFact;
 
-public class TransfersFact extends OperationFact {
+public class TransfersFact extends GeneralOperationFact<TransfersItem> {
     private Address sender;
     private ArrayList<TransfersItem> items;
 
-    @Deprecated
-    TransfersFact(String sender) {
-        this(sender, new TransfersItem[0]);
-    }
-
     TransfersFact(String sender, TransfersItem[] items) {
-        super(Constant.MC_TRANSFERS_OPERATION_FACT);
+        super(Constant.MC_TRANSFERS_OPERATION_FACT, sender, items);
         this.sender = new Address(sender);
         this.items = new ArrayList<TransfersItem>(Arrays.asList(items));
-        generateHash();
-    }
-
-    private void generateHash() {
-        this.hash = new Hash(toBytes());
-    }
-
-    @Deprecated
-    public void addItem(TransfersItem item) {
-        items.add(item);
         generateHash();
     }
 

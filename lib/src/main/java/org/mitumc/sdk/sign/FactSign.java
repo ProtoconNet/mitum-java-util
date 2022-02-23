@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.bitcoinj.core.Base58;
 
-import org.mitumc.sdk.interfaces.BytesChangeable;
+import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.TimeStamp;
@@ -12,7 +12,7 @@ import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.key.Keypair;
 
 
-public class FactSign implements BytesChangeable {
+public class FactSign implements BytesConvertible {
     private Hint hint;
     private String signer;
     private byte[] signature;

@@ -5,15 +5,15 @@ import java.util.HashMap;
 
 import org.bitcoinj.core.Base58;
 
-import org.mitumc.sdk.interfaces.BytesChangeable;
-import org.mitumc.sdk.interfaces.Dictionariable;
-import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.interfaces.BytesConvertible;
+import org.mitumc.sdk.interfaces.HashMapConvertible;
+import org.mitumc.sdk.operation.base.OperationFact;
 import org.mitumc.sdk.sign.FactSign;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
-public class Operation implements BytesChangeable, Dictionariable {
+public class Operation implements BytesConvertible, HashMapConvertible {
     private Hint hint;
     private String memo;
     private OperationFact fact;
@@ -22,53 +22,16 @@ public class Operation implements BytesChangeable, Dictionariable {
 
     private String networkId;
 
-    public Operation(OperationFact fact) {
-        this("", fact);
-    }
-
-    public Operation(String memo, OperationFact fact) {
+    private Operation(OperationFact fact, String memo) {
         this.memo = memo;
         this.fact = fact;
         this.factSigns = new ArrayList<FactSign>();
-        setHint();
-        // generateHash();
+        this.hint = fact.getOperationHint();
     }
 
-    public Operation(OperationFact fact, String NetworkId) {
-        this("", fact, NetworkId);
-    }
-
-    public Operation(String memo, OperationFact fact, String networkId) {
-        this(memo, fact);
+    public Operation(OperationFact fact, String memo, String networkId) {
+        this(fact, memo);
         this.networkId = networkId;
-    }
-
-    private void setHint() {
-        String type = this.fact.getType();
-        if(type.equals(Constant.MC_CREATE_ACCOUNTS_OPERATION_FACT)) {
-            this.hint = new Hint(Constant.MC_CRAETE_ACCOUNTS_OPERATION);
-        }
-        else if(type.equals(Constant.MC_KEY_UPDATER_OPERATION_FACT)) {
-            this.hint = new Hint(Constant.MC_KEY_UPDATER_OPERATION);
-        }
-        else if(type.equals(Constant.MC_TRANSFERS_OPERATION_FACT)) {
-            this.hint = new Hint(Constant.MC_TRANSFERS_OPERATION);
-        }
-        else if(type.equals(Constant.MBS_CREATE_DOCUMENTS_OPERATION_FACT)) {
-            this.hint = new Hint(Constant.MBS_CREATE_DOCUMENTS_OPERATION);
-        }
-        else if(type.equals(Constant.MBS_SIGN_DOCUMENTS_OPERATION_FACT)) {
-            this.hint = new Hint(Constant.MBS_SIGN_DOCUMENTS_OPERATION);
-        }
-        else if(type.equals(Constant.MBC_CREATE_DOCUMENTS_OPERATION_FACT)) {
-            this.hint = new Hint(Constant.MBC_CREATE_DOCUMENTS_OPERATION);
-        }
-        else if(type.equals(Constant.MBC_UPDATE_DOCUMENTS_OPERATION_FACT)) {
-            this.hint = new Hint(Constant.MBC_UPDATE_DOCUMENTS_OPERATION);
-        }
-        else {
-            Util.raiseError("Invalid fact type; Operation.");
-        }
     }
 
     private void generateHash() {
@@ -79,8 +42,8 @@ public class Operation implements BytesChangeable, Dictionariable {
         this.factSigns.add(
             FactSign.createSign(
                 Util.concatByteArray(
-                    this.fact.hash.getSha3Digest(), 
-                    this.networkId != null ? this.networkId.getBytes() : Constant.NETWORK_ID.getBytes()), 
+                    this.fact.getHash().getSha3Digest(), 
+                    this.networkId.getBytes()), 
                 signKey));
         generateHash();
     }
@@ -99,7 +62,7 @@ public class Operation implements BytesChangeable, Dictionariable {
             Util.raiseError("Fact Sign is empty; Operation.");
         }
         
-        byte[] bfactHash = this.fact.hash.getSha3Digest();
+        byte[] bfactHash = this.fact.getHash().getSha3Digest();
         byte[] bfactSigns = Util.<FactSign>concatItemArray(this.factSigns);
         byte[] bmemo = this.memo.getBytes();
 

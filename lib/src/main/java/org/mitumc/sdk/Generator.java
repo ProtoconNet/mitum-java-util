@@ -4,61 +4,59 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bitcoinj.core.Base58;
-
+import org.mitumc.sdk.interfaces.IdSettable;
 import org.mitumc.sdk.key.Keypair;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.TimeStamp;
 import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.operation.Operation;
-import org.mitumc.sdk.operation.OperationFact;
-import org.mitumc.sdk.operation.blockcity.BlockCityGenerator;
+import org.mitumc.sdk.operation.base.OperationFact;
 import org.mitumc.sdk.operation.currency.CurrencyGenerator;
-import org.mitumc.sdk.operation.blocksign.BlockSignGenerator;
+import org.mitumc.sdk.operation.document.DocumentGenerator;
 
 
-public class Generator {
+public class Generator implements IdSettable {
     private String id;
-    private CurrencyGenerator currencyGenerator;
-    private BlockSignGenerator blockSignGenerator;
-    private BlockCityGenerator blockCityGenerator;
+    private CurrencyGenerator mc;
+    private DocumentGenerator md;
 
     private Generator(String id) {
         this.id = id;
-        this.currencyGenerator = CurrencyGenerator.get(id);
-        this.blockSignGenerator = BlockSignGenerator.get(id);
-        this.blockCityGenerator = BlockCityGenerator.get(id);
+        this.mc = CurrencyGenerator.get(id);
+        this.md = DocumentGenerator.get(id);
     }
 
     public static Generator get(String id) {
         return new Generator(id);
     }
 
+    @Override
     public void setId(String id) {
         this.id = id;
-        this.currencyGenerator = CurrencyGenerator.get(id);
-        this.blockSignGenerator = BlockSignGenerator.get(id);
-        this.blockCityGenerator = BlockCityGenerator.get(id);
+        this.mc = CurrencyGenerator.get(id);
+        this.md = DocumentGenerator.get(id);
     }
 
-    public CurrencyGenerator currency() {
-        return this.currencyGenerator;
+    @Override
+    public String getId() {
+        return this.id;
     }
 
-    public BlockSignGenerator blockSign() {
-        return this.blockSignGenerator;
+    public CurrencyGenerator mc() {
+        return this.mc;
     }
 
-    public BlockCityGenerator blockCity() {
-        return this.blockCityGenerator;
+    public DocumentGenerator md() {
+        return this.md;
     }
 
     public Operation getOperation(OperationFact fact) {
-        return new Operation(fact);
+        return new Operation(fact, "", this.id);
     }
 
-    public Operation getOperation(String memo, OperationFact fact) {
-        return new Operation(memo, fact);
+    public Operation getOperation(OperationFact fact, String memo) {
+        return new Operation(fact, memo, this.id);
     }
 
     public HashMap<String, Object> getSeal(String signKey, Operation[] operations) {

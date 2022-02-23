@@ -9,8 +9,8 @@ import org.mitumc.sdk.key.Address;
 public class TransfersItem extends CurrencyItem {
     private Address receiver;
 
-    TransfersItem(String receiver, Amount[] amounts) {
-        super(ITEM_TYPE_C_TRANSFERS, amounts);
+    TransfersItem(String itemType, String receiver, Amount[] amounts) {
+        super(itemType, amounts);
         this.receiver = new Address(receiver);
     }
 

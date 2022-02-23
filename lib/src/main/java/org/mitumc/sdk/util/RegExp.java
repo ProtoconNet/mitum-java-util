@@ -12,6 +12,7 @@ public class RegExp {
     public static final String EXP_LAND_DATA = Constant.MBC_LAND_DATA;
     public static final String EXP_VOTE_DATA = Constant.MBC_VOTE_DATA;
     public static final String EXP_HISTORY_DATA = Constant.MBC_HISTORY_DATA;
+    public static final String EXP_BLOCKSIGN_DATA = Constant.MBS_DOCUMENT_DATA;
 
     public static void assertLongEnough(String target) {
         if(target.length() < 3) {
@@ -57,6 +58,14 @@ public class RegExp {
         }
         if(!Pattern.matches("^[a-zA-Z0-9]*$", key.substring(0, key.length() - 3))) {
             Util.raiseError("Invalid format; RegExp.assertPublicKey(String key).");
+        }
+    }
+
+    public static void assertBlockSignDocumentId(String id) {
+        assertLongEnough(id);
+        String suffix = id.substring(id.length() - 3);
+        if(!suffix.equals(EXP_BLOCKSIGN_DATA)) {
+            Util.raiseError("Invalid type suffix; RegExp.assertBlockSignDocumentId(String id).");
         }
     }
 
