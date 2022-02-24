@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.operation.document.base.Document;
+import org.mitumc.sdk.operation.document.Document;
 import org.mitumc.sdk.operation.document.base.Info;
 import org.mitumc.sdk.operation.document.blockcity.info.LandInfo;
 import org.mitumc.sdk.util.BigInt;

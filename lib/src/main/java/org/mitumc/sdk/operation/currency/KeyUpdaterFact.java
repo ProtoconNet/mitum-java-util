@@ -7,6 +7,7 @@ import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Keys;
 import org.mitumc.sdk.operation.base.PurposedOperationFact;
 import org.mitumc.sdk.key.Address;
+import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
 
@@ -22,6 +23,11 @@ public class KeyUpdaterFact extends PurposedOperationFact {
         this.keys = keys;
 
         generateHash();
+    }
+
+    @Override
+    public Hint getOperationHint() {
+        return new Hint(Constant.MC_KEY_UPDATER_OPERATION);
     }
 
     @Override

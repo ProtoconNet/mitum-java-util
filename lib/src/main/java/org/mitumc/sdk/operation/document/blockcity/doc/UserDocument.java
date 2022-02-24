@@ -3,7 +3,7 @@ package org.mitumc.sdk.operation.document.blockcity.doc;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
-import org.mitumc.sdk.operation.document.base.Document;
+import org.mitumc.sdk.operation.document.Document;
 import org.mitumc.sdk.operation.document.base.Info;
 import org.mitumc.sdk.operation.document.blockcity.UserStatistics;
 import org.mitumc.sdk.operation.document.blockcity.info.UserInfo;

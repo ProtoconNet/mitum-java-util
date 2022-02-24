@@ -1,7 +1,6 @@
 package org.mitumc.sdk.operation.document;
 
 import org.mitumc.sdk.operation.base.OperationGenerator;
-import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.blockcity.BlockCityGenerator;
 import org.mitumc.sdk.operation.document.blocksign.BlockSignGenerator;
 

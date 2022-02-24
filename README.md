@@ -1,8 +1,14 @@
 # mitum-java-util
 
-'mitum-java-util' will introduce the usage of [mitum-currency](https://github.com/ProtoconNet/mitum-currency), [mitum-data-blocksign](https://github.com/ProtoconNet/mitum-data-blocksign) and [mitum-blockcity](https://github.com/ProtoconNet/mitum-blockcity) for Java.
+'mitum-java-util' will introduce the usage of [mitum-currency](https://github.com/ProtoconNet/mitum-currency), [mitum-document](https://github.com/ProtoconNet/mitum-document) for Java.
 
 'mitum-java-util' now supports generating fact, operation and sign with btc wif based keypairs.
+
+Note that every address and key is just an example. Don't care about each value. Sometimes signer or owner can be written in practices.
+
+Use accurate and correct addresses and keys when you use. Do not trust all values in this document.
+
+__With all practices in this document, we are not responsible for using wrong or invalid values.__
 
 ## Installation
 
@@ -28,14 +34,14 @@ javac 17.0.1
 ```
 [Download jar file](release/) and include the package to your project.
 
-The latest version is `mitum-java-util-2.2.4-jdk17.jar`.
+The latest version is `mitum-java-util-3.0.0-jdk17.jar`.
 
 #### Gradle
 ```sh
-implementation files('./lib/mitum-java-util-2.2.4-jdk17.jar')
+implementation files('./lib/mitum-java-util-3.0.0-jdk17.jar')
 ```
 
-Replace `./lib/mitum-java-util-2.2.4-jdk17.jar` with your file path.
+Replace `./lib/mitum-java-util-3.0.0-jdk17.jar` with your file path.
 
 ## Index
 
@@ -46,24 +52,20 @@ Replace `./lib/mitum-java-util-2.2.4-jdk17.jar` with your file path.
 |2-1|[Create Generator](#create-generator)|
 |2-2|[Get Address from Keys](#get-address-from-keys)|
 |2-3|[Generate JSON File from Operation and Seal](#generate-json-file-from-operation-and-seal)|
-|3|[Generate Currency Operations](#generate-currency-operations)|
+|3|[Generate Currency Operation](#generate-currency-operation)|
 |3-1|[Generate Create-Accounts](#generate-create-accounts)|
 |3-2|[Generate Key-Updater](#generate-key-updater)|
 |3-3|[Generate Transfers](#generate-transfers)|
-|4|[Generate BlockSign Operations](#generate-blocksign-operations)|
-|4-1|[Generate BlockSign Create-Documents](#generate-blocksign-create-documents)|
-|4-2|[Generate BlockSign Sign-Documents](#generate-blocksign-sign-documents)|
-|5|[Generate BlockCity Operations](#generate-blockcity-operations)|
-|5-1|[Generate User Document](#generate-user-document)|
-|5-2|[Generate Land Document](#generate-land-document)|
-|5-3|[Generate Vote Document](#generate-vote-document)|
-|5-4|[Generate History Document](#generate-history-document)|
-|5-5|[Generate BlockCity Create-Documents](#generate-blockcity-create-documents)|
-|5-6|[Generate BlockCity Update-Documents](#generate-blockcity-update-documents)|
-|6|[Generate New Seal](#generate-new-seal)|
-|7|[Send Messages to Network](#send-messages-to-network)|
-|8|[Sign Message](#sign-message)|
-|9|[Add Fact Signature to Operation](#add-fact-signature-to-operation)|
+|4|[Generate Document Operation](#generate-document-operation)|
+|4-1|[Generate BlockSign Documents](#generate-blocksign-documents)|
+|4-2|[Generate BlockCity Documents](#generate-blockcity-documents)|
+|4-3|[Generate Create-Documents](#generate-create-documents)|
+|4-4|[Generate Update-Documents](#generate-update-documents)|
+|4-5|[Generate BlockSign Sign-Documents](#generate-blocksign-sign-documents)|
+|5|[Generate New Seal](#generate-new-seal)|
+|6|[Send Messages to Network](#send-messages-to-network)|
+|7|[Sign Message](#sign-message)|
+|8|[Add Fact Signature to Operation](#add-fact-signature-to-operation)|
 
 <br />
 
@@ -71,8 +73,6 @@ Replace `./lib/mitum-java-util-2.2.4-jdk17.jar` with your file path.
 |---|
 |[Keypair](#keypair)|
 |[Generator](#generator)|
-|[CurrencyGenerator](#currencygenerator)|
-|[BlockSignGenerator](#blocksigngenerator)|
 |[JSONParser](#jsonparser)|
 |[Signer](#signer)|
 
@@ -147,37 +147,23 @@ Keypair skp = Keypair.fromSeed(bseed);
 
 'mitum-currency' supports various kinds of operations, but 'mitum-java-util' will provide these frequently used operations.
 
-In addition, 'mitum-java-util' provides two operations of 'mitum-data-blocksign',
+In addition, 'mitum-java-util' provides two operations of 'mitum-document'.
 
-* `Create-Documents` creates an document with file hash.
-* `Sign-Documents` signs the document.
-
-Also, it supports to create three types of blockcity document and two types of operation.
-
-* `Create-Documents` create an document with document id.
+* `Create-Documents` creates an document.
 * `Update-Documents` update the state of the document.
 
-### Prerequisite
+And now, this sdk supports two models implemented based on 'mitum-document', `mitum blocksign` and `mitum blockcity`.
 
-Before generating new operation, you should check below for 'mitum-currency',
+'mitum blocksign' provides one more additional operation, `Sign-Documents`.
 
-* `private key` of source account to generate signatures (a.k.a signing key)
-* `public address` of source account
-* `public key` of target account
-* `network id`
+Available document types for each model are like below.
 
-Additionally, you should check below for 'mitum-data-blocksign',
-
-* `filehash` for Create-Documents
-* `owner` and 'documentid' for Sign-Documents and Transfer-Documents
-
-Note that the package root of 'mitum-java-util' is `org.mitumc.sdk`.
-
-* Every key, address, and keypair must be that of mitum-currency.
+* Use only one document type, 'blocksign' document for 'mitum blocksign'.
+* Use four document types, 'user, 'land', 'vote', and 'history' for 'mitum blockcity'.
 
 ### Create Generator
 
-`mitum-java-util` supports to generate operations of `mitum-currency`, `mitum-data-blocksign` and `mitum-blockcity`.
+`mitum-java-util` supports to generate operations of `mitum-currency`, and `mitum-document`.
 
 #### Generator
 
@@ -187,26 +173,29 @@ You can use `Generator` by this library.
 
 First of all, set network id by `Generator.get(id)`.
 
-For `mitum-currency`, use `Generator.currency()`.
+For `mitum-currency`, use `Generator.mc()`.
 
-For `mitum-data-blocksign`, use `Generator.blockSign()`.
+For `mitum-document`, use `Generator.md()`.
 
-For `mitum-blockcity`, use `Generator.blockCity()`.
+Additionally, 'mitum-document' provides two more generators.
+
+For `blocksign`, use `Generator.md().bs()`.
+
+For `blockcity`, use `Generator.md().bc()`.
 
 ```java
 String id = "mitum";
 Generator generator = Generator.get(id);
 
-CurrencyGenerator cgn = generator.currency(); // org.mitumc.sdk.operation.currency.CurrencyGenerator;
-BlockSignGenerator bsgn = generator.blockSign(); // org.mitumc.sdk.operation.blocksign.BlockSignGenerator;
-BlockCityGenerator bcgn = generator.blockCity(); // org.mitumc.sdk.operation.blockcity.BlockCityGenerator;
+generator.mc() // for currency
+generator.md() // for document
+generator.md().bs() // for blocksign
+generator.md().bc() // for blockcity
 ```
 
-#### CurrencyGenerator
+#### Currency Generator
 
-* `org.mitumc.sdk.operation.currency.CurrencyGenerator`
-
-Using `CurrencyGenerator`, below methods are available.
+Using `Generator.mc()`, below methods are available.
 
 ```java
 Key key(String key, int weight);
@@ -222,42 +211,47 @@ KeyUpdaterFact getKeyUpdaterFact(String target, String currencyId, Keys keys);
 TransfersFact getTransfersFact(String sender, TransfersItem[] items);
 ```
 
-#### BlockSignGenerator
+#### Document Generator
 
-* `org.mitumc.sdk.operation.blocksign.BlockSignGenerator`
-
-Using `BlockSignGenerator`, below methods are available.
+Using `Generator.md()`, below methods are available.
 
 ```java
-CreateDocumentsItem getCreateDocumentsItem(String fileHash, int documentId, String signcode, String title, int size, String currencyId, String[] signers, String[] signcodes);
-SignDocumentsItem getSignDocumentsItem(String owner, int documentId, String currencyId);
-
-BlockSignFact getBlockSignFact(String sender, CreateDocumentsItem[] items);
-BlockSignFact getBlockSignFact(String sender, SignDocumentsItem[] items);
+CreateDocumentsItem getCreateDocumentsItem(Document document, String currencyId);
+UpdateDocumentsItem getUpdateDocumentsItem(Document document, String currencyId);
+CreateDocumentsFact getCreateDocumentsFact(String sender, CreateDocumentsItem[] items);
+UpdateDocumentsFact getUpdateDocumentsFact(String sender, UpdateDocumentsItem[] items);
 ```
 
-#### BlockCityGenerator
+Note that create-documents and update-documents of `mitum-document` are common operations of `blocksign` and `blockcity`.
 
-* `org.mitumc.sdk.operation.blockcity.BlockCityGenerator`
+So `md` helps to generate `item` and `fact` of those operations simultaneously.
 
-Using `BlockCityGenerator`, below methods are available.
+1. Using `Generator.md().bs()` below methods are available.
 
 ```java
-@Deprecated Candidate candidate(String address, String nickname, String manifest);
-Candidate candidate(String address, String nickname String manifest, int count);
-Info info(String docType, String documentId);
+BlockSignUser user(String address, String signCode, boolean signed);
+Document document(String documentId, String owner, String fileHash, BlockSignUser creator, String title, String size, BlockSignUser[] signers);
+
+SignDocumentsItem getSignDocumentsItem(String documentId, String owner, String currencyId);
+SignDocumentsFact getSignDocumentsFact(String sender, SignDocumentsItem[] items);
+```
+
+Note that `sign-documents` is provided only for `blocksign`.
+
+So what supports sign-documents is `Generator.md().bs()` rather than `Generator.md()`.
+
+The output of `user` is served as 'creator' or 'signer' of `document`.
+
+2. Using `Generator.md().bc()`, below methods are available.
+
+```java
+Candidate candidate(String address, String nickname, String manifest, int count);
 UserStatistics userStatistics(int hp, int strength, int agility, int dexterity, int charisma, int intelligence, int vital);
 
-Document document(Info info, String owner, int gold, int bankGold, UserStatistics statistics);
-Document document(Info info, String owner, String address, String area, String renter, String account, String rentDate, int period);
-Document document(Info info, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office);
-Document document(Info info, String owner, String name, String account, String date, String usage, String app);
-
-BlockCityItem getCreateDocumentsItem(T document, String currencyId);
-BlockCityItem getUpdateDocumentsItem(T document, String currencyId);
-
-BlockCityFact getCreateDocumentsFact(String sender, BlockCityItem<T>[] items);
-BlockCityFact getUpdateDocumentsFact(String sender, BlockCityItem<T>[] items);
+Document document(String documentId, String owner, int gold, int bankGold, UserStatistics statistics);
+Document document(String documentId, String owner, String address, String area, String renter, String account, String rentDate, int period);
+Document document(String documentId, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office);
+Document document(String documentId, String owner, String name, String account, String date, String usage, String app);
 ```
 
 #### Generate Operation by Generator
@@ -266,7 +260,7 @@ BlockCityFact getUpdateDocumentsFact(String sender, BlockCityItem<T>[] items);
 
 ```java
 Operation getOperation(OperationFact fact);
-Operation getOperation(String memo, OperationFact fact);
+Operation getOperation(OperationFact fact, String memo);
 HashMap<String, Object> getSeal(String signKey, Operation[] operations);
 ```
 
@@ -280,7 +274,7 @@ Each key in the account has a corresponding weight(1 <= weight <= 100).
 
 And, the account has threshold(1 <= threshold <= 100) which should be smaller than or equal to the sum of all weights of account keys.
 
-To get address, use `CurrencyGenerator`.
+To get address, use `Generator.mc()`.
 
 #### How to Get Address
 
@@ -292,16 +286,11 @@ import org.mitumc.key.Keys
 */
 Generator generator = Generator.get("mitum");
 
-Key key = generator.currency().key("24TbbrNYVngpPEdq6Zc5rD1PQSTGQpqwabB9nVmmonXjqmpu", 100);
-Keys keys = generator.currency().keys(100);
-keys.addKey(key);
-
-Keys keys2 = generator.currency().keys(new Key[]{key}, 100);
+Key key = generator.mc().key("24TbbrNYVngpPEdq6Zc5rD1PQSTGQpqwabB9nVmmonXjqmpu", 100);
+Keys keys = generator.mc().keys(new Key[]{key}, 100);
 
 String address = keys.getAddress(); // your address
 ```
-
-Note that 'keys' and 'keys2' work same.
 
 ### Generate JSON File from Operation and Seal
 
@@ -322,7 +311,7 @@ void createJSON(HashMap target, String fpName);
 
 A use-case of `JSONParser` will be introduced in the next part, too.
 
-## Generate Currency Operations
+## Generate Currency Operation
 
 This part explains how to generate currency operations by `Generator`.
 
@@ -335,6 +324,10 @@ Supported operations are
 ### Generate Create-Accounts 
 
 For new account, `currency id` and `initial amount` must be set. With source account, you can create and register new account of target public key.
+
+Note that source account must be already registered one.
+
+When you use `Generator`, you must set `network id` before you create something.
 
 #### Usage
 
@@ -354,13 +347,12 @@ String targetPub = "knW2wVXH399P9Xg8aVjAGuMkk3uTBZwcSpcy4aR3UjiAmpu";
 
 Generator gn = Generator.get("mitum");
 
-Key key = gn.currency().key(targetPub, 100);
-Keys keys = gn.currency().keys(new Key[]{key}, 100);
+Key key = gn.mc().key(targetPub, 100);
+Keys keys = gn.mc().keys(new Key[] { keys }, 100);
+Amount amount = gn.mc().amount("PEN", "100");
 
-Amount amount = gn.currency().amount("MCC", "1000");
-CreateAccountsItem item = gn.currency().getCreateAccountsItem(keys, new Amount[]{amount});
-
-CreateAccountsFact fact = gn.currency().getCreateAccountsFact(sourceAddr, new CreateAccountsItem[]{item});
+CreateAccountsItem item = gn.mc().getCreateAccountsItem(keys, new Amount[] { amount });
+CreateAccountsFact fact = gn.mc().getCreateAccountsFact(sourceAddr, new CreateAccountsItem[] { item });
 
 Operation operation = gn.getOperation(fact);
 operation.addSign(sourcePriv);
@@ -369,8 +361,6 @@ JSONParser.createJSON(operation.toDict(), "createaccounts.json");
 ```
 
 You must add new fact signature by `addSign()` before creating operation json files.
-
-If you would like to change 'network id' for the operation, use `getOperation(fact, networkId)` or `getOperation(memo, fact, networkId)` instead of `getOperation(fact)` and `getOperation(memo, fact)`
 
 With `JSONParser.createJSON(target, fileName)`, the result format will be like [this](example/createaccounts.json). (Each value is up to input arguments and time)
 
@@ -395,10 +385,10 @@ String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
 
 String targetPub = "27uxAwUpvdc9sbRgztW8LrNoHnBmwgKavGuU6KvWzCgnimpu";
 
-Key key = gn.currency().key(targetPub, 100);
-Keys keys = gn.currency().keys(new Key[]{key}, 100);
+Key key = gn.mc().key(targetPub, 100);
+Keys keys = gn.mc().keys(new Key[]{key}, 100);
 
-KeyUpdaterFact fact = gn.currency().getKeyUpdaterFact(sourceAddr, "MCC", keys);
+KeyUpdaterFact fact = gn.mc().getKeyUpdaterFact(sourceAddr, "MCC", keys);
 Operation operation = gn.getOperation(fact);
 operation.addSign(sourcePriv);
 
@@ -427,10 +417,10 @@ String targetAddr = "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca";
 
 Generator gn = Generator.get("mitum");
 
-Amount amount = gn.currency().getAmount("MCC", "1000");
-TransfersItem item = gn.currency().getTransfersItem(targetAddr, new Amount[]{amount});
+Amount amount = gn.mc().getAmount("MCC", "1000");
+TransfersItem item = gn.mc().getTransfersItem(targetAddr, new Amount[]{ amount });
 
-TransfersFact fact = gn.currency().getTransfersFact(sourceAddr, new TransfersItem[]{item});
+TransfersFact fact = gn.mc().getTransfersFact(sourceAddr, new TransfersItem[]{ item });
 
 Operation operation = gn.getOperation(fact);
 operation.addSign(sourcePriv);
@@ -438,79 +428,63 @@ operation.addSign(sourcePriv);
 JSONParser.createJSON(operation.toDict(), "transfers.json");
 ```
 
-## Generate BlockSign Operations
+## Generate Document Operation
 
-This part explains how to generate blocksign operations by `Generator`.
+To create or update documents, you must prepare available document object for each operation item.
 
-Supported operations are
+For example, 'blocksign' supports one type of 'document', blocksign document, which hint is `mitum-blocksign-document-data`.
 
-* Create-Documents
-* Sign-Documents
+However, 'blockcity' supports four types of 'document', user/land/vote/history document, with hints different with blocksign.
 
-### Generate BlockSign Create-Documents
+That means you must generate a document corresponding to the document type you want.
 
-To generate an operation, you must prepare file-hash. Create-Document supports to create documents with setting signers who must sign them.
+So first, we will introduce how to generate a document for each type.
 
-#### Usage
+### Generate BlockSign Documents
 
-```java
-/*
-import org.mitumc.sdk.Generator;
-import org.mitumc.sdk.JSONParser;
-import org.mitumc.sdk.operation.Operation;
-import org.mitumc.sdk.operation.blocksign.*;
-*/
-String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
-String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
+As mentioned, blocksign uses only one document type, blocksign document.
 
-Generator gn = Generator.get("mitum");
+First, you must prepare a creator and signers.
 
-CreateDocumentsItem item = gn.blockSign().getCreateDocumentsItem("absscd:mbfh-v0.0.1", 300, "user03", "title300", 1234, "MCC", new String[0], new String[]{"user04"});
-BlockSignFact<CreateDocumentsItem> fact = gn.blockSign().getBlockSignFact(sourceAddr, new CreateDocumentsItem[]{item});
+For convenience, call each of them `user`.
 
-Operation operation = gn.getOperation(fact);
-operation.addSign(sourcePriv);
+A `user` can be generated by `Generator.md().bs().user(address, signCode, signed)`
 
-JSONParser.createJSON(operation.toDict(), "createdocuments.json");
-```
+What you have to prepare to generate document are
 
-### Generate BlockSign Sign-Documents
+* document id
+* owner
+* file hash
+* creator - from `user`
+* title
+* file size
+* a signer list - signers from `user`
 
-To generate an operation, you must prepare owner and document id. Sign-Document supports to sign documents registered by 'mitum-data-blocksign'
+Note that every document ids of blocksign are followed by the type suffix `sdi`.
 
 #### Usage
 
 ```java
 /*
 import org.mitumc.sdk.Generator;
-import org.mitumc.sdk.JSONParser;
-import org.mitumc.sdk.operation.Operation;
-import org.mitumc.sdk.operation.blocksign.*;
+import org.mitumc.sdk.operation.document.Document;
+import org.mitumc.sdk.operation.document.blocksign.BlockSignUser;
 */
-String sourcePriv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
-String sourceAddr = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
+String signer1 = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
+String signer2 = "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca";
 
 Generator gn = Generator.get("mitum");
 
-SignDocumentsItem item = gn.blockSign().getSignDocumentsItem(sourceAddr, 0, "MCC");
-BlockSignFact<SignDocumentsItem> fact = gn.blockSign().getBlockSignFact(sourceAddr, new SignDocumentsItem[]{item});
+BlockSignUser creator = gn.md().bs().user(signer1, "signcode01", true);
+BlockSignUser user1 = gn.md().bs().user(signer1, "signcode01", true);
+BlockSignUser user2 = gn.md().bs().user(signer2, "signcode02", false);
 
-Operation operation = gn.getOperation(fact);
-operation.addSign(sourcePriv);
-
-JSONParser.createJSON(operation.toDict(), "signdocuments.json");
+Document document = gn.md().bs().document("4000sdi", signer1, "test-hs:01", creator, "test-doc-01", "12345", new BlockSignUser[] { user1, user2 });
 ```
 
-## Generate BlockCity Operations
+### Generate BlockCity Documents
 
-This part shows how to genereate blockcity operations with `Generator`.
-
-Supported operations are
-
-* Create-Documents
-* Sign-Documents
-
-Supported document types are
+Supported document types of blockcity are
 
 * User Data
 * Land Data
@@ -524,7 +498,11 @@ Note a document id for each document type has a unique suffix.
 * vote data: cvi
 * history data: chi
 
-### Generate User Document
+Those documents are used only by blockcity.
+
+If you wonder what each argument means, see [Generator](#generator).
+
+#### User Document
 
 What you must prepare before generate a user document are,
 
@@ -537,17 +515,17 @@ What you must prepare before generate a user document are,
 
 ```java
 /*
-import org.mitumc.sdk.operation.blockcity.*;
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.operation.document.Document;
+import org.mitumc.sdk.operation.document.blockcity.UserStatistics;
 */
-Info info = generator.blockCity().info(Document.DOCTYPE_USER_DATA, "4cui");
-UserStatistics userStatic = generator.blockCity().userStatistics(1, 1, 1, 1, 1, 1, 1);
-    
-Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", 10, 10, userStatic);       
+Generator gn = Generator.get("mitum");
+
+UserStatistics statistics = gn.md().bc().userStatistics(1, 1, 1, 1, 1, 1, 1);
+Document document = gn.md().bc().document("user01cui", "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca", 1, 1, statistics);      
 ```
 
-If you wonder what value needs for each parameter, see [Generator](#generator).
-
-### Generate Land Document
+#### Land Document
 
 What you must prepare are,
 
@@ -555,23 +533,23 @@ What you must prepare are,
 * document owner
 * address to rent
 * area to rent
-* renter
-* account who rents
+* renter who rent
+* account who rent
 * rent date and period
 
 #### Usage
 
 ```java
 /*
-import org.mitumc.sdk.operation.blockcity.*;
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.operation.document.Document;
 */
-Info info = generator.blockCity().info(Document.DOCTYPE_LAND_DATA, "4cli");
-Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", "abcd", "city1", "foo", "8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "2021-10-10", 10);
+Generator gn = Generator.get("mitum");
+
+Document document = gn.md().bc().document("land01cli", "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca", "addr-01", "area-01", "renter01", "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca", "2022-02-02", 5);
 ```
 
-If you wonder what value needs for each parameter, see [Generator](#generator).
-
-### Generate Vote Document
+#### Vote Document
 
 What you must prepare are,
 
@@ -588,18 +566,17 @@ What you must prepare are,
 
 ```java
 /*
-import org.mitumc.sdk.operation.blockcity.*;
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.operation.document.Document;
 */
-Info info = generator.blockCity().info(Document.DOCTYPE_VOTE_DATA, "5cvi");
-Candidate c1 = generator.blockCity().candidate("8sXvbEaGh1vfpSWSib7qiJQQeqxVJ5YQRPpceaa5rd9Ymca", "foo", "", 1);
-Candidate c2 = generator.blockCity().candidate("Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "foo2", "", 2);
+Generator gn = Generator.get("mitum");
 
-Document document = generator.blockCity().document(info, "5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", 1, "2022-01-02", new Candidate[]{ c1, c2 }, "foo", "Gu5xHjhos5WkjGo9jKmYMY7dwWWzbEGdQCs11QkyAhh8mca", "2022");
+Candidate c1 = gn.md().bc().candidate("FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca", "nickname-01", "HI", 1);
+Candidate c2 = gn.md().bc().candidate("77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca", "nickname-02", "HELLO", 2);   
+Document document = gn.md().bc().document("vote01cvi", "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca", 1, "2022-02-28T02:20:34.333Z", new Candidate[] { c1, c2 }, "boss01", "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca", "5");
 ```
 
-If you wonder what value needs for each parameter, see [Generator](#generator).
-
-### Generate History Document
+#### History Document
 
 What you must prepare are,
 
@@ -615,15 +592,57 @@ What you must prepare are,
 
 ```java
 /*
-import org.mitumc.sdk.operation.blockcity.*;
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.operation.document.Document;
 */
-Info info = generator.blockCity().info(Document.DOCTYPE_HISTORY_DATA, "1000chi");
-Document document = generator.blockCity().document(info, "8iRVFAPiHKaeznfN3CmNjtFtjYSPMPKLuL6qkaJz8RLumca", "abcd", "8iRVFAPiHKaeznfN3CmNjtFtjYSPMPKLuL6qkaJz8RLumca", "2022-02-01T00:00:00.000+09:00", "bob", "foo");
+Generator gn = Generator.get("mitum");
+
+Document document = gn.md().bc().document("hist01chi", "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca", "hello", "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca", "2022-02-25T08:03:22.234Z", "usage090", "app090");
 ```
 
-If you wonder what value needs for each parameter, see [Generator](#generator).
+### Generate Create-Documents
 
-### Generate BlockCity Create-Documents
+All models based on 'mitum-document' are played with operations,  'create-documents' and 'update-documents'.
+
+So in this section, we will introduce how to generate create-documents and update-documents operation with documents you prepared.
+
+About generating documents, go to the previous section.
+
+To generate create-documents operation, you have to prepare,
+
+* currency id for fees
+* document
+* sender's address and private key
+
+#### Usage
+
+```java
+/*
+import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.document.*;
+import org.mitumc.sdk.operation.Operation;
+*/
+Generator gn = Generator.get("mitum");
+
+String sender = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
+String priv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
+// document: Document object you made
+
+CreateDocumentsItem item = gn.md().getCreateDocumentsItem(document, "PEN");
+CreateDocumentsFact fact = gn.md().getCreateDocumentsFact(sender, new CreateDocumentsItem[] { item });
+
+Operation operation = gn.getOperation(fact);
+operation.addSign(priv);
+
+JSONParser.createJSON(operation.toDict(), "createdocuments.json");
+```
+
+See the start of [Generate Document Operations](#generate-document-operations) for `Document`.
+
+See [Generator](#generator) for details.
+
+### Generate Update-Documents
 
 To generate create-documents operation, you have to prepare,
 
@@ -635,53 +654,62 @@ To generate create-documents operation, you have to prepare,
 
 ```java
 /*
-import org.mitumc.sdk.operation.blockcity.*;
-import org.mitumc.sdk.operation.Operation;
+import org.mitumc.sdk.Generator;
 import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.document.*;
+import org.mitumc.sdk.operation.Operation;
 */
-// type of document: org.mitumc.sdk.operation.blockcity.Document
-BlockCityItem item = generator.blockCity().getCreateDocumentsItem(document, "PEN");
-BlockCityFact fact = generator.blockCity().getCreateDocumentsFact("5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", new BlockCityItem[]{ item });
+Generator gn = Generator.get("mitum");
 
-Operation operation = generator.getOperation(fact);
-operation.addSign("Kz5gif6kskQA8HD6GeEjPse1LuqF8d3WFEauTSAuCwD1h94vboyAmpr");
+String sender = "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca";
+String priv = "KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr";
+// document: Document object you made
 
-JSONParser.createJSON(operation.toDict(), "create_documents.json");
+UpdateDocumentsItem item = gn.md().getUpdateDocumentsItem(document, "PEN");
+UpdateDocumentsFact fact = gn.md().getUpdateDocumentsFact(sender, new UpdateDocumentsItem[] { item });
+
+Operation operation = gn.getOperation(fact);
+operation.addSign(priv);
+
+JSONParser.createJSON(operation.toDict(), "updatedocuments.json");
 ```
 
-See the start of [Generate BlockCity Operations](#generate-blockcity-operations) for `Document`.
+See the start of [Generate Document Operations](#generate-document-operations) for `Document`.
 
 See [Generator](#generator) for details.
 
-### Generate BlockCity Update-Documents
+### Generate BlockSign Sign-Documents
 
-To generate create-documents operation, you have to prepare,
+As mentioned, `sign-documents` operation is used only for 'blocksign'.
 
-* currency id for fees
-* document object generated along the above instructions.
-* sender's address and private key
+So you must use blocksign specific generator, `Generator.md().bs()` to generate items and facts of sign-documents.
+
+To generate a sign-document's item, you must prepare
+
+* document id
+* owner's address
+* currency id for fee
+
+Note that you don't have to prepare document for 'sign-documents'. Only document id is needed.
 
 #### Usage
 
 ```java
 /*
-import org.mitumc.sdk.operation.blockcity.*;
-import org.mitumc.sdk.operation.Operation;
+import org.mitumc.sdk.Generator;
 import org.mitumc.sdk.JSONParser;
+import org.mitumc.sdk.operation.document.blocksign.*;
 */
-// type of document: org.mitumc.sdk.operation.blockcity.Document
-BlockCityItem item = generator.blockCity().getUpdateDocumentsItem(document, "PEN");
-BlockCityFact fact = generator.blockCity().getUpdateDocumentsFact("5KGBDDsmNXCa69kVAgRxDovu7JWxdsUxtAz7GncKxRfqmca", new BlockCityItem[]{ item });
+Generator gn = Generator.get("mitum");
 
-Operation operation = generator.getOperation(fact);
-operation.addSign("Kz5gif6kskQA8HD6GeEjPse1LuqF8d3WFEauTSAuCwD1h94vboyAmpr");
+SignDocumentsItem item = gn.md().bs().getSignDocumentsItem("4000sdi", "FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca", "PEN");
+SignDocumentsFact fact = gn.md().bs().getSignDocumentsFact("FcLfoPNCYjSMnxLPiQJQFGTV15ecHn3xY4J2HNCrqbCfmca", new SignDocumentsItem[] { item });
 
-JSONParser.createJSON(operation.toDict(), "update_documents.json");
+Operation operation = gn.getOperation(fact);
+operation.addSign("KzafpyGojcN44yme25UMGvZvKWdMuFv1SwEhsZn8iF8szUz16jskmpr");
+
+JSONParser.createJSON(operation.toDict(), "signdocuments.json");
 ```
-
-See the start of [Generate BlockCity Operations](#generate-blockcity-operations) for `Document`.
-
-See [Generator](#generator) for details.
 
 ## Generate New Seal
 
@@ -722,9 +750,13 @@ Then the result format of `createJSON(seal, fileName)` will be like [this](examp
 
 ## Send Messages to Network
 
-Send created json files to the network by 'mitum-currency' and 'mitum-data-blocksign'.
+Use `curl` to broadcast your operations.
 
-See [mitum-currency](https://github.com/ProtoconNet/mitum-currency) and [mitum-data-blocksign](https://github.com/ProtoconNet/mitum-data-blocksign).
+```shell
+~$ curl -X POST -H "Content-Type: application/json" -d @seal.json https://{mitum network address}/builder/send
+```
+
+* seal.json is your seal file.
 
 ## Sign Message
 

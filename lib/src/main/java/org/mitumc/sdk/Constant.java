@@ -28,11 +28,11 @@ public class Constant {
     public static final String SEAL = "seal";
 
     public static final String MD_CREATE_DOCUMENTS_ITEM = "mitum-create-documents-item";
-    public static final String MD_CREATE_DOCUMENTS_OP_FACT = "mitum-create-documents-operation-fact";
-    public static final String MD_CREATE_DOCUMENTS_OP = "mitum-create-documents-operation";
+    public static final String MD_CREATE_DOCUMENTS_OPERATION_FACT = "mitum-create-documents-operation-fact";
+    public static final String MD_CREATE_DOCUMENTS_OPERATION = "mitum-create-documents-operation";
     public static final String MD_UPDATE_DOCUMENTS_ITEM = "mitum-update-documents-item";
-    public static final String MD_UPDATE_DOCUMENTS_OP_FACT = "mitum-update-documents-operation-fact";
-    public static final String MD_UPDATE_DOCUMENTS_OP = "mitum-update-documents-operation";
+    public static final String MD_UPDATE_DOCUMENTS_OPERATION_FACT = "mitum-update-documents-operation-fact";
+    public static final String MD_UPDATE_DOCUMENTS_OPERATION = "mitum-update-documents-operation";
     public static final String MD_DOCUMENT_INFO = "mitum-document-info";
     public static final String MD_DOCUMENT_ID = "mitum-document-id";
 
@@ -41,8 +41,8 @@ public class Constant {
     public static final String MBS_DOCUMENT_DATA = "sdi";
 
     public static final String MBS_SIGN_ITEM_SINGLE_DOCUMENT = "mitum-blocksign-sign-item-single-document";
-    public static final String MBS_SIGN_DOCUMENTS_OP_FACT = "mitum-blocksign-sign-documents-operation-fact";
-    public static final String MBS_SIGN_DOCUMENTS_OP = "mitum-blocksign-sign-documents-operation";
+    public static final String MBS_SIGN_DOCUMENTS_OPERATION_FACT = "mitum-blocksign-sign-documents-operation-fact";
+    public static final String MBS_SIGN_DOCUMENTS_OPERATION = "mitum-blocksign-sign-documents-operation";
 
     public static final String MBC_USER_DATA = "cui";
     public static final String MBC_LAND_DATA = "cli";

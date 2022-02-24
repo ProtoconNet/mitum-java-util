@@ -7,11 +7,11 @@ import org.mitumc.sdk.util.Hint;
 
 public class UpdateDocumentsFact extends GeneralDocumentsFact {
     UpdateDocumentsFact(String sender, DocumentsItem[] items) {
-        super(Constant.MD_UPDATE_DOCUMENTS_OP_FACT, sender, items);
+        super(Constant.MD_UPDATE_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MD_UPDATE_DOCUMENTS_OP);
+        return new Hint(Constant.MD_UPDATE_DOCUMENTS_OPERATION);
     }
 }

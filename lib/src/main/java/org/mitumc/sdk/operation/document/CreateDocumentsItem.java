@@ -1,7 +1,6 @@
 package org.mitumc.sdk.operation.document;
 
 import org.mitumc.sdk.Constant;
-import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.base.GeneralDocumentsItem;
 
 

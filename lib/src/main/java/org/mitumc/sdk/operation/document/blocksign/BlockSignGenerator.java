@@ -1,6 +1,7 @@
 package org.mitumc.sdk.operation.document.blocksign;
 
 import org.mitumc.sdk.operation.base.OperationGenerator;
+import org.mitumc.sdk.operation.document.Document;
 import org.mitumc.sdk.operation.document.blocksign.doc.BlockSignDocument;
 
 
@@ -18,7 +19,7 @@ public class BlockSignGenerator extends OperationGenerator {
         return new BlockSignUser(address, signCode, signed);
     }
 
-    public BlockSignDocument document(String documentId, String owner, String fileHash, BlockSignUser creator, String title, String size, BlockSignUser[] signers) {
+    public Document document(String documentId, String owner, String fileHash, BlockSignUser creator, String title, String size, BlockSignUser[] signers) {
         return new BlockSignDocument(documentId, owner, fileHash, creator, title, size, signers);
     }
     

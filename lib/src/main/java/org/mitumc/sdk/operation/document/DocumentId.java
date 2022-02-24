@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.util.Hint;
-import org.mitumc.sdk.util.RegExp;
 import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.Constant;
 
@@ -15,8 +14,6 @@ public class DocumentId implements BytesConvertible, HashMapConvertible {
     private String type;
 
     public DocumentId(String documentId) {
-        RegExp.assertBlockCityDocumentId(documentId);
-
         HashMap<String, String> parsed = Util.parseDocumentId(documentId);
         this.id = parsed.get("id");
         this.type = parsed.get("suffix");
