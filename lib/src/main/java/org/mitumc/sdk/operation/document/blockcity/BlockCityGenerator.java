@@ -1,7 +1,7 @@
 package org.mitumc.sdk.operation.document.blockcity;
 
 import org.mitumc.sdk.operation.base.OperationGenerator;
-import org.mitumc.sdk.operation.document.base.Document;
+import org.mitumc.sdk.operation.document.Document;
 import org.mitumc.sdk.operation.document.blockcity.doc.HistoryDocument;
 import org.mitumc.sdk.operation.document.blockcity.doc.LandDocument;
 import org.mitumc.sdk.operation.document.blockcity.doc.UserDocument;

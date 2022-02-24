@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import org.mitumc.sdk.operation.document.base.Document;
+import org.mitumc.sdk.operation.document.Document;
 import org.mitumc.sdk.operation.document.blocksign.BlockSignUser;
 import org.mitumc.sdk.operation.document.blocksign.info.BlockSignGeneralInfo;
 import org.mitumc.sdk.util.BigInt;

@@ -17,14 +17,14 @@ public abstract class Info implements BytesConvertible, HashMapConvertible {
     private DocumentId documentId;
 
     protected Info(String docType, String documentId) {
-        assertInfo(documentId);
+        assertInfo(docType, documentId);
         this.hint = new Hint(Constant.MD_DOCUMENT_INFO);
         this.docType = docType;
         this.documentId = new DocumentId(documentId);
     }
 
-    private void assertInfo(String documentId) {
-        if(docType == Constant.MBS_DOCTYPE_DOCUMENT_DATA) {
+    private void assertInfo(String docType, String documentId) {
+        if(docType.equals(Constant.MBS_DOCTYPE_DOCUMENT_DATA)) {
             RegExp.assertBlockSignDocumentId(documentId);
         }
         else {

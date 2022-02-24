@@ -1,6 +1,8 @@
 package org.mitumc.sdk.operation.document.base;
 
 import java.util.HashMap;
+
+import org.mitumc.sdk.operation.document.Document;
 import org.mitumc.sdk.util.Util;
 
 public class GeneralDocumentsItem extends DocumentsItem {

@@ -7,7 +7,6 @@ import org.mitumc.sdk.util.Hint;
 public class CreateAccountsFact extends GeneralOperationFact<CreateAccountsItem> {
     CreateAccountsFact(String sender, CreateAccountsItem[] items) {
         super(Constant.MC_CREATE_ACCOUNTS_OPERATION_FACT, sender, items);
-        generateHash();
     }
 
     @Override

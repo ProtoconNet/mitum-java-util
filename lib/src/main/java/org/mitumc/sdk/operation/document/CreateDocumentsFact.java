@@ -8,11 +8,11 @@ import org.mitumc.sdk.util.Hint;
 
 public class CreateDocumentsFact extends GeneralDocumentsFact {
     CreateDocumentsFact(String sender, DocumentsItem[] items) {
-        super(Constant.MD_CREATE_DOCUMENTS_OP_FACT, sender, items);
+        super(Constant.MD_CREATE_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MD_CREATE_DOCUMENTS_OP);
+        return new Hint(Constant.MD_CREATE_DOCUMENTS_OPERATION);
     }
 }
