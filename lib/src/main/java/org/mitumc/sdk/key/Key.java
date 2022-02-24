@@ -2,14 +2,14 @@ package org.mitumc.sdk.key;
 
 import java.util.HashMap;
 
-import org.mitumc.sdk.interfaces.BytesChangeable;
-import org.mitumc.sdk.interfaces.Dictionariable;
+import org.mitumc.sdk.interfaces.BytesConvertible;
+import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
-public class Key implements BytesChangeable, Dictionariable {
+public class Key implements BytesConvertible, HashMapConvertible {
     private Hint hint;
     private BaseKey key;
     private BigInt weight;

@@ -9,8 +9,8 @@ import org.mitumc.sdk.util.Util;
 public class CreateAccountsItem extends CurrencyItem {
     private Keys keys;
 
-    CreateAccountsItem(Keys keys, Amount[] amounts) {
-        super(ITEM_TYPE_C_CREATE_ACCOUNTS, amounts);
+    CreateAccountsItem(String itemType, Keys keys, Amount[] amounts) {
+        super(itemType, amounts);
         this.keys = keys;
     }
 

@@ -6,27 +6,19 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import org.mitumc.sdk.interfaces.BytesChangeable;
-import org.mitumc.sdk.interfaces.Dictionariable;
+import org.mitumc.sdk.interfaces.BytesConvertible;
+import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
-public class Keys implements BytesChangeable, Dictionariable {
+public class Keys implements BytesConvertible, HashMapConvertible {
     private Hint hint;
     private ArrayList<Key> keys;
     private BigInt threshold;
     private Hash hash;
-
-    @Deprecated
-    public Keys(int threshold) {
-        assertThreshold(threshold);
-        this.hint = new Hint(Constant.MC_KEYS);
-        this.keys =  new ArrayList<Key>();
-        this.threshold = new BigInt(Integer.toString(threshold));
-    }
 
     public Keys(Key[] keys, int threshold) {
         assertThreshold(threshold);
@@ -62,33 +54,12 @@ public class Keys implements BytesChangeable, Dictionariable {
         this.hash = new Hash(toBytes());
     }
 
-    @Deprecated
-    public void addKey(Key key) {
-        this.keys.add(key);
-        generateHash();
-    }
-
     public String getAddress() {
         return this.hash.getSha3Hash() + Constant.MC_ADDRESS;
     }
 
     public String getHash() {
         return this.hash.getSha3Hash();
-    }
-
-    @Deprecated
-    public boolean isOverThreshold() {
-        long sum = 0;
-
-        for (Key key : this.keys) {
-            sum += key.getWeight();
-        }
-
-        if (sum < Integer.parseInt(threshold.getValue())) {
-            return false;
-        }
-
-        return true;
     }
 
     @Override

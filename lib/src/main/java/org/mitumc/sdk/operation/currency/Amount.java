@@ -2,14 +2,14 @@ package org.mitumc.sdk.operation.currency;
 
 import java.util.HashMap;
 
-import org.mitumc.sdk.interfaces.BytesChangeable;
-import org.mitumc.sdk.interfaces.Dictionariable;
+import org.mitumc.sdk.interfaces.BytesConvertible;
+import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
-public class Amount implements BytesChangeable, Dictionariable {
+public class Amount implements BytesConvertible, HashMapConvertible {
     private Hint hint;
     private String currency;
     private BigInt amount;
