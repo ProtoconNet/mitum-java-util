@@ -18,13 +18,13 @@ import org.mitumc.sdk.operation.document.DocumentGenerator;
 
 public class Generator implements IdSettable {
     private String id;
-    private CurrencyGenerator mc;
-    private DocumentGenerator md;
+    private CurrencyGenerator currency;
+    private DocumentGenerator document;
 
     private Generator(String id) {
         this.id = id;
-        this.mc = CurrencyGenerator.get(id);
-        this.md = DocumentGenerator.get(id);
+        this.currency = CurrencyGenerator.get(id);
+        this.document = DocumentGenerator.get(id);
     }
 
     public static Generator get(String id) {
@@ -34,8 +34,8 @@ public class Generator implements IdSettable {
     @Override
     public void setId(String id) {
         this.id = id;
-        this.mc = CurrencyGenerator.get(id);
-        this.md = DocumentGenerator.get(id);
+        this.currency = CurrencyGenerator.get(id);
+        this.document = DocumentGenerator.get(id);
     }
 
     @Override
@@ -43,12 +43,12 @@ public class Generator implements IdSettable {
         return this.id;
     }
 
-    public CurrencyGenerator mc() {
-        return this.mc;
+    public CurrencyGenerator currency() {
+        return this.currency;
     }
 
-    public DocumentGenerator md() {
-        return this.md;
+    public DocumentGenerator document() {
+        return this.document;
     }
 
     public Operation getOperation(OperationFact fact) {

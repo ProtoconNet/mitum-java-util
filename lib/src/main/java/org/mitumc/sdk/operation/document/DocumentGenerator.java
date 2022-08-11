@@ -5,34 +5,34 @@ import org.mitumc.sdk.operation.document.blockcity.BlockCityGenerator;
 import org.mitumc.sdk.operation.document.blocksign.BlockSignGenerator;
 
 public class DocumentGenerator extends OperationGenerator {
-    private BlockSignGenerator bs;
-    private BlockCityGenerator bc;
+    private BlockSignGenerator blocksign;
+    private BlockCityGenerator blockcity;
     
     private DocumentGenerator(String id) {
         super(id);
         
-        this.bs = BlockSignGenerator.get(id);
-        this.bc = BlockCityGenerator.get(id);
+        this.blocksign = BlockSignGenerator.get(id);
+        this.blockcity = BlockCityGenerator.get(id);
     }
 
     public static DocumentGenerator get(String id) {
         return new DocumentGenerator(id);
     }
 
-    public BlockSignGenerator bs() {
-        return this.bs;
+    public BlockSignGenerator blocksign() {
+        return this.blocksign;
     }
 
-    public BlockCityGenerator bc() {
-        return this.bc;
+    public BlockCityGenerator blockcity() {
+        return this.blockcity;
     }
 
     @Override
     public void setId(String id) {
         super.setId(id);
 
-        this.bs = BlockSignGenerator.get(id);
-        this.bc = BlockCityGenerator.get(id);
+        this.blocksign = BlockSignGenerator.get(id);
+        this.blockcity = BlockCityGenerator.get(id);
     }
 
     @Override
