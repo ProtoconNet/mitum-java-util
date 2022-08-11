@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.mitumc.sdk.operation.base.Item;
 
-abstract class CurrencyItem extends Item {
+public abstract class CurrencyItem extends Item {
     protected ArrayList<Amount> amounts;
 
     protected CurrencyItem(String itemType, Amount[] amounts) {

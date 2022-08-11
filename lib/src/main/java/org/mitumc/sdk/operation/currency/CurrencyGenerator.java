@@ -4,18 +4,31 @@ import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Key;
 import org.mitumc.sdk.key.Keys;
 import org.mitumc.sdk.operation.base.OperationGenerator;
+import org.mitumc.sdk.operation.currency.extension.CurrencyExtensionGenerator;
 import org.mitumc.sdk.util.Util;
 
 public class CurrencyGenerator extends OperationGenerator {
+    private CurrencyExtensionGenerator extension;
     
     private CurrencyGenerator(String id) {
         super(id);
+        this.extension = CurrencyExtensionGenerator.get(id);
     }
 
     public static CurrencyGenerator get(String id) {
         return new CurrencyGenerator(id);
     }
 
+    public CurrencyExtensionGenerator extension() {
+        return this.extension;
+    }
+
+    @Override
+    public void setId(String id) {
+        super.setId(id);
+        this.extension = CurrencyExtensionGenerator.get(id);
+    }
+    
     public Key key(String key, int weight) {
         return new Key(key, weight);
     }

@@ -1,6 +1,5 @@
 package org.mitumc.sdk;
 
-
 public class Constant {
     public static final String VERSION = "v0.0.1";
     public static final String NETWORK_ID = "mitum";
@@ -53,12 +52,21 @@ public class Constant {
     public static final String MBC_DOCTYPE_LAND_DATA = "mitum-blockcity-document-land-data";
     public static final String MBC_DOCTYPE_VOTE_DATA = "mitum-blockcity-document-voting-data";
     public static final String MBC_DOCTYPE_HISTORY_DATA = "mitum-blockcity-document-history-data";
-    
+
     public static final String MBC_USER_DOCUMENT_ID = "mitum-blockcity-user-document-id";
     public static final String MBC_LAND_DOCUMENT_ID = "mitum-blockcity-land-document-id";
     public static final String MBC_VOTE_DOCUMENT_ID = "mitum-blockcity-voting-document-id";
     public static final String MBC_HISTORY_DOCUMENT_ID = "mitum-blockcity-history-document-id";
-    
+
     public static final String MBC_USER_STATISTICS = "mitum-blockcity-user-statistics";
     public static final String MBC_VOTING_CANDIDATE = "mitum-blockcity-voting-candidate";
+
+    public static final String MC_EXT_CREATE_CONTRACT_ACCOUNTS_OPERATION_FACT = "mitum-currency-create-contract-accounts-operation-fact";
+    public static final String MC_EXT_CREATE_CONTRACT_ACCOUNTS_OPERATION = "mitum-currency-create-contract-accounts-operation";
+    public static final String MC_EXT_CREATE_CONTRACT_ACCOUNTS_SIN_AMOUNT = "mitum-currency-create-contract-accounts-single-amount";
+    public static final String MC_EXT_CREATE_CONTRACT_ACCOUNTS_MUL_AMOUNTS = "mitum-currency-create-contract-accounts-multiple-amounts";
+    public static final String MC_EXT_WITHDRAWS_OPERATION_FACT = "mitum-currency-contract-account-withdraw-operation-fact";
+    public static final String MC_EXT_WITHDRAWS_OPERATION = "mitum-currency-contract-account-withdraw-operation";
+    public static final String MC_EXT_WITHDRAWS_SIN_AMOUNT = "mitum-currency-withdraws-item-single-amount";
+    public static final String MC_EXT_WITHDRAWS_MUL_AMOUNTS = "mitum-currency-withdraws-item-multi-amounts";
 }
