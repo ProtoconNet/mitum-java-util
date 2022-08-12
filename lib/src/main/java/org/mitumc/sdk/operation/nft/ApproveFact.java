@@ -1,5 +1,16 @@
 package org.mitumc.sdk.operation.nft;
 
-public class ApproveFact {
-    
+import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.util.Hint;
+import org.mitumc.sdk.operation.base.GeneralOperationFact;
+
+public class ApproveFact extends GeneralOperationFact<ApproveItem> {
+    ApproveFact(String sender, ApproveItem[] items) {
+        super(Constant.MNFT_APPROVE_OPERATION_FACT, sender, items);
+    }
+
+    @Override
+    public Hint getOperationHint() {
+        return new Hint(Constant.MNFT_APPROVE_OPERATION);
+    }
 }

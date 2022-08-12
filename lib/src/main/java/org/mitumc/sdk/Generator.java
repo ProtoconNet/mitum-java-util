@@ -15,6 +15,7 @@ import org.mitumc.sdk.operation.base.OperationFact;
 import org.mitumc.sdk.operation.currency.CurrencyGenerator;
 import org.mitumc.sdk.operation.document.DocumentGenerator;
 import org.mitumc.sdk.operation.feefi.FeefiGenerator;
+import org.mitumc.sdk.operation.nft.NFTGenerator;
 
 
 public class Generator implements IdSettable {
@@ -22,12 +23,14 @@ public class Generator implements IdSettable {
     private CurrencyGenerator currency;
     private DocumentGenerator document;
     private FeefiGenerator feefi;
+    private NFTGenerator nft;
 
     private Generator(String id) {
         this.id = id;
         this.currency = CurrencyGenerator.get(id);
         this.document = DocumentGenerator.get(id);
         this.feefi = FeefiGenerator.get(id);
+        this.nft = NFTGenerator.get(id);
     }
 
     public static Generator get(String id) {
@@ -40,6 +43,7 @@ public class Generator implements IdSettable {
         this.currency = CurrencyGenerator.get(id);
         this.document = DocumentGenerator.get(id);
         this.feefi = FeefiGenerator.get(id);
+        this.nft = NFTGenerator.get(id);
     }
 
     @Override
@@ -57,6 +61,10 @@ public class Generator implements IdSettable {
 
     public FeefiGenerator feefi() {
         return this.feefi;
+    }
+
+    public NFTGenerator nft() {
+        return this.nft;
     }
 
     public Operation getOperation(OperationFact fact) {
