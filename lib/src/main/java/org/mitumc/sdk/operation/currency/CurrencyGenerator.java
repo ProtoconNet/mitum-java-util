@@ -4,6 +4,7 @@ import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Key;
 import org.mitumc.sdk.key.Keys;
 import org.mitumc.sdk.operation.base.OperationGenerator;
+import org.mitumc.sdk.operation.currency.base.Amount;
 import org.mitumc.sdk.operation.currency.extension.CurrencyExtensionGenerator;
 import org.mitumc.sdk.util.Util;
 

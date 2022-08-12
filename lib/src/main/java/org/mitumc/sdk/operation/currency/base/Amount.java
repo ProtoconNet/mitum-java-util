@@ -1,4 +1,4 @@
-package org.mitumc.sdk.operation.currency;
+package org.mitumc.sdk.operation.currency.base;
 
 import java.util.HashMap;
 
@@ -14,7 +14,7 @@ public class Amount implements BytesConvertible, HashMapConvertible {
     private String currency;
     private BigInt amount;
 
-    Amount(String currency, String amount) {
+    public Amount(String currency, String amount) {
         this.hint = new Hint(Constant.MC_AMOUNT);
         this.currency = currency;
         this.amount = new BigInt(amount);

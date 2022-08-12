@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.operation.currency.Amount;
-import org.mitumc.sdk.operation.currency.CurrencyItem;
+import org.mitumc.sdk.operation.currency.base.Amount;
+import org.mitumc.sdk.operation.currency.base.CurrencyItem;
 import org.mitumc.sdk.util.Util;
 
 public class WithdrawsItem extends CurrencyItem {
     private Address target;
 
-    WithdrawsItem(String itemType, Address target, Amount[] amounts) {
+    WithdrawsItem(String itemType, String target, Amount[] amounts) {
         super(itemType, amounts);
-        this.target = target;
+        this.target = new Address(target);
     }
 
     @Override
     public byte[] toBytes() {
-        byte[] bTarget = this.target.toBytes();
+        byte[] btarget = this.target.toBytes();
         byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
         
-        return Util.concatByteArray(bTarget, bamounts);
+        return Util.concatByteArray(btarget, bamounts);
     }
 
     @Override

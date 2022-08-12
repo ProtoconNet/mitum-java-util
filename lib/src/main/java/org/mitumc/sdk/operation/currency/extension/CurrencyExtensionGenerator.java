@@ -1,11 +1,9 @@
 package org.mitumc.sdk.operation.currency.extension;
 
 import org.mitumc.sdk.Constant;
-import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.key.Key;
 import org.mitumc.sdk.key.Keys;
 import org.mitumc.sdk.operation.base.OperationGenerator;
-import org.mitumc.sdk.operation.currency.Amount;
+import org.mitumc.sdk.operation.currency.base.Amount;
 import org.mitumc.sdk.util.Util;
 
 public class CurrencyExtensionGenerator extends OperationGenerator {
@@ -16,14 +14,6 @@ public class CurrencyExtensionGenerator extends OperationGenerator {
 
     public static CurrencyExtensionGenerator get(String id) {
         return new CurrencyExtensionGenerator(id);
-    }
-
-    public Key key(String key, int weight) {
-        return new Key(key, weight);
-    }
-
-    public Keys keys(Key[] keys, int threshold) {
-        return new Keys(keys, threshold);
     }
 
     public CreateContractAccountsItem getCreateContractAccountsItem(Keys keys, Amount[] amounts) {
@@ -39,7 +29,7 @@ public class CurrencyExtensionGenerator extends OperationGenerator {
         }
     }
 
-    public WithdrawsItem getWithdrawsItem(Address target, Amount[] amounts) {
+    public WithdrawsItem getWithdrawsItem(String target, Amount[] amounts) {
         if(amounts.length >= 1) {
             return new WithdrawsItem(Constant.MC_EXT_WITHDRAWS_MUL_AMOUNTS, target, amounts);
         }

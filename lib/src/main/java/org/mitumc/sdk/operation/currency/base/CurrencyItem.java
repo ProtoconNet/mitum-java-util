@@ -1,4 +1,4 @@
-package org.mitumc.sdk.operation.currency;
+package org.mitumc.sdk.operation.currency.base;
 
 import java.util.ArrayList;
 import java.util.Arrays;

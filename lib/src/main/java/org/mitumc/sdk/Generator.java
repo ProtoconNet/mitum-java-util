@@ -14,17 +14,20 @@ import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.operation.base.OperationFact;
 import org.mitumc.sdk.operation.currency.CurrencyGenerator;
 import org.mitumc.sdk.operation.document.DocumentGenerator;
+import org.mitumc.sdk.operation.feefi.FeefiGenerator;
 
 
 public class Generator implements IdSettable {
     private String id;
     private CurrencyGenerator currency;
     private DocumentGenerator document;
+    private FeefiGenerator feefi;
 
     private Generator(String id) {
         this.id = id;
         this.currency = CurrencyGenerator.get(id);
         this.document = DocumentGenerator.get(id);
+        this.feefi = FeefiGenerator.get(id);
     }
 
     public static Generator get(String id) {
@@ -36,6 +39,7 @@ public class Generator implements IdSettable {
         this.id = id;
         this.currency = CurrencyGenerator.get(id);
         this.document = DocumentGenerator.get(id);
+        this.feefi = FeefiGenerator.get(id);
     }
 
     @Override
@@ -49,6 +53,10 @@ public class Generator implements IdSettable {
 
     public DocumentGenerator document() {
         return this.document;
+    }
+
+    public FeefiGenerator feefi() {
+        return this.feefi;
     }
 
     public Operation getOperation(OperationFact fact) {
