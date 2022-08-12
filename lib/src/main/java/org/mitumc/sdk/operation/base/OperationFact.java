@@ -15,7 +15,7 @@ abstract public class OperationFact implements BytesConvertible, HashMapConverti
     protected Hash hash;
 
     protected OperationFact(String operationType) {
-        this.hint = new Hint(operationType);
+        this.hint = Hint.get(operationType);
         this.token = Util.getDateTimeStamp();
     }
 
@@ -28,7 +28,7 @@ abstract public class OperationFact implements BytesConvertible, HashMapConverti
     }
 
     protected void generateHash() {
-        this.hash = new Hash(toBytes());
+        this.hash = Hash.fromBytes(toBytes());
     }
 
     abstract public Hint getOperationHint();

@@ -14,9 +14,9 @@ public class Key implements BytesConvertible, HashMapConvertible {
     private BaseKey key;
     private BigInt weight;
 
-    public Key(String key, int weight) {
+    private Key(String key, int weight) {
         assertWeight(weight);
-        this.hint = new Hint(Constant.MC_KEY);
+        this.hint = Hint.get(Constant.MC_KEY);
         this.key = new BaseKey(key);
         this.weight = new BigInt(Integer.toString(weight));
     }
@@ -27,6 +27,10 @@ public class Key implements BytesConvertible, HashMapConvertible {
         }
     }
 
+    public static Key get(String key, int weight) {
+        return new Key(key, weight);
+    }
+
     public int getWeight() {
         return Integer.parseInt(this.weight.getValue());
     }
@@ -35,8 +39,13 @@ public class Key implements BytesConvertible, HashMapConvertible {
         return this.key.getKey();
     }
 
+    @Deprecated
     public String getRawKey() {
-        return this.key.getRawKey();
+        return this.getKeyWithoutType();
+    }
+
+    public String getKeyWithoutType() {
+        return this.key.getKeyWithoutType();
     }
 
     @Override

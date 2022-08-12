@@ -5,7 +5,9 @@ import java.util.HashMap;
 
 import org.bitcoinj.core.Base58;
 import org.mitumc.sdk.interfaces.IdSettable;
+import org.mitumc.sdk.key.Key;
 import org.mitumc.sdk.key.Keypair;
+import org.mitumc.sdk.key.Keys;
 import org.mitumc.sdk.util.Hash;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.TimeStamp;
@@ -17,20 +19,17 @@ import org.mitumc.sdk.operation.document.DocumentGenerator;
 import org.mitumc.sdk.operation.feefi.FeefiGenerator;
 import org.mitumc.sdk.operation.nft.NFTGenerator;
 
-
 public class Generator implements IdSettable {
     private String id;
-    private CurrencyGenerator currency;
-    private DocumentGenerator document;
-    private FeefiGenerator feefi;
-    private NFTGenerator nft;
+    public static CurrencyGenerator currency = CurrencyGenerator.get();
+    public static DocumentGenerator document = DocumentGenerator.get();
+    public static FeefiGenerator feefi = FeefiGenerator.get();
+    public static NFTGenerator nft = NFTGenerator.get();
+
+    private Generator() {}
 
     private Generator(String id) {
         this.id = id;
-        this.currency = CurrencyGenerator.get(id);
-        this.document = DocumentGenerator.get(id);
-        this.feefi = FeefiGenerator.get(id);
-        this.nft = NFTGenerator.get(id);
     }
 
     public static Generator get(String id) {
@@ -40,10 +39,6 @@ public class Generator implements IdSettable {
     @Override
     public void setId(String id) {
         this.id = id;
-        this.currency = CurrencyGenerator.get(id);
-        this.document = DocumentGenerator.get(id);
-        this.feefi = FeefiGenerator.get(id);
-        this.nft = NFTGenerator.get(id);
     }
 
     @Override
@@ -51,28 +46,12 @@ public class Generator implements IdSettable {
         return this.id;
     }
 
-    public CurrencyGenerator currency() {
-        return this.currency;
-    }
-
-    public DocumentGenerator document() {
-        return this.document;
-    }
-
-    public FeefiGenerator feefi() {
-        return this.feefi;
-    }
-
-    public NFTGenerator nft() {
-        return this.nft;
-    }
-
     public Operation getOperation(OperationFact fact) {
-        return new Operation(fact, "", this.id);
+        return Operation.get(fact, "", this.id);
     }
 
     public Operation getOperation(OperationFact fact, String memo) {
-        return new Operation(fact, memo, this.id);
+        return Operation.get(fact, memo, this.id);
     }
 
     public HashMap<String, Object> getSeal(String signKey, Operation[] operations) {
@@ -101,7 +80,7 @@ public class Generator implements IdSettable {
             tempLen += bt.length;
         }
 
-        Hash bodyHash = new Hash(Util.concatByteArray(bsigner, bsignedAt, boperations));
+        Hash bodyHash = Hash.fromBytes(Util.concatByteArray(bsigner, bsignedAt, boperations));
 
         byte[] signature;
         signature = keypair.sign(
@@ -109,11 +88,11 @@ public class Generator implements IdSettable {
                         bodyHash.getSha3Digest(),
                         this.id.getBytes()));
 
-        Hash hash = new Hash(Util.concatByteArray(bodyHash.getSha3Digest(), signature));
+        Hash hash = Hash.fromBytes(Util.concatByteArray(bodyHash.getSha3Digest(), signature));
 
         HashMap<String, Object> hashMap = new HashMap<>();
 
-        hashMap.put("_hint", new Hint(Constant.SEAL).getHint());
+        hashMap.put("_hint", Hint.get(Constant.SEAL).getHint());
         hashMap.put("hash", hash.getSha3Hash());
         hashMap.put("body_hash", bodyHash.getSha3Hash());
         hashMap.put("signer", signer);
@@ -127,5 +106,33 @@ public class Generator implements IdSettable {
         hashMap.put("operations", arr);
 
         return hashMap;
+    }
+
+    public static HashMap<String, Object> randomKeys() {
+        return Generator.randomKeys(1);
+    }
+
+    public static HashMap<String, Object> randomKeys(int numOfKeys) {
+        int weight = 100 / numOfKeys;
+        if (100 % numOfKeys != 0) {
+            weight++;
+        }
+
+        Keypair[] kps = new Keypair[numOfKeys];
+        Key[] ks = new Key[numOfKeys];
+
+        for (int i = 0; i < numOfKeys; i++) {
+            Keypair kp = Keypair.random();
+            kps[i] = kp;
+            ks[i] = Key.get(kp.getPublicKey(), weight);
+        }
+
+        Keys keys = Keys.get(ks, 100);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("keypairs", kps);
+        map.put("keys", keys);
+
+        return map;
     }
 }

@@ -11,6 +11,6 @@ public class NFTSignFact extends GeneralOperationFact<NFTSignItem>{
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MNFT_SIGN_OPERATION);
+        return Hint.get(Constant.MNFT_SIGN_OPERATION);
     }
 }

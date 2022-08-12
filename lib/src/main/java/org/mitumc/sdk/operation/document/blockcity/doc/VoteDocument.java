@@ -7,10 +7,10 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.operation.document.Document;
+import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.base.Info;
 import org.mitumc.sdk.operation.document.blockcity.Candidate;
-import org.mitumc.sdk.operation.document.blockcity.info.VoteInfo;
+import org.mitumc.sdk.operation.document.blockcity.info.SingleInfo;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Util;
 
@@ -22,13 +22,13 @@ public class VoteDocument extends Document {
     private Address account;
     private String office;
 
-    public VoteDocument(String documentId, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office) {
-        super(new VoteInfo(documentId), owner);
+    VoteDocument(String documentId, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office) {
+        super(SingleInfo.vote(documentId), owner);
         assertInfo(info);
         this.round = new BigInt("" + round);
         this.endTime = endTime;
         this.bossName = bossName;
-        this.account = new Address(account);
+        this.account = Address.get(account);
         this.office = office;
 
         this.candidates = new ArrayList<Candidate>();

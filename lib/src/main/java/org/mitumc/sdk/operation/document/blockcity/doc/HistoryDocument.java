@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.operation.document.Document;
+import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.base.Info;
-import org.mitumc.sdk.operation.document.blockcity.info.HistoryInfo;
+import org.mitumc.sdk.operation.document.blockcity.info.SingleInfo;
 import org.mitumc.sdk.util.Util;
 
 public class HistoryDocument extends Document {
@@ -16,11 +16,11 @@ public class HistoryDocument extends Document {
     private String usage;
     private String app;
 
-    public HistoryDocument(String documentId, String owner, String name, String account, String date, String usage, String app) {
-        super(new HistoryInfo(documentId), owner);
+    HistoryDocument(String documentId, String owner, String name, String account, String date, String usage, String app) {
+        super(SingleInfo.history(documentId), owner);
         assertInfo(info);
         this.name = name;
-        this.account = new Address(account);
+        this.account = Address.get(account);
         this.date = date;
         this.usage = usage;
         this.app = app;

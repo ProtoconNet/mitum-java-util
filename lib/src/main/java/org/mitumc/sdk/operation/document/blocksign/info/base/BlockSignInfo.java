@@ -14,7 +14,7 @@ public class BlockSignInfo extends Info {
     public Hint getIdHint() {
         switch (this.getDocType()) {
             case Constant.MBS_DOCTYPE_DOCUMENT_DATA:
-                return new Hint(Constant.MD_DOCUMENT_ID);
+                return Hint.get(Constant.MD_DOCUMENT_ID);
             default:
                 Util.raiseError("Invalid document type; BlockSignInfo");
         }

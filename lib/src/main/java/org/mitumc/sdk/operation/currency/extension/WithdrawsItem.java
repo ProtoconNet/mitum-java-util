@@ -13,7 +13,7 @@ public class WithdrawsItem extends CurrencyItem {
 
     WithdrawsItem(String itemType, String target, Amount[] amounts) {
         super(itemType, amounts);
-        this.target = new Address(target);
+        this.target = Address.get(target);
     }
 
     @Override

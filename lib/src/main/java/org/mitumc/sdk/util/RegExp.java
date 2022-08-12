@@ -104,4 +104,18 @@ public class RegExp {
             Util.raiseError("Invalid type suffix; RegExp.assertHistoryData(String id).");
         }
     }
+
+    public static void assertNFTID(String id) {
+        int dash = id.indexOf("-");
+        if(dash < 0) {
+            Util.raiseError("No divider(-) in target string; RegExp.assertNFTID(String id).");
+        }
+        
+        assertLongEnough(id.substring(0, dash));
+        try {
+            Integer.parseInt(id.substring(dash + 1));
+        } catch(Exception e) {
+            Util.raiseError("Collection idx is not integer; RegExp.assertNFTID(String id).");
+        }
+    }
 }

@@ -16,7 +16,7 @@ public class CollectionRegisterFact extends PurposedOperationFact {
     
     CollectionRegisterFact(String sender, CollectionRegisterForm form, String currencyId) {
         super(Constant.MNFT_COLLECTION_REGISTER_OPERATION_FACT);
-        this.sender = new Address(sender);
+        this.sender = Address.get(sender);
         this.form = form;
         this.currencyId = currencyId;
 
@@ -25,7 +25,7 @@ public class CollectionRegisterFact extends PurposedOperationFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MNFT_COLLECTION_REGISTER_OPERATION);
+        return Hint.get(Constant.MNFT_COLLECTION_REGISTER_OPERATION);
     }
 
     @Override

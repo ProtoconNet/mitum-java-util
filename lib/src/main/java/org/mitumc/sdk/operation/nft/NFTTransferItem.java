@@ -14,7 +14,7 @@ public class NFTTransferItem extends NFTItem {
 
     NFTTransferItem(String receiver, NFTID nid, String currencyId) {
         super(Constant.MNFT_TRANSFER_ITEM, currencyId);
-        this.receiver = new Address(receiver);
+        this.receiver = Address.get(receiver);
         this.nid = nid;
     }
 

@@ -1,9 +1,8 @@
-package org.mitumc.sdk.operation.document;
+package org.mitumc.sdk.operation.document.base;
 
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.operation.document.base.Info;
 import org.mitumc.sdk.util.Hint;
 
 
@@ -13,9 +12,9 @@ public abstract class Document implements BytesConvertible, HashMapConvertible {
     protected Address owner;
     
     protected Document(Info info, String owner) {
-        this.hint = new Hint(info.getDocType());
+        this.hint = Hint.get(info.getDocType());
         this.info = info;
-        this.owner = new Address(owner);
+        this.owner = Address.get(owner);
     }
 
     public String getDocType() {

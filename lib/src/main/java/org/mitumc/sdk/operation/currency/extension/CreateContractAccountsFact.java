@@ -11,6 +11,6 @@ public class CreateContractAccountsFact extends GeneralOperationFact<CreateContr
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MC_EXT_CREATE_CONTRACT_ACCOUNTS_OPERATION);
+        return Hint.get(Constant.MC_EXT_CREATE_CONTRACT_ACCOUNTS_OPERATION);
     }
 }

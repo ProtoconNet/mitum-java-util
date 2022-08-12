@@ -18,16 +18,20 @@ public class CollectionPolicy implements BytesConvertible, HashMapConvertible {
     private String uri;
     private ArrayList<Address> whites;
 
-    public CollectionPolicy(String name, int royalty, String uri, String[] whites) {
-        this.hint = new Hint(Constant.MNFT_COLLECTION_POLICY);
+    private CollectionPolicy(String name, int royalty, String uri, String[] whites) {
+        this.hint = Hint.get(Constant.MNFT_COLLECTION_POLICY);
         this.name = name;
         this.royalty = new BigInt(royalty + "");
         this.uri = uri;
         this.whites =  new ArrayList<Address>();
 
         for(String w : whites) {
-            this.whites.add(new Address(w));
+            this.whites.add(Address.get(w));
         }
+    }
+
+    public static CollectionPolicy get(String name, int royalty, String uri, String[] whites) {
+        return new CollectionPolicy(name, royalty, uri, whites);
     }
 
     @Override

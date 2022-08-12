@@ -15,7 +15,7 @@ public class GeneralOperationFact<T extends Item> extends OperationFact {
 
     protected GeneralOperationFact(String factType, String sender, T[] items) {
         super(factType);
-        this.sender = new Address(sender);
+        this.sender = Address.get(sender);
         this.items = new ArrayList<T>(Arrays.asList(items));
         
         generateHash();

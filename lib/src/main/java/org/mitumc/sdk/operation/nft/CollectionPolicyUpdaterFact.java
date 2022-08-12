@@ -19,7 +19,7 @@ public class CollectionPolicyUpdaterFact extends PurposedOperationFact {
 
     CollectionPolicyUpdaterFact(String sender, String collection, CollectionPolicy policy, String currencyId) {
         super(Constant.MNFT_COLLECTION_POLICY_UPDATER_OPERATION_FACT);
-        this.sender = new Address(sender);
+        this.sender = Address.get(sender);
         this.collection = collection;
         this.policy = policy;
         this.currencyId = currencyId;
@@ -29,7 +29,7 @@ public class CollectionPolicyUpdaterFact extends PurposedOperationFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MNFT_COLLECTION_POLICY_UPDATER_OPERATION);
+        return Hint.get(Constant.MNFT_COLLECTION_POLICY_UPDATER_OPERATION);
     }
 
     @Override

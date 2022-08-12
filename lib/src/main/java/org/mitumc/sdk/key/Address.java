@@ -6,9 +6,13 @@ import org.mitumc.sdk.util.RegExp;
 public class Address implements BytesConvertible {
     private String address;
 
-    public Address(String address) {
+    private Address(String address) {
         RegExp.assertAddress(address);
         this.address = address;
+    }
+
+    public static Address get(String address) {
+        return new Address(address);
     }
 
     public byte[] toBytes() {

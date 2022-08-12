@@ -18,8 +18,8 @@ public class PoolDepositsFact extends PurposedOperationFact {
 
     PoolDepositsFact(String sender, String pool, String poolId, Amount amount) {
         super(Constant.MF_POOL_DEPOSITS_OPERATION_FACT);
-        this.sender = new Address(sender);
-        this.pool = new Address(pool);
+        this.sender = Address.get(sender);
+        this.pool = Address.get(pool);
         this.poolId = poolId;
         this.amount = amount;
 
@@ -28,7 +28,7 @@ public class PoolDepositsFact extends PurposedOperationFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MF_POOL_DEPOSITS_OPERATION);
+        return Hint.get(Constant.MF_POOL_DEPOSITS_OPERATION);
     }
 
     @Override

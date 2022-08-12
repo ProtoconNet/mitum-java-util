@@ -34,7 +34,7 @@ public class Signer {
     private static byte[] factSignToBytes(JsonObject factSign) {
         byte[] bsigner = factSign.get("signer").getAsString().getBytes();
         byte[] bsign = Base58.decode(factSign.get("signature").getAsString());
-        byte[] bsignedAt = new TimeStamp(factSign.get("signed_at").getAsString()).getUTC().getBytes();
+        byte[] bsignedAt = TimeStamp.fromString(factSign.get("signed_at").getAsString()).getUTC().getBytes();
 
         return Util.concatByteArray(bsigner, bsign, bsignedAt);
     }
@@ -82,7 +82,7 @@ public class Signer {
         signedOper.put("fact_signs", factSigns);
 
         byte[] bmemo = operation.get("memo").getAsString().getBytes();
-        signedOper.put("hash", new Hash(Util.concatByteArray(bfactHash, bfactSigns, bmemo)).getSha3Hash());
+        signedOper.put("hash", Hash.fromBytes(Util.concatByteArray(bfactHash, bfactSigns, bmemo)).getSha3Hash());
 
         return signedOper;
     }

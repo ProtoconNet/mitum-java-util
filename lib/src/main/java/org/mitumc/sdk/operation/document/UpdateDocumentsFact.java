@@ -12,6 +12,6 @@ public class UpdateDocumentsFact extends GeneralDocumentsFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MD_UPDATE_DOCUMENTS_OPERATION);
+        return Hint.get(Constant.MD_UPDATE_DOCUMENTS_OPERATION);
     }
 }

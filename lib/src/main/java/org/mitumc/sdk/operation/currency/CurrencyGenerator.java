@@ -3,46 +3,34 @@ package org.mitumc.sdk.operation.currency;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Key;
 import org.mitumc.sdk.key.Keys;
-import org.mitumc.sdk.operation.base.OperationGenerator;
+import org.mitumc.sdk.operation.base.BaseGenerator;
 import org.mitumc.sdk.operation.currency.base.Amount;
 import org.mitumc.sdk.operation.currency.extension.CurrencyExtensionGenerator;
 import org.mitumc.sdk.util.Util;
 
-public class CurrencyGenerator extends OperationGenerator {
-    private CurrencyExtensionGenerator extension;
-    
-    private CurrencyGenerator(String id) {
-        super(id);
-        this.extension = CurrencyExtensionGenerator.get(id);
+public class CurrencyGenerator extends BaseGenerator {
+    public static CurrencyExtensionGenerator extension = CurrencyExtensionGenerator.get();
+
+    public static CurrencyGenerator get() {
+        return new CurrencyGenerator();
     }
 
-    public static CurrencyGenerator get(String id) {
-        return new CurrencyGenerator(id);
-    }
-
-    public CurrencyExtensionGenerator extension() {
-        return this.extension;
-    }
-
-    @Override
-    public void setId(String id) {
-        super.setId(id);
-        this.extension = CurrencyExtensionGenerator.get(id);
-    }
-    
+    @Deprecated
     public Key key(String key, int weight) {
-        return new Key(key, weight);
+        return Key.get(key, weight);
     }
 
+    @Deprecated
     public Keys keys(Key[] keys, int threshold) {
-        return new Keys(keys, threshold);
+        return Keys.get(keys, threshold);
     }
 
+    @Deprecated
     public Amount amount(String currency, String amount) {
-        return new Amount(currency, amount);
+        return Amount.get(currency, amount);
     }
 
-    public CreateAccountsItem getCreateAccountsItem(Keys keys, Amount[] amounts) {
+    public static CreateAccountsItem getCreateAccountsItem(Keys keys, Amount[] amounts) {
         if(amounts.length > 1) {
             return new CreateAccountsItem(Constant.MC_CREATE_ACCOUNTS_MUL_AMOUNTS, keys, amounts);
         }
@@ -55,7 +43,7 @@ public class CurrencyGenerator extends OperationGenerator {
         }
     }
 
-    public TransfersItem getTransfersItem(String receiver, Amount[] amounts) {
+    public static TransfersItem getTransfersItem(String receiver, Amount[] amounts) {
         if(amounts.length > 1) {
             return new TransfersItem(Constant.MC_TRANSFERS_ITEM_MUL_AMOUNTS, receiver, amounts);
         }
@@ -68,15 +56,15 @@ public class CurrencyGenerator extends OperationGenerator {
         }
     }
 
-    public CreateAccountsFact getCreateAccountsFact(String sender, CreateAccountsItem[] items) {
+    public static CreateAccountsFact getCreateAccountsFact(String sender, CreateAccountsItem[] items) {
         return new CreateAccountsFact(sender, items);
     }
 
-    public KeyUpdaterFact getKeyUpdaterFact(String target, String currencyId, Keys keys) {
+    public static KeyUpdaterFact getKeyUpdaterFact(String target, String currencyId, Keys keys) {
         return new KeyUpdaterFact(target, currencyId, keys); 
     }
 
-    public TransfersFact getTransfersFact(String sender, TransfersItem[] items) {
+    public static TransfersFact getTransfersFact(String sender, TransfersItem[] items) {
         return new TransfersFact(sender, items);
     }
 }

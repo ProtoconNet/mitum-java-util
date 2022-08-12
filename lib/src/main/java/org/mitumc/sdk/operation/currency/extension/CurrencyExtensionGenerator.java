@@ -2,21 +2,16 @@ package org.mitumc.sdk.operation.currency.extension;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Keys;
-import org.mitumc.sdk.operation.base.OperationGenerator;
+import org.mitumc.sdk.operation.base.BaseGenerator;
 import org.mitumc.sdk.operation.currency.base.Amount;
 import org.mitumc.sdk.util.Util;
 
-public class CurrencyExtensionGenerator extends OperationGenerator {
-    
-    private CurrencyExtensionGenerator(String id) {
-        super(id);
+public class CurrencyExtensionGenerator extends BaseGenerator {
+    public static CurrencyExtensionGenerator get() {
+        return new CurrencyExtensionGenerator();
     }
 
-    public static CurrencyExtensionGenerator get(String id) {
-        return new CurrencyExtensionGenerator(id);
-    }
-
-    public CreateContractAccountsItem getCreateContractAccountsItem(Keys keys, Amount[] amounts) {
+    public static CreateContractAccountsItem getCreateContractAccountsItem(Keys keys, Amount[] amounts) {
         if(amounts.length >= 1) {
             return new CreateContractAccountsItem(Constant.MC_EXT_CREATE_CONTRACT_ACCOUNTS_MUL_AMOUNTS, keys, amounts);
         }
@@ -29,7 +24,7 @@ public class CurrencyExtensionGenerator extends OperationGenerator {
         }
     }
 
-    public WithdrawsItem getWithdrawsItem(String target, Amount[] amounts) {
+    public static WithdrawsItem getWithdrawsItem(String target, Amount[] amounts) {
         if(amounts.length >= 1) {
             return new WithdrawsItem(Constant.MC_EXT_WITHDRAWS_MUL_AMOUNTS, target, amounts);
         }
@@ -42,10 +37,10 @@ public class CurrencyExtensionGenerator extends OperationGenerator {
         }
     }
 
-    public CreateContractAccountsFact getCreateContractAccountsFact(String sender, CreateContractAccountsItem[] items) {
+    public static CreateContractAccountsFact getCreateContractAccountsFact(String sender, CreateContractAccountsItem[] items) {
         return new CreateContractAccountsFact(sender, items);
     }
-    public WithdrawsFact getWithdrawsFact(String sender, WithdrawsItem[] items) {
+    public static WithdrawsFact getWithdrawsFact(String sender, WithdrawsItem[] items) {
         return new WithdrawsFact(sender, items);
     }
 }

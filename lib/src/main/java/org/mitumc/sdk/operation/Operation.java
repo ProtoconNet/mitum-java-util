@@ -29,16 +29,25 @@ public class Operation implements BytesConvertible, HashMapConvertible {
         this.hint = fact.getOperationHint();
     }
 
-    public Operation(OperationFact fact, String memo, String networkId) {
+    private Operation(OperationFact fact, String memo, String networkId) {
         this(fact, memo);
         this.networkId = networkId;
     }
 
     private void generateHash() {
-        this.hash = new Hash(toBytes());
+        this.hash = Hash.fromBytes(toBytes());
     }
 
+    public static Operation get(OperationFact fact, String memo, String networkId) {
+        return new Operation(fact, memo, networkId);
+    }
+
+    @Deprecated
     public void addSign(String signKey) {
+        sign(signKey);
+    }
+
+    public void sign(String signKey) {
         this.factSigns.add(
             FactSign.createSign(
                 Util.concatByteArray(

@@ -20,8 +20,8 @@ public class PoolWithdrawFact extends PurposedOperationFact {
 
     PoolWithdrawFact(String sender, String pool, String poolId, Amount[] amounts) {
         super(Constant.MF_POOL_WITHDRAW_OPERATION_FACT);
-        this.sender = new Address(sender);
-        this.pool = new Address(pool);
+        this.sender = Address.get(sender);
+        this.pool = Address.get(pool);
         this.poolId = poolId;
         this.amounts = new ArrayList<Amount>(Arrays.asList(amounts));
 
@@ -30,7 +30,7 @@ public class PoolWithdrawFact extends PurposedOperationFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MF_POOL_WITHDRAW_OPERATION);
+        return Hint.get(Constant.MF_POOL_WITHDRAW_OPERATION);
     }
 
     @Override

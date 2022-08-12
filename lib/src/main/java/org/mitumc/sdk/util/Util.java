@@ -8,7 +8,6 @@ import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.Constant;
 
 public class Util {
-
     public static HashMap<String, String> parseHint(String hinted) {
         int idx = hinted.indexOf('~');
         if (idx == -1) {
@@ -42,6 +41,17 @@ public class Util {
         return map;
     }
 
+    public static HashMap<String, String> parseNFTID(String nid) {
+        RegExp.assertNFTID(nid);
+        int dash = nid.indexOf("-");
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("collection", nid.substring(0, dash));
+        map.put("idx", nid.substring(dash + 1));
+
+        return map;
+    }
+
     public static Hint getHintFromString(String hint) {
         int idx = hint.indexOf("-" + Constant.VERSION);
 
@@ -49,7 +59,7 @@ public class Util {
             raiseError("Invalid hint; Util.getHintFromString(String hint).");
         }
 
-        return new Hint(hint.substring(0, idx));
+        return Hint.get(hint.substring(0, idx));
     }
 
     @Deprecated
@@ -65,7 +75,7 @@ public class Util {
     }
 
     public static TimeStamp getDateTimeStamp() {
-        return new TimeStamp();
+        return TimeStamp.now();
     }
 
     public static byte[] concatByteArray(byte[]... bs) {

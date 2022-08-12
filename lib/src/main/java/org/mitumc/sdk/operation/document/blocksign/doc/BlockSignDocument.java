@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import org.mitumc.sdk.operation.document.Document;
+import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.blocksign.BlockSignUser;
 import org.mitumc.sdk.operation.document.blocksign.info.BlockSignGeneralInfo;
 import org.mitumc.sdk.util.BigInt;
@@ -18,8 +18,8 @@ public class BlockSignDocument extends Document {
     private BigInt size;
     private ArrayList<BlockSignUser> signers;
 
-    public BlockSignDocument(String documentId, String owner, String fileHash, BlockSignUser creator, String title, String size, BlockSignUser[] signers) {
-        super(new BlockSignGeneralInfo(documentId), owner);
+    private BlockSignDocument(String documentId, String owner, String fileHash, BlockSignUser creator, String title, String size, BlockSignUser[] signers) {
+        super(BlockSignGeneralInfo.get(documentId), owner);
     
         this.fileHash = fileHash;
         this.creator = creator;
@@ -30,6 +30,10 @@ public class BlockSignDocument extends Document {
         for(BlockSignUser user : signers) {
             this.signers.add(user);
         }
+    }
+
+    public static BlockSignDocument get(String documentId, String owner, String fileHash, BlockSignUser creator, String title, String size, BlockSignUser[] signers) {
+        return new BlockSignDocument(documentId, owner, fileHash, creator, title, size, signers);
     }
     
     @Override

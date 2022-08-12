@@ -19,7 +19,7 @@ public class FactSign implements BytesConvertible {
     private TimeStamp signedAt;
 
     private FactSign(String signer, byte[] signature) {
-        this.hint = new Hint(Constant.BASE_FACT_SIGN);
+        this.hint = Hint.get(Constant.BASE_FACT_SIGN);
         this.signer = signer;
         this.signature = Util.copyByteArray(signature);
         this.signedAt = Util.getDateTimeStamp();

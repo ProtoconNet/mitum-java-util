@@ -12,7 +12,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class JSONParser {
-
     public static JsonObject getObjectFromJSONFile(String fpName) {
         try {
             return (JsonObject) JsonParser.parseReader(new FileReader(fpName));
@@ -26,12 +25,22 @@ public class JSONParser {
         return new Gson().toJsonTree(target).getAsJsonObject();
     }
 
-    public static void createJSON(JsonObject target, String fpName) {
+    @Deprecated
+    public static void createJSON(JsonObject target, String fp) {
+        writeJsonFileFromJsonObject(target, fp);
+    }
+
+    @Deprecated
+    public static void createJSON(HashMap<String, Object> target, String fp) {
+        writeJsonFileFromHashMap(target, fp);
+    }
+
+    public static void writeJsonFileFromJsonObject(JsonObject target, String fp) {
         FileWriter writer;
 
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            writer = new FileWriter(fpName);
+            writer = new FileWriter(fp);
             gson.toJson(target, writer);
 
             try {
@@ -45,10 +54,10 @@ public class JSONParser {
             Util.log("Fail to create JSON file; JSONParser.");
             return;
         }
-        Util.log("Success to create JSON file - " + fpName + ".");
+        Util.log("Success to create JSON file - " + fp + ".");
     }
 
-    public static void createJSON(HashMap<String, Object> target, String fpName) {
-        createJSON(new Gson().toJsonTree(target).getAsJsonObject(), fpName);
+    public static void writeJsonFileFromHashMap(HashMap<String, Object> target, String fp) {
+        writeJsonFileFromJsonObject(new Gson().toJsonTree(target).getAsJsonObject(), fp);
     }
 }

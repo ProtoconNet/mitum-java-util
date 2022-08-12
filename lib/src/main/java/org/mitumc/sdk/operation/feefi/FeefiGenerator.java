@@ -1,16 +1,11 @@
 package org.mitumc.sdk.operation.feefi;
 
-import org.mitumc.sdk.operation.base.OperationGenerator;
+import org.mitumc.sdk.operation.base.BaseGenerator;
 import org.mitumc.sdk.operation.currency.base.Amount;
 
-public class FeefiGenerator extends OperationGenerator {
-    
-    private FeefiGenerator(String id) {
-        super(id);
-    }
-
-    public static FeefiGenerator get(String id) {
-        return new FeefiGenerator(id);
+public class FeefiGenerator extends BaseGenerator {
+    public static FeefiGenerator get() {
+        return new FeefiGenerator();
     }
 
     public PoolRegisterFact getPoolRegisterFact(String sender, String target, Amount initialFee, String incomingCid, String outgoingCid, String currencyId) {

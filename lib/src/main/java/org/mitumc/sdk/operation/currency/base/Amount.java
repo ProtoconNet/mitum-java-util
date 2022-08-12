@@ -14,10 +14,14 @@ public class Amount implements BytesConvertible, HashMapConvertible {
     private String currency;
     private BigInt amount;
 
-    public Amount(String currency, String amount) {
-        this.hint = new Hint(Constant.MC_AMOUNT);
+    private Amount(String currency, String amount) {
+        this.hint = Hint.get(Constant.MC_AMOUNT);
         this.currency = currency;
         this.amount = new BigInt(amount);
+    }
+
+    public static Amount get(String currency, String amount) {
+        return new Amount(currency, amount);
     }
 
     public byte[] toBytes() {

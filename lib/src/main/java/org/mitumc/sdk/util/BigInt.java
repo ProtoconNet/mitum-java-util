@@ -18,6 +18,10 @@ public class BigInt implements BytesConvertible {
         this.num = new BigInteger(num);
     }
 
+    public static BigInt get(String num) {
+        return new BigInt(num);
+    }
+
     private byte[] reverse(byte[] bytes) {
         if (bytes == null) {
             return null;

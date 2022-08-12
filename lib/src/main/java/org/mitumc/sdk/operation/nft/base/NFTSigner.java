@@ -16,11 +16,15 @@ public class NFTSigner implements BytesConvertible, HashMapConvertible {
     private BigInt share;
     private boolean signed;
     
-    NFTSigner(String account, int share, boolean signed) {
-        this.hint = new Hint(Constant.MNFT_SIGNER);
-        this.account = new Address(account);
+    private NFTSigner(String account, int share, boolean signed) {
+        this.hint = Hint.get(Constant.MNFT_SIGNER);
+        this.account = Address.get(account);
         this.share = new BigInt(share + "");
         this.signed = signed;
+    }
+
+    public static NFTSigner get(String account, int share, boolean signed) {
+        return new NFTSigner(account, share, signed);
     }
 
     @Override

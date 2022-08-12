@@ -14,10 +14,19 @@ public class NFTID implements BytesConvertible, HashMapConvertible {
     private String collection;
     private BigInt idx;
     
-    NFTID(String collection, BigInt idx) {
-        this.hint = new Hint(Constant.MNFT_NFT_ID);
+    private NFTID(String collection, BigInt idx) {
+        this.hint = Hint.get(Constant.MNFT_NFT_ID);
         this.collection = collection;
         this.idx = idx;
+    }
+
+    public static NFTID get(String collection, BigInt idx) {
+        return new NFTID(collection, idx);
+    }
+
+    public static NFTID get(String nid) {
+        HashMap<String, String> parsed = Util.parseNFTID(nid);
+        return NFTID.get(parsed.get("collection"), new BigInt(parsed.get("idx")));
     }
 
     @Override

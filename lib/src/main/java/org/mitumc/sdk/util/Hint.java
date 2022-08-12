@@ -6,14 +6,22 @@ public class Hint {
     private String type;
     private String version;
 
-    public Hint(String type) {
+    private Hint(String type) {
         this(type, Constant.VERSION);
     }
 
-    public Hint(String type, String version) {
+    private Hint(String type, String version) {
         assertVersion(version);
         this.type = type;
         this.version = version;
+    }
+
+    public static Hint get(String type) {
+        return new Hint(type);
+    }
+
+    public static Hint get(String type, String version) {
+        return new Hint(type, version);
     }
 
     private void assertVersion(String version) {

@@ -13,7 +13,7 @@ public class TransfersItem extends CurrencyItem {
 
     TransfersItem(String itemType, String receiver, Amount[] amounts) {
         super(itemType, amounts);
-        this.receiver = new Address(receiver);
+        this.receiver = Address.get(receiver);
     }
 
     @Override

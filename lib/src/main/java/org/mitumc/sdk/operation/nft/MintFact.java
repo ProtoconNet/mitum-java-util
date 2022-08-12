@@ -11,6 +11,6 @@ public class MintFact extends GeneralOperationFact<MintItem> {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MNFT_MINT_OPERATION);
+        return Hint.get(Constant.MNFT_MINT_OPERATION);
     }
 }

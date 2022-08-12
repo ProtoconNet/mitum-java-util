@@ -11,6 +11,6 @@ public class WithdrawsFact extends GeneralOperationFact<WithdrawsItem> {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MC_EXT_WITHDRAWS_OPERATION);
+        return Hint.get(Constant.MC_EXT_WITHDRAWS_OPERATION);
     }
 }

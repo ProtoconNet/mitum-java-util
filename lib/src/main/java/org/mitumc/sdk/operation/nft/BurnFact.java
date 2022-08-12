@@ -11,6 +11,6 @@ public class BurnFact extends GeneralOperationFact<BurnItem>{
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MNFT_BURN_OPERATION);
+        return Hint.get(Constant.MNFT_BURN_OPERATION);
     }
 }

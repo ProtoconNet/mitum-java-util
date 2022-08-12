@@ -27,7 +27,7 @@ class BaseKey implements BytesConvertible {
         this.type = parsed.get("type");
     }
 
-    public String getRawKey() {
+    public String getKeyWithoutType() {
         return this.key;
     }
 
@@ -44,6 +44,6 @@ class BaseKey implements BytesConvertible {
     }
 
     public byte[] rawToBytes() {
-        return getRawKey().getBytes();
+        return getKeyWithoutType().getBytes();
     }
 }

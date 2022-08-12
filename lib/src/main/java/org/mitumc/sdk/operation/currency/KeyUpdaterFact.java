@@ -18,7 +18,7 @@ public class KeyUpdaterFact extends PurposedOperationFact {
 
     KeyUpdaterFact(String target, String currencyId, Keys keys) {
         super(Constant.MC_KEY_UPDATER_OPERATION_FACT);
-        this.target = new Address(target);
+        this.target = Address.get(target);
         this.currencyId = currencyId;
         this.keys = keys;
 
@@ -27,7 +27,7 @@ public class KeyUpdaterFact extends PurposedOperationFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MC_KEY_UPDATER_OPERATION);
+        return Hint.get(Constant.MC_KEY_UPDATER_OPERATION);
     }
 
     @Override

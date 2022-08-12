@@ -13,16 +13,24 @@ public class Hash {
     private byte[] sha3Digest;
     private String sha3Hash;
 
-    public Hash() {
+    private Hash() {
         this("");
     }
 
-    public Hash(byte[] target) {
+    private Hash(byte[] target) {
         setter(target);
     }
 
-    public Hash(String msg) {
+    private Hash(String msg) {
         setter(msg);
+    }
+
+    public static Hash fromBytes(byte[] target) {
+        return new Hash(target);
+    }
+
+    public static Hash fromString(String msg) {
+        return new Hash(msg);
     }
 
     private void sha256() {

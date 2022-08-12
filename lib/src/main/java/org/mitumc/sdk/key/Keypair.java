@@ -15,7 +15,12 @@ public class Keypair {
         generatePublicKey();
     }
 
+    @Deprecated
     public static Keypair create() {
+        return Keypair.random();
+    }
+
+    public static Keypair random() {
         BTCKeyPair kp = BTCKeyPair.create();
         return fromPrivateKey(kp.getPrivateKey() + Constant.KEY_PRIVATE);
     }
@@ -44,12 +49,22 @@ public class Keypair {
         }
     }
 
+    @Deprecated
     public String getRawPrivateKey() {
-        return this.privateKey.getRawKey();
+        return this.getPrivateKeyWithoutType();
     }
 
+    @Deprecated
     public String getRawPublicKey() {
-        return this.publicKey.getRawKey();
+        return this.getPublicKeyWithoutType();
+    }
+
+    public String getPrivateKeyWithoutType() {
+        return this.privateKey.getKeyWithoutType();
+    }
+
+    public String getPublicKeyWithoutType() {
+        return this.publicKey.getKeyWithoutType();
     }
 
     public String getPrivateKey() {
@@ -65,7 +80,7 @@ public class Keypair {
     }
 
     void generatePublicKey() {
-        this.keypair = BTCKeyPair.fromPrivateKey(this.privateKey.getRawKey());
+        this.keypair = BTCKeyPair.fromPrivateKey(this.privateKey.getKeyWithoutType());
         this.publicKey = new BaseKey(this.keypair.getPublicKey(), Constant.KEY_PUBLIC);
     }
 

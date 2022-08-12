@@ -17,7 +17,7 @@ public class MintForm implements BytesConvertible, HashMapConvertible {
     private NFTSigners copyrighters;
     
     MintForm(String hash, String uri, NFTSigners creators, NFTSigners copyrighters) {
-        this.hint = new Hint(Constant.MNFT_MINT_FORM);
+        this.hint = Hint.get(Constant.MNFT_MINT_FORM);
         this.hash = hash;
         this.uri = uri;
         this.creators = creators;

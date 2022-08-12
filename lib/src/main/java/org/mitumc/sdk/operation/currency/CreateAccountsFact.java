@@ -11,6 +11,6 @@ public class CreateAccountsFact extends GeneralOperationFact<CreateAccountsItem>
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MC_CRAETE_ACCOUNTS_OPERATION);
+        return Hint.get(Constant.MC_CRAETE_ACCOUNTS_OPERATION);
     }
 }

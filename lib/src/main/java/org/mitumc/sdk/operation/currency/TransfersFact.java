@@ -12,6 +12,6 @@ public class TransfersFact extends GeneralOperationFact<TransfersItem> {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MC_TRANSFERS_OPERATION);
+        return Hint.get(Constant.MC_TRANSFERS_OPERATION);
     }
 }

@@ -13,6 +13,6 @@ public class CreateDocumentsFact extends GeneralDocumentsFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MD_CREATE_DOCUMENTS_OPERATION);
+        return Hint.get(Constant.MD_CREATE_DOCUMENTS_OPERATION);
     }
 }

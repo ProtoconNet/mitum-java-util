@@ -16,10 +16,14 @@ public class NFTSigners implements BytesConvertible, HashMapConvertible {
     private BigInt total;
     private ArrayList<NFTSigner> signers;
     
-    NFTSigners(int total, NFTSigner[] signers) {
-        this.hint = new Hint(Constant.MNFT_SIGNERS);
+    private NFTSigners(int total, NFTSigner[] signers) {
+        this.hint = Hint.get(Constant.MNFT_SIGNERS);
         this.total = new BigInt(total + "");
         this.signers = new ArrayList<NFTSigner>(Arrays.asList(signers));
+    }
+
+    public static NFTSigners get(int total, NFTSigner[] signers) {
+        return new NFTSigners(total, signers);
     }
 
     @Override

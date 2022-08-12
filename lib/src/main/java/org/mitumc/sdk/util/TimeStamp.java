@@ -12,17 +12,17 @@ public class TimeStamp {
     private String date;
     private String time;
 
-    TimeStamp() {
+    private TimeStamp() {
         this(new Date());
     }
 
-    public TimeStamp(Date timestamp) {
+    private TimeStamp(Date timestamp) {
         DateFormat ISOformatter = new SimpleDateFormat(ISO_PATTERN);
         this.ISOtimestamp = ISOformatter.format(timestamp);
         formatTimestamp();
     }
 
-    public TimeStamp(String timestamp) {
+    private TimeStamp(String timestamp) {
         this.ISOtimestamp = timestamp;
         int t = timestamp.indexOf("T");
         int z = timestamp.indexOf("Z");
@@ -32,6 +32,18 @@ public class TimeStamp {
             return;
         }
         formatTimestamp();
+    }
+
+    public static TimeStamp now() {
+        return new TimeStamp();
+    }
+
+    public static TimeStamp fromDate(Date timestamp) {
+        return new TimeStamp(timestamp);
+    }
+
+    public static TimeStamp fromString(String timestamp) {
+        return new TimeStamp(timestamp);
     }
 
     private void formatTimestamp() {

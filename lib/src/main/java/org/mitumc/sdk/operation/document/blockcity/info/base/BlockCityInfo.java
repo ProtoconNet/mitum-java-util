@@ -14,13 +14,13 @@ public class BlockCityInfo extends Info {
     public Hint getIdHint() {
         switch (getDocType()) {
             case Constant.MBC_DOCTYPE_USER_DATA:
-                return new Hint(Constant.MBC_USER_DOCUMENT_ID);
+                return Hint.get(Constant.MBC_USER_DOCUMENT_ID);
             case Constant.MBC_DOCTYPE_LAND_DATA:
-                return new Hint(Constant.MBC_LAND_DOCUMENT_ID);
+                return Hint.get(Constant.MBC_LAND_DOCUMENT_ID);
             case Constant.MBC_DOCTYPE_VOTE_DATA:
-                return new Hint(Constant.MBC_VOTE_DOCUMENT_ID);
+                return Hint.get(Constant.MBC_VOTE_DOCUMENT_ID);
             case Constant.MBC_DOCTYPE_HISTORY_DATA:
-                return new Hint(Constant.MBC_HISTORY_DOCUMENT_ID);
+                return Hint.get(Constant.MBC_HISTORY_DOCUMENT_ID);
             default:
                 Util.raiseError("Invalid document type; BlockCityInfo.");
         }

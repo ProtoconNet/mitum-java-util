@@ -11,6 +11,6 @@ public class NFTTransferFact extends GeneralOperationFact<NFTTransferItem>{
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MNFT_TRANSFER_OPERATION);
+        return Hint.get(Constant.MNFT_TRANSFER_OPERATION);
     }
 }

@@ -18,9 +18,9 @@ public abstract class Info implements BytesConvertible, HashMapConvertible {
 
     protected Info(String docType, String documentId) {
         assertInfo(docType, documentId);
-        this.hint = new Hint(Constant.MD_DOCUMENT_INFO);
+        this.hint = Hint.get(Constant.MD_DOCUMENT_INFO);
         this.docType = docType;
-        this.documentId = new DocumentId(documentId);
+        this.documentId = DocumentId.get(documentId);
     }
 
     private void assertInfo(String docType, String documentId) {

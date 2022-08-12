@@ -11,6 +11,6 @@ public class ApproveFact extends GeneralOperationFact<ApproveItem> {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MNFT_APPROVE_OPERATION);
+        return Hint.get(Constant.MNFT_APPROVE_OPERATION);
     }
 }

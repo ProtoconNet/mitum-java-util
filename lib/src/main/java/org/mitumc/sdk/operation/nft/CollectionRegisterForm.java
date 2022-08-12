@@ -21,8 +21,8 @@ public class CollectionRegisterForm implements BytesConvertible, HashMapConverti
     private ArrayList<Address> whites;
     
     CollectionRegisterForm(String target, String symbol, String name, int royalty, String uri, String[] whites) {
-        this.hint = new Hint(Constant.MNFT_COLLECTION_REGISTER_FORM);
-        this.target = new Address(target);
+        this.hint = Hint.get(Constant.MNFT_COLLECTION_REGISTER_FORM);
+        this.target = Address.get(target);
         this.symbol = symbol;
         this.name = name;
         this.royalty = new BigInt(royalty + "");
@@ -30,7 +30,7 @@ public class CollectionRegisterForm implements BytesConvertible, HashMapConverti
         this.whites = new ArrayList<>();
         
         for(String w : whites) {
-            this.whites.add(new Address(w));
+            this.whites.add(Address.get(w));
         }
     }
 

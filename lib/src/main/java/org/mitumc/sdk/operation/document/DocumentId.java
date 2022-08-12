@@ -13,10 +13,14 @@ public class DocumentId implements BytesConvertible, HashMapConvertible {
     private String id;
     private String type;
 
-    public DocumentId(String documentId) {
+    private DocumentId(String documentId) {
         HashMap<String, String> parsed = Util.parseDocumentId(documentId);
         this.id = parsed.get("id");
         this.type = parsed.get("suffix");
+    }
+
+    public static DocumentId get(String documentId) {
+        return new DocumentId(documentId);
     }
 
     public String getDocumentId() {
@@ -41,21 +45,21 @@ public class DocumentId implements BytesConvertible, HashMapConvertible {
         HashMap<String, Object> hashMap = new HashMap<>();
         
         if(getType().equals(Constant.MBS_DOCUMENT_DATA)) {
-            hashMap.put("_hint", new Hint(Constant.MD_DOCUMENT_ID).getHint());
+            hashMap.put("_hint", Hint.get(Constant.MD_DOCUMENT_ID).getHint());
         }
         else {
             switch(getType()) {
                 case Constant.MBC_USER_DATA:
-                    hashMap.put("_hint", new Hint(Constant.MBC_USER_DOCUMENT_ID).getHint());
+                    hashMap.put("_hint", Hint.get(Constant.MBC_USER_DOCUMENT_ID).getHint());
                     break;
                 case Constant.MBC_LAND_DATA:
-                    hashMap.put("_hint", new Hint(Constant.MBC_LAND_DOCUMENT_ID).getHint());
+                    hashMap.put("_hint", Hint.get(Constant.MBC_LAND_DOCUMENT_ID).getHint());
                     break;
                 case Constant.MBC_VOTE_DATA:
-                    hashMap.put("_hint", new Hint(Constant.MBC_VOTE_DOCUMENT_ID).getHint());
+                    hashMap.put("_hint", Hint.get(Constant.MBC_VOTE_DOCUMENT_ID).getHint());
                     break;
                 case Constant.MBC_HISTORY_DATA:
-                    hashMap.put("_hint", new Hint(Constant.MBC_HISTORY_DOCUMENT_ID).getHint());
+                    hashMap.put("_hint", Hint.get(Constant.MBC_HISTORY_DOCUMENT_ID).getHint());
                     break;
                 default:
                     Util.raiseError("Invalid document id; DocumentId");

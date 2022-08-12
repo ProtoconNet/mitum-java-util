@@ -10,7 +10,7 @@ abstract public class Item implements BytesConvertible, HashMapConvertible {
     protected Hint hint;
 
     protected Item(String itemType) {
-        this.hint = new Hint(itemType);
+        this.hint = Hint.get(itemType);
     }
 
     abstract public byte[] toBytes();

@@ -19,8 +19,8 @@ public class PoolPolicyUpdaterFact extends PurposedOperationFact {
 
     PoolPolicyUpdaterFact(String sender, String target, Amount fee, String poolId, String currencyId) {
         super(Constant.MF_POOL_POLICY_UPDATER_OPERATION_FACT);
-        this.sender = new Address(sender);
-        this.target = new Address(target);
+        this.sender = Address.get(sender);
+        this.target = Address.get(target);
         this.fee = fee;
         this.poolId = poolId;
         this.currencyId = currencyId;
@@ -30,7 +30,7 @@ public class PoolPolicyUpdaterFact extends PurposedOperationFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MF_POOL_POLICY_UPDATER_OPERATION);
+        return Hint.get(Constant.MF_POOL_POLICY_UPDATER_OPERATION);
     }
 
     @Override

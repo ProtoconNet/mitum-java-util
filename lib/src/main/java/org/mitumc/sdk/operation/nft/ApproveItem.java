@@ -14,7 +14,7 @@ public class ApproveItem extends NFTItem {
 
     ApproveItem(String approved, NFTID nid, String currencyId) {
         super(Constant.MNFT_APPROVE_ITEM, currencyId);
-        this.approved = new Address(approved);
+        this.approved = Address.get(approved);
         this.nid = nid;
     }
 

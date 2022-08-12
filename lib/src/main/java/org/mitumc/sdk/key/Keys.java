@@ -20,10 +20,10 @@ public class Keys implements BytesConvertible, HashMapConvertible {
     private BigInt threshold;
     private Hash hash;
 
-    public Keys(Key[] keys, int threshold) {
+    private Keys(Key[] keys, int threshold) {
         assertThreshold(threshold);
         assertOverThreshold(keys, threshold);
-        this.hint = new Hint(Constant.MC_KEYS);
+        this.hint = Hint.get(Constant.MC_KEYS);
         this.keys = new ArrayList<Key>(Arrays.asList(keys));
         this.threshold = new BigInt(Integer.toString(threshold));
         generateHash();
@@ -47,11 +47,23 @@ public class Keys implements BytesConvertible, HashMapConvertible {
         }
     }
 
+    public static Keys get(Key[] keys, int threshold) {
+        return new Keys(keys, threshold);
+    }
+
     private void generateHash() {
         if(this.keys.size() <= 0) {
             Util.raiseError("No keys; Keys.");
         }
-        this.hash = new Hash(toBytes());
+        this.hash = Hash.fromBytes(toBytes());
+    }
+
+    public ArrayList<Key> getKeys() {
+        return this.keys;
+    }
+
+    public int getThreshold() {
+        return Integer.parseInt(this.threshold.getValue());
     }
 
     public String getAddress() {
@@ -95,8 +107,8 @@ public class Keys implements BytesConvertible, HashMapConvertible {
 
         @Override
         public int compare(Key k1, Key k2) {
-            ByteBuffer b1 = ByteBuffer.wrap(k1.getRawKey().getBytes());
-            ByteBuffer b2 = ByteBuffer.wrap(k2.getRawKey().getBytes());
+            ByteBuffer b1 = ByteBuffer.wrap(k1.getKeyWithoutType().getBytes());
+            ByteBuffer b2 = ByteBuffer.wrap(k2.getKeyWithoutType().getBytes());
 
             return b1.compareTo(b2);
         }

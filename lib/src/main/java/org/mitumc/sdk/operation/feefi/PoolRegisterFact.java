@@ -20,8 +20,8 @@ public class PoolRegisterFact extends PurposedOperationFact {
 
     PoolRegisterFact(String sender, String target, Amount initialFee, String incomingCid, String outgoingCid, String currencyId) {
         super(Constant.MF_POOL_REGISTER_OPERATION_FACT);
-        this.sender = new Address(sender);
-        this.target = new Address(target);
+        this.sender = Address.get(sender);
+        this.target = Address.get(target);
         this.initialFee = initialFee;
         this.incomingCid = incomingCid;
         this.outgoingCid = outgoingCid;
@@ -32,7 +32,7 @@ public class PoolRegisterFact extends PurposedOperationFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MF_POOL_REGISTER_OPERATION);
+        return Hint.get(Constant.MF_POOL_REGISTER_OPERATION);
     }
 
     @Override

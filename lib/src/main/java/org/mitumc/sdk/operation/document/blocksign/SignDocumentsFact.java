@@ -11,6 +11,6 @@ public class SignDocumentsFact extends GeneralDocumentsFact {
 
     @Override
     public Hint getOperationHint() {
-        return new Hint(Constant.MBS_SIGN_DOCUMENTS_OPERATION);
+        return Hint.get(Constant.MBS_SIGN_DOCUMENTS_OPERATION);
     }
 }

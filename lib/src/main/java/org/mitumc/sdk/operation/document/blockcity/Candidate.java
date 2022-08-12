@@ -19,8 +19,8 @@ public class Candidate implements BytesConvertible, HashMapConvertible {
 
     Candidate(String address, String nickname, String manifest, int count) {
         assertManifest(manifest);
-        this.hint = new Hint(Constant.MBC_VOTING_CANDIDATE);
-        this.address = new Address(address);
+        this.hint = Hint.get(Constant.MBC_VOTING_CANDIDATE);
+        this.address = Address.get(address);
         this.nickname = nickname;
         this.manifest = manifest;
         this.count = new BigInt("" + count);

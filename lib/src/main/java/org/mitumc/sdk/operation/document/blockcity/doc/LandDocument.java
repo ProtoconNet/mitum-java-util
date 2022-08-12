@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.operation.document.Document;
+import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.base.Info;
-import org.mitumc.sdk.operation.document.blockcity.info.LandInfo;
+import org.mitumc.sdk.operation.document.blockcity.info.SingleInfo;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Util;
 
@@ -18,13 +18,13 @@ public class LandDocument extends Document {
     private String rentDate;
     private BigInt period;
 
-    public LandDocument(String documentId, String owner, String address, String area, String renter, String account, String rentDate, int period) {
-        super(new LandInfo(documentId), owner);
+    LandDocument(String documentId, String owner, String address, String area, String renter, String account, String rentDate, int period) {
+        super(SingleInfo.land(documentId), owner);
         assertInfo(info);
         this.address = address;
         this.area = area;
         this.renter = renter;
-        this.account = new Address(account);
+        this.account = Address.get(account);
         this.rentDate = rentDate;
         this.period = new BigInt("" + period);
     }

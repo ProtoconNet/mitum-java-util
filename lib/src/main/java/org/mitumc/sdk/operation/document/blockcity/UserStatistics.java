@@ -20,7 +20,7 @@ public class UserStatistics implements BytesConvertible, HashMapConvertible {
     private BigInt vital;
 
     UserStatistics(int hp, int str, int agi, int dex, int cha, int intel, int vital) {
-        this.hint = new Hint(Constant.MBC_USER_STATISTICS);
+        this.hint = Hint.get(Constant.MBC_USER_STATISTICS);
         
         this.hp = new BigInt("" + hp);
         this.str = new BigInt("" + str);
