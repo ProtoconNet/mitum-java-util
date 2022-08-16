@@ -5,12 +5,12 @@ import org.mitumc.sdk.operation.document.base.GeneralDocumentsFact;
 import org.mitumc.sdk.util.Hint;
 
 public class SignDocumentsFact extends GeneralDocumentsFact {
-    SignDocumentsFact(String sender, SignDocumentsItem[] items) {
+    SignDocumentsFact(String sender, SignDocumentsItem[] items) throws Exception {
         super(Constant.MBS_SIGN_DOCUMENTS_OPERATION_FACT, sender, items);
     }
 
     @Override
-    public Hint getOperationHint() {
+    public Hint getOperationHint() throws Exception {
         return Hint.get(Constant.MBS_SIGN_DOCUMENTS_OPERATION);
     }
 }

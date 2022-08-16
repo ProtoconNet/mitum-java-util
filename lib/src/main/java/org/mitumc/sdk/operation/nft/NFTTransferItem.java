@@ -12,7 +12,7 @@ public class NFTTransferItem extends NFTItem {
     private Address receiver;
     private NFTID nid;
 
-    NFTTransferItem(String receiver, NFTID nid, String currencyId) {
+    NFTTransferItem(String receiver, NFTID nid, String currencyId) throws Exception {
         super(Constant.MNFT_TRANSFER_ITEM, currencyId);
         this.receiver = Address.get(receiver);
         this.nid = nid;

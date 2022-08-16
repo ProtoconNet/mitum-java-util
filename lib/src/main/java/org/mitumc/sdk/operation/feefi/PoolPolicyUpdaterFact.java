@@ -17,7 +17,7 @@ public class PoolPolicyUpdaterFact extends PurposedOperationFact {
     private String poolId;
     private String currencyId;
 
-    PoolPolicyUpdaterFact(String sender, String target, Amount fee, String poolId, String currencyId) {
+    PoolPolicyUpdaterFact(String sender, String target, Amount fee, String poolId, String currencyId) throws Exception {
         super(Constant.MF_POOL_POLICY_UPDATER_OPERATION_FACT);
         this.sender = Address.get(sender);
         this.target = Address.get(target);
@@ -29,8 +29,15 @@ public class PoolPolicyUpdaterFact extends PurposedOperationFact {
     }
 
     @Override
-    public Hint getOperationHint() {
-        return Hint.get(Constant.MF_POOL_POLICY_UPDATER_OPERATION);
+    public Hint getOperationHint() throws Exception {
+        try {
+            return Hint.get(Constant.MF_POOL_POLICY_UPDATER_OPERATION);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to get operation hint", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override

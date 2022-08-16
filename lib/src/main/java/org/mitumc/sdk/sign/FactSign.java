@@ -11,26 +11,32 @@ import org.mitumc.sdk.util.TimeStamp;
 import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.key.Keypair;
 
-
 public class FactSign implements BytesConvertible {
     private Hint hint;
     private String signer;
     private byte[] signature;
     private TimeStamp signedAt;
 
-    private FactSign(String signer, byte[] signature) {
-        this.hint = Hint.get(Constant.BASE_FACT_SIGN);
+    private FactSign(String signer, byte[] signature) throws Exception {
         this.signer = signer;
         this.signature = Util.copyByteArray(signature);
         this.signedAt = Util.getDateTimeStamp();
+        this.hint = Hint.get(Constant.BASE_FACT_SIGN);
     }
 
-    public static FactSign createSign(byte[] target, String signKey) {
+    public static FactSign get(byte[] target, String signKey) throws Exception {
         Keypair keypair = Keypair.fromPrivateKey(signKey);
         byte[] signature = keypair.sign(target);
         String signer = keypair.getPublicKey();
 
-        return new FactSign(signer, signature);
+        try {
+            return new FactSign(signer, signature);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create fact sign", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     public byte[] toBytes() {
@@ -41,7 +47,7 @@ public class FactSign implements BytesConvertible {
     }
 
     public HashMap<String, Object> toDict() {
-        HashMap<String,Object> hashMap = new HashMap<>();
+        HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
         hashMap.put("signer", this.signer);

@@ -18,7 +18,7 @@ public class PoolWithdrawFact extends PurposedOperationFact {
     private String poolId;
     private ArrayList<Amount> amounts;
 
-    PoolWithdrawFact(String sender, String pool, String poolId, Amount[] amounts) {
+    PoolWithdrawFact(String sender, String pool, String poolId, Amount[] amounts) throws Exception {
         super(Constant.MF_POOL_WITHDRAW_OPERATION_FACT);
         this.sender = Address.get(sender);
         this.pool = Address.get(pool);
@@ -29,17 +29,33 @@ public class PoolWithdrawFact extends PurposedOperationFact {
     }
 
     @Override
-    public Hint getOperationHint() {
-        return Hint.get(Constant.MF_POOL_WITHDRAW_OPERATION);
+    public Hint getOperationHint() throws Exception {
+        try {
+            return Hint.get(Constant.MF_POOL_WITHDRAW_OPERATION);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to get operation hint", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] toBytes() throws Exception {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] bsender = this.sender.toBytes();
         byte[] bpool = this.pool.toBytes();
         byte[] bpoolId = this.poolId.getBytes();
-        byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
+        byte[] bamounts = null;
+
+        try {
+            bamounts = Util.<Amount>concatItemArray(this.amounts);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert pool withdraw fact to bytes", Util.getName()),
+                            e.getMessage()));
+        }
 
         return Util.concatByteArray(btoken, bsender, bpool, bpoolId, bamounts);
     }
@@ -56,7 +72,7 @@ public class PoolWithdrawFact extends PurposedOperationFact {
         hashMap.put("poolid", this.poolId);
 
         ArrayList<Object> arr = new ArrayList<>();
-        for(Amount amt : this.amounts) {
+        for (Amount amt : this.amounts) {
             arr.add(amt.toDict());
         }
         hashMap.put("amounts", arr);

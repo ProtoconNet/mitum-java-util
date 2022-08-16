@@ -4,7 +4,7 @@ import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.operation.document.blockcity.info.base.BlockCityInfo;
 
 public class HistoryInfo extends BlockCityInfo {
-    HistoryInfo(String documentId) {
+    HistoryInfo(String documentId) throws Exception {
         super(Constant.MBC_DOCTYPE_HISTORY_DATA, documentId);
     }
 }

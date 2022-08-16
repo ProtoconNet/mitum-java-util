@@ -16,7 +16,7 @@ public class PoolDepositsFact extends PurposedOperationFact {
     private String poolId;
     private Amount amount;
 
-    PoolDepositsFact(String sender, String pool, String poolId, Amount amount) {
+    PoolDepositsFact(String sender, String pool, String poolId, Amount amount) throws Exception {
         super(Constant.MF_POOL_DEPOSITS_OPERATION_FACT);
         this.sender = Address.get(sender);
         this.pool = Address.get(pool);
@@ -27,8 +27,15 @@ public class PoolDepositsFact extends PurposedOperationFact {
     }
 
     @Override
-    public Hint getOperationHint() {
-        return Hint.get(Constant.MF_POOL_DEPOSITS_OPERATION);
+    public Hint getOperationHint() throws Exception {
+        try {
+            return Hint.get(Constant.MF_POOL_DEPOSITS_OPERATION);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to get operation hint", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override

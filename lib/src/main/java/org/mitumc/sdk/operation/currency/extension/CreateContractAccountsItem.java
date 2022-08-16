@@ -11,16 +11,24 @@ import org.mitumc.sdk.util.Util;
 public class CreateContractAccountsItem extends CurrencyItem {
     private Keys keys;
 
-    CreateContractAccountsItem(String itemType, Keys keys, Amount[] amounts) {
+    CreateContractAccountsItem(String itemType, Keys keys, Amount[] amounts) throws Exception {
         super(itemType, amounts);
         this.keys = keys;
     }
 
     @Override
-    public byte[] toBytes() {
-        byte[] bkeys = this.keys.toBytes();
-        byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
-        
+    public byte[] toBytes() throws Exception {
+        byte[] bkeys = null;
+        byte[] bamounts = null;
+        try {
+            bkeys = this.keys.toBytes();
+            bamounts = Util.<Amount>concatItemArray(this.amounts);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert create contract accounts item to bytes", Util.getName()),
+                            e.getMessage()));
+        }
         return Util.concatByteArray(bkeys, bamounts);
     }
 
@@ -30,9 +38,9 @@ public class CreateContractAccountsItem extends CurrencyItem {
 
         hashMap.put("_hint", this.hint.getHint());
         hashMap.put("keys", this.keys.toDict());
-        
+
         ArrayList<Object> arr = new ArrayList<>();
-        for(Amount amt : this.amounts) {
+        for (Amount amt : this.amounts) {
             arr.add(amt.toDict());
         }
 

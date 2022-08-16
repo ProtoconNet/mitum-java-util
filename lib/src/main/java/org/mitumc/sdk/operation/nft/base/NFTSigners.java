@@ -15,21 +15,38 @@ public class NFTSigners implements BytesConvertible, HashMapConvertible {
     private Hint hint;
     private BigInt total;
     private ArrayList<NFTSigner> signers;
-    
-    private NFTSigners(int total, NFTSigner[] signers) {
+
+    private NFTSigners(int total, NFTSigner[] signers) throws Exception {
         this.hint = Hint.get(Constant.MNFT_SIGNERS);
         this.total = new BigInt(total + "");
         this.signers = new ArrayList<NFTSigner>(Arrays.asList(signers));
     }
 
-    public static NFTSigners get(int total, NFTSigner[] signers) {
-        return new NFTSigners(total, signers);
+    public static NFTSigners get(int total, NFTSigner[] signers) throws Exception {
+        try {
+            return new NFTSigners(total, signers);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create nft signers", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] toBytes() throws Exception {
         byte[] btotal = this.total.toBytes();
-        byte[] bsigners = Util.<NFTSigner>concatItemArray(this.signers);
+        byte[] bsigners = null;
+
+        try {
+            bsigners = Util.<NFTSigner>concatItemArray(this.signers);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert nft signers to bytes", Util.getName()),
+                            e.getMessage()));
+        }
+
         return Util.concatByteArray(btotal, bsigners);
     }
 
@@ -39,9 +56,9 @@ public class NFTSigners implements BytesConvertible, HashMapConvertible {
 
         map.put("_hint", this.hint.getHint());
         map.put("total", Integer.parseInt(this.total.getValue()));
-        
+
         ArrayList<Object> arr = new ArrayList<>();
-        for(NFTSigner s : this.signers) {
+        for (NFTSigner s : this.signers) {
             arr.add(s.toDict());
         }
         map.put("signers", arr);

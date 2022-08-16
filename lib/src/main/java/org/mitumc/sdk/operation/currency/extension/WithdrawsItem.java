@@ -11,16 +11,32 @@ import org.mitumc.sdk.util.Util;
 public class WithdrawsItem extends CurrencyItem {
     private Address target;
 
-    WithdrawsItem(String itemType, String target, Amount[] amounts) {
+    WithdrawsItem(String itemType, String target, Amount[] amounts) throws Exception {
         super(itemType, amounts);
-        this.target = Address.get(target);
+        try {
+            this.target = Address.get(target);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create withdraws item", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] toBytes() throws Exception {
         byte[] btarget = this.target.toBytes();
-        byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
-        
+        byte[] bamounts = null;
+
+        try {
+            bamounts = Util.<Amount>concatItemArray(this.amounts);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert withdraws item to bytes", Util.getName()),
+                            e.getMessage()));
+        }
+
         return Util.concatByteArray(btarget, bamounts);
     }
 
@@ -30,9 +46,9 @@ public class WithdrawsItem extends CurrencyItem {
 
         hashMap.put("_hint", this.hint.getHint());
         hashMap.put("target", this.target.getAddress());
-        
+
         ArrayList<Object> arr = new ArrayList<>();
-        for(Amount amt : this.amounts) {
+        for (Amount amt : this.amounts) {
             arr.add(amt.toDict());
         }
 

@@ -15,25 +15,32 @@ public class NFTSigner implements BytesConvertible, HashMapConvertible {
     private Address account;
     private BigInt share;
     private boolean signed;
-    
-    private NFTSigner(String account, int share, boolean signed) {
+
+    private NFTSigner(String account, int share, boolean signed) throws Exception {
         this.hint = Hint.get(Constant.MNFT_SIGNER);
         this.account = Address.get(account);
         this.share = new BigInt(share + "");
         this.signed = signed;
     }
 
-    public static NFTSigner get(String account, int share, boolean signed) {
-        return new NFTSigner(account, share, signed);
+    public static NFTSigner get(String account, int share, boolean signed) throws Exception {
+        try {
+            return new NFTSigner(account, share, signed);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create nft signer", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override
     public byte[] toBytes() {
         byte[] baccount = this.account.toBytes();
-        byte[] bshare = this.share.toBytes(); 
-        byte[] bsigned = new byte[]{0};
+        byte[] bshare = this.share.toBytes();
+        byte[] bsigned = new byte[] { 0 };
 
-        if(this.signed) {
+        if (this.signed) {
             bsigned[0] = 1;
         }
 

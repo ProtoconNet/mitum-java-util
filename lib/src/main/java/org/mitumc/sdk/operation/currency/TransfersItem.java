@@ -11,16 +11,32 @@ import org.mitumc.sdk.operation.currency.base.CurrencyItem;
 public class TransfersItem extends CurrencyItem {
     private Address receiver;
 
-    TransfersItem(String itemType, String receiver, Amount[] amounts) {
+    TransfersItem(String itemType, String receiver, Amount[] amounts) throws Exception {
         super(itemType, amounts);
-        this.receiver = Address.get(receiver);
+        try {
+            this.receiver = Address.get(receiver);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create transfers item", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] toBytes() throws Exception {
         byte[] breceiver = this.receiver.toBytes();
-        byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
-        
+        byte[] bamounts = null;
+
+        try {
+            bamounts = Util.<Amount>concatItemArray(this.amounts);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert transfers item to bytes", Util.getName()),
+                            e.getMessage()));
+        }
+
         return Util.concatByteArray(breceiver, bamounts);
     }
 
@@ -32,7 +48,7 @@ public class TransfersItem extends CurrencyItem {
         hashMap.put("receiver", this.receiver.getAddress());
 
         ArrayList<Object> arr = new ArrayList<>();
-        for(Amount amount : this.amounts) {
+        for (Amount amount : this.amounts) {
             arr.add(amount.toDict());
         }
         hashMap.put("amounts", arr);

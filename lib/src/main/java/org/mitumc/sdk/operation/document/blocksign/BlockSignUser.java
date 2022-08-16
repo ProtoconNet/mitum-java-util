@@ -14,8 +14,8 @@ public class BlockSignUser implements BytesConvertible, HashMapConvertible {
     private Address address;
     private String signCode;
     private boolean signed;
-    
-    BlockSignUser(String address, String signCode, boolean signed) {
+
+    BlockSignUser(String address, String signCode, boolean signed) throws Exception {
         this.hint = Hint.get(Constant.MBS_USER);
         this.address = Address.get(address);
         this.signCode = signCode;
@@ -28,10 +28,10 @@ public class BlockSignUser implements BytesConvertible, HashMapConvertible {
 
     @Override
     public byte[] toBytes() {
-        byte[] bAddress = this.address.toBytes();
-        byte[] bSignCode = this.signCode.getBytes();
-        byte[] bSigned = this.signed ? new byte[]{ 1 } : new byte[]{ 0 };
-        return Util.concatByteArray(bAddress, bSignCode, bSigned);
+        byte[] baddress = this.address.toBytes();
+        byte[] bsignCode = this.signCode.getBytes();
+        byte[] bsigned = this.signed ? new byte[] { 1 } : new byte[] { 0 };
+        return Util.concatByteArray(baddress, bsignCode, bsigned);
     }
 
     @Override

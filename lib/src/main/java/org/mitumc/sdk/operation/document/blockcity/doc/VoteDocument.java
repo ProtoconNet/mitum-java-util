@@ -22,7 +22,8 @@ public class VoteDocument extends Document {
     private Address account;
     private String office;
 
-    VoteDocument(String documentId, String owner, int round, String endTime, Candidate[] candidates, String bossName, String account, String office) {
+    VoteDocument(String documentId, String owner, int round, String endTime, Candidate[] candidates, String bossName,
+            String account, String office) throws Exception {
         super(SingleInfo.vote(documentId), owner);
         assertInfo(info);
         this.round = new BigInt("" + round);
@@ -32,45 +33,53 @@ public class VoteDocument extends Document {
         this.office = office;
 
         this.candidates = new ArrayList<Candidate>();
-        for(Candidate candidate : candidates) {
+        for (Candidate candidate : candidates) {
             this.candidates.add(candidate);
         }
     }
-    
-    private void assertInfo(Info info) {
-        if(!info.getDocType().equals(Constant.MBC_DOCTYPE_VOTE_DATA)) {
-            Util.raiseError("Invalid docType of Info; VoteDocument.");
+
+    private void assertInfo(Info info) throws Exception {
+        if (!info.getDocType().equals(Constant.MBC_DOCTYPE_VOTE_DATA)) {
+            throw new Exception(Util.errMsg("invalid doctype", Util.getName()));
         }
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] toBytes() throws Exception {
         this.candidates.sort(new CandidateComparator());
 
-        byte[] bInfo = this.info.toBytes();
-        byte[] bOwner = this.owner.toBytes();
-        byte[] bRound = this.round.toBytes();
-        byte[] bEndTime = this.endTime.getBytes();
-        byte[] bBossName = this.bossName.getBytes();
-        byte[] bAccount = this.account.toBytes();
-        byte[] bOffice = this.office.getBytes();
-        byte[] bCandidates = Util.<Candidate>concatItemArray(this.candidates);
-        
-        return Util.concatByteArray(bInfo, bOwner, bRound, bEndTime, bBossName, bAccount, bOffice, bCandidates);
+        byte[] binfo = this.info.toBytes();
+        byte[] bowner = this.owner.toBytes();
+        byte[] bround = this.round.toBytes();
+        byte[] bendTime = this.endTime.getBytes();
+        byte[] bbossName = this.bossName.getBytes();
+        byte[] baccount = this.account.toBytes();
+        byte[] boffice = this.office.getBytes();
+        byte[] bcandidates = null;
+
+        try {
+            bcandidates = Util.<Candidate>concatItemArray(this.candidates);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert vote document to bytes", Util.getName()),
+                            e.getMessage()));
+        }
+
+        return Util.concatByteArray(binfo, bowner, bround, bendTime, bbossName, baccount, boffice, bcandidates);
     }
 
     @Override
-    public HashMap<String, Object> toDict() {
+    public HashMap<String, Object> toDict() throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
-        hashMap.put("info", this.info.toDict());
         hashMap.put("owner", this.owner.getAddress());
         hashMap.put("round", Integer.parseInt(this.round.getValue()));
         hashMap.put("endvotetime", this.endTime);
 
         ArrayList<Object> arr = new ArrayList<>();
-        for(Candidate candidate : this.candidates) {
+        for (Candidate candidate : this.candidates) {
             arr.add(candidate.toDict());
         }
         hashMap.put("candidates", arr);
@@ -79,18 +88,24 @@ public class VoteDocument extends Document {
         hashMap.put("account", this.account.getAddress());
         hashMap.put("termofoffice", this.office);
 
+        try {
+            hashMap.put("info", this.info.toDict());
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert vote document to hashmap", Util.getName()),
+                            e.getMessage()));
+        }
+
         return hashMap;
     }
 
     public static class CandidateComparator implements Comparator<Candidate> {
-
         @Override
         public int compare(Candidate c1, Candidate c2) {
             ByteBuffer b1 = ByteBuffer.wrap(c1.toBytes());
             ByteBuffer b2 = ByteBuffer.wrap(c2.toBytes());
-
             return b1.compareTo(b2);
         }
-
     }
 }

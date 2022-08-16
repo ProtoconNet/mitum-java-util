@@ -13,8 +13,8 @@ public class CollectionRegisterFact extends PurposedOperationFact {
     private Address sender;
     private CollectionRegisterForm form;
     private String currencyId;
-    
-    CollectionRegisterFact(String sender, CollectionRegisterForm form, String currencyId) {
+
+    CollectionRegisterFact(String sender, CollectionRegisterForm form, String currencyId) throws Exception {
         super(Constant.MNFT_COLLECTION_REGISTER_OPERATION_FACT);
         this.sender = Address.get(sender);
         this.form = form;
@@ -24,16 +24,33 @@ public class CollectionRegisterFact extends PurposedOperationFact {
     }
 
     @Override
-    public Hint getOperationHint() {
-        return Hint.get(Constant.MNFT_COLLECTION_REGISTER_OPERATION);
+    public Hint getOperationHint() throws Exception {
+        try {
+            return Hint.get(Constant.MNFT_COLLECTION_REGISTER_OPERATION);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to get operation hint", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] toBytes() throws Exception {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] bsender = this.sender.toBytes();
-        byte[] bform = this.form.toBytes();
+        byte[] bform = null;
         byte[] bcurrencyId = this.currencyId.getBytes();
+
+        try {
+            bform = this.form.toBytes();
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert collection register fact to bytes", Util.getName()),
+                            e.getMessage()));
+        }
+
         return Util.concatByteArray(btoken, bsender, bform, bcurrencyId);
     }
 
@@ -48,6 +65,6 @@ public class CollectionRegisterFact extends PurposedOperationFact {
         map.put("form", this.form.toDict());
         map.put("currency", this.currencyId);
 
-        return super.toDict();
+        return map;
     }
 }

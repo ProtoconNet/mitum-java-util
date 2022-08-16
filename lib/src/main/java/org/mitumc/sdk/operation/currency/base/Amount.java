@@ -14,21 +14,28 @@ public class Amount implements BytesConvertible, HashMapConvertible {
     private String currency;
     private BigInt amount;
 
-    private Amount(String currency, String amount) {
+    private Amount(String currency, String amount) throws Exception {
         this.hint = Hint.get(Constant.MC_AMOUNT);
         this.currency = currency;
         this.amount = new BigInt(amount);
     }
 
-    public static Amount get(String currency, String amount) {
-        return new Amount(currency, amount);
+    public static Amount get(String currency, String amount) throws Exception {
+        try {
+            return new Amount(currency, amount);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create amount", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     public byte[] toBytes() {
         byte[] bamount = this.amount.toBytes(BigInt.LITTLE_ENDIAN, true);
         byte[] bcurrency = this.currency.getBytes();
 
-        if(bamount.length < 1) {
+        if (bamount.length < 1) {
             return bcurrency;
         }
 
@@ -46,4 +53,3 @@ public class Amount implements BytesConvertible, HashMapConvertible {
         return hashMap;
     }
 }
-

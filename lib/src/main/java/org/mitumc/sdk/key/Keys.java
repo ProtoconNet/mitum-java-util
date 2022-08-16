@@ -20,7 +20,7 @@ public class Keys implements BytesConvertible, HashMapConvertible {
     private BigInt threshold;
     private Hash hash;
 
-    private Keys(Key[] keys, int threshold) {
+    private Keys(Key[] keys, int threshold) throws Exception {
         assertThreshold(threshold);
         assertOverThreshold(keys, threshold);
         this.hint = Hint.get(Constant.MC_KEYS);
@@ -29,33 +29,49 @@ public class Keys implements BytesConvertible, HashMapConvertible {
         generateHash();
     }
 
-    private void assertThreshold(int threshold) {
+    private void assertThreshold(int threshold) throws Exception {
         if (threshold < 1 || threshold > 100) {
-            Util.raiseError("Invalid threshold; Keys.");
+            throw new Exception(Util.errMsg("invalid threshold - now, threshold is " + threshold, Util.getName()));
         }
     }
 
-    private void assertOverThreshold(Key[] keys, int threshold) {
+    private void assertOverThreshold(Key[] keys, int threshold) throws Exception {
         long sum = 0;
 
-        for(Key key : keys) {
+        for (Key key : keys) {
             sum += key.getWeight();
         }
 
-        if(sum < threshold) {
-            Util.raiseError("The sum of all weights doesn't satisfy the condition: sum(weights) >= threshold; Keys.");
+        if (sum < threshold) {
+            throw new Exception(
+                    Util.errMsg("the sum of all weights doesn't satisfy the condition - now, weight-sum(" + sum
+                            + ") < threshold(" + threshold + ")", Util.getName()));
         }
     }
 
-    public static Keys get(Key[] keys, int threshold) {
-        return new Keys(keys, threshold);
+    public static Keys get(Key[] keys, int threshold) throws Exception {
+        try {
+            return new Keys(keys, threshold);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create keys from keys and threshold", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
-    private void generateHash() {
-        if(this.keys.size() <= 0) {
-            Util.raiseError("No keys; Keys.");
+    private void generateHash() throws Exception {
+        try {
+            if (this.keys.size() <= 0) {
+                throw new Exception(Util.errMsg("no keys", Util.getName()));
+            }
+            this.hash = Hash.fromBytes(toBytes());
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to generate hash", Util.getName()),
+                            e.getMessage()));
         }
-        this.hash = Hash.fromBytes(toBytes());
     }
 
     public ArrayList<Key> getKeys() {
@@ -75,11 +91,19 @@ public class Keys implements BytesConvertible, HashMapConvertible {
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] toBytes() throws Exception {
         this.keys.sort(new Keys.KeyComparator());
-
-        byte[] bkeys = Util.<Key>concatItemArray(this.keys);
+        byte[] bkeys = null;
         byte[] bthreshold = this.threshold.toBytes();
+
+        try {
+            bkeys = Util.<Key>concatItemArray(this.keys);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert keys to bytes", Util.getName()),
+                            e.getMessage()));
+        }
 
         return Util.concatByteArray(bkeys, bthreshold);
     }
@@ -104,7 +128,6 @@ public class Keys implements BytesConvertible, HashMapConvertible {
     }
 
     public static class KeyComparator implements Comparator<Key> {
-
         @Override
         public int compare(Key k1, Key k2) {
             ByteBuffer b1 = ByteBuffer.wrap(k1.getKeyWithoutType().getBytes());
@@ -112,6 +135,5 @@ public class Keys implements BytesConvertible, HashMapConvertible {
 
             return b1.compareTo(b2);
         }
-
     }
 }

@@ -17,7 +17,7 @@ public class Candidate implements BytesConvertible, HashMapConvertible {
     private String manifest;
     private BigInt count;
 
-    Candidate(String address, String nickname, String manifest, int count) {
+    Candidate(String address, String nickname, String manifest, int count) throws Exception {
         assertManifest(manifest);
         this.hint = Hint.get(Constant.MBC_VOTING_CANDIDATE);
         this.address = Address.get(address);
@@ -26,9 +26,10 @@ public class Candidate implements BytesConvertible, HashMapConvertible {
         this.count = new BigInt("" + count);
     }
 
-    private void assertManifest(String manifest) {
+    private void assertManifest(String manifest) throws Exception {
         if (manifest.length() > 100) {
-            Util.raiseError("manifest length is over 100! (manifest.length() <= 100; Candidate.");
+            throw new Exception(Util.errMsg(
+                    "manifest length is too long - now, manifest(" + manifest.length() + ") > 100", Util.getName()));
         }
     }
 

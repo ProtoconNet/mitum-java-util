@@ -14,21 +14,28 @@ public class Key implements BytesConvertible, HashMapConvertible {
     private BaseKey key;
     private BigInt weight;
 
-    private Key(String key, int weight) {
+    private Key(String key, int weight) throws Exception {
         assertWeight(weight);
         this.hint = Hint.get(Constant.MC_KEY);
-        this.key = new BaseKey(key);
+        this.key = BaseKey.get(key);
         this.weight = new BigInt(Integer.toString(weight));
     }
 
-    private void assertWeight(int weight) {
+    private void assertWeight(int weight) throws Exception {
         if (weight < 1 || weight > 100) {
-            Util.raiseError("Invalid weight; Key.");
+            throw new Exception(Util.errMsg("invalid weight - now " + weight, Util.getName()));
         }
     }
 
-    public static Key get(String key, int weight) {
-        return new Key(key, weight);
+    public static Key get(String key, int weight) throws Exception {
+        try {
+            return new Key(key, weight);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create key from key and weight", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     public int getWeight() {

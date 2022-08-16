@@ -6,25 +6,22 @@ import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
 public class PurposedOperationFact extends OperationFact {
-    protected PurposedOperationFact(String factType) {
+    protected PurposedOperationFact(String factType) throws Exception {
         super(factType);
     }
 
     @Override
-    public Hint getOperationHint() {
-        Util.raiseError("Unimplemented method getOperationHint(); GeneralOperationFact.");
-        return null;
+    public Hint getOperationHint() throws Exception {
+        throw new Exception(Util.errMsg("unimplemented method", Util.getName()));
     }
 
     @Override
-    public byte[] toBytes() {
-        Util.raiseError("Unimplemented method getOperationHint(); GeneralOperationFact.");
-        return null;
+    public byte[] toBytes() throws Exception {
+        throw new Exception(Util.errMsg("unimplemented method", Util.getName()));
     }
 
     @Override
-    public HashMap<String, Object> toDict() {
-        Util.raiseError("Unimplemented method getOperationHint(); GeneralOperationFact.");
-        return null;
+    public HashMap<String, Object> toDict() throws Exception {
+        throw new Exception(Util.errMsg("unimplemented method", Util.getName()));
     }
 }

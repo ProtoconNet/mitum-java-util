@@ -19,9 +19,9 @@ public class UserStatistics implements BytesConvertible, HashMapConvertible {
     private BigInt intel;
     private BigInt vital;
 
-    UserStatistics(int hp, int str, int agi, int dex, int cha, int intel, int vital) {
+    UserStatistics(int hp, int str, int agi, int dex, int cha, int intel, int vital) throws Exception {
         this.hint = Hint.get(Constant.MBC_USER_STATISTICS);
-        
+
         this.hp = new BigInt("" + hp);
         this.str = new BigInt("" + str);
         this.agi = new BigInt("" + agi);

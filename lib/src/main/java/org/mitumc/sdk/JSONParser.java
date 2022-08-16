@@ -12,12 +12,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class JSONParser {
-    public static JsonObject getObjectFromJSONFile(String fpName) {
+    public static JsonObject getObjectFromJSONFile(String fpName) throws Exception {
         try {
             return (JsonObject) JsonParser.parseReader(new FileReader(fpName));
         } catch (Exception e) {
-            Util.raiseError("Fail to create JSON file; JSONParser.");
-            return null;
+            throw new Exception(
+                    Util.errMsg("failed to create json file", Util.getName()));
         }
     }
 
@@ -26,38 +26,36 @@ public class JSONParser {
     }
 
     @Deprecated
-    public static void createJSON(JsonObject target, String fp) {
+    public static void createJSON(JsonObject target, String fp) throws Exception {
         writeJsonFileFromJsonObject(target, fp);
     }
 
     @Deprecated
-    public static void createJSON(HashMap<String, Object> target, String fp) {
+    public static void createJSON(HashMap<String, Object> target, String fp) throws Exception {
         writeJsonFileFromHashMap(target, fp);
     }
 
-    public static void writeJsonFileFromJsonObject(JsonObject target, String fp) {
+    public static void writeJsonFileFromJsonObject(JsonObject target, String fp) throws Exception {
         FileWriter writer;
-
         try {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             writer = new FileWriter(fp);
             gson.toJson(target, writer);
-
             try {
                 writer.flush();
                 writer.close();
             } catch (Exception e) {
-                Util.raiseError("Fail to Flush JSON file writer; JSONParser.");
-                return;
+                throw new Exception(
+                        Util.errMsg("failed to flush file writer", Util.getName()));
             }
         } catch (Exception e) {
-            Util.log("Fail to create JSON file; JSONParser.");
-            return;
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to write json file", Util.getName())));
         }
-        Util.log("Success to create JSON file - " + fp + ".");
     }
 
-    public static void writeJsonFileFromHashMap(HashMap<String, Object> target, String fp) {
+    public static void writeJsonFileFromHashMap(HashMap<String, Object> target, String fp) throws Exception {
         writeJsonFileFromJsonObject(new Gson().toJsonTree(target).getAsJsonObject(), fp);
     }
 }

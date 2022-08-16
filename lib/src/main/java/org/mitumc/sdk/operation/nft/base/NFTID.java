@@ -13,20 +13,34 @@ public class NFTID implements BytesConvertible, HashMapConvertible {
     private Hint hint;
     private String collection;
     private BigInt idx;
-    
-    private NFTID(String collection, BigInt idx) {
+
+    private NFTID(String collection, BigInt idx) throws Exception {
         this.hint = Hint.get(Constant.MNFT_NFT_ID);
         this.collection = collection;
         this.idx = idx;
     }
 
-    public static NFTID get(String collection, BigInt idx) {
-        return new NFTID(collection, idx);
+    public static NFTID get(String collection, BigInt idx) throws Exception {
+        try {
+            return new NFTID(collection, idx);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create nft id", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
-    public static NFTID get(String nid) {
-        HashMap<String, String> parsed = Util.parseNFTID(nid);
-        return NFTID.get(parsed.get("collection"), new BigInt(parsed.get("idx")));
+    public static NFTID get(String nid) throws Exception {
+        try {
+            HashMap<String, String> parsed = Util.parseNFTID(nid);
+            return NFTID.get(parsed.get("collection"), new BigInt(parsed.get("idx")));
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create nft id", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override

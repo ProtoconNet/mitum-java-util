@@ -10,38 +10,60 @@ import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
-
 public class KeyUpdaterFact extends PurposedOperationFact {
     private Address target;
     private String currencyId;
     private Keys keys;
 
-    KeyUpdaterFact(String target, String currencyId, Keys keys) {
+    KeyUpdaterFact(String target, String currencyId, Keys keys) throws Exception {
         super(Constant.MC_KEY_UPDATER_OPERATION_FACT);
-        this.target = Address.get(target);
         this.currencyId = currencyId;
         this.keys = keys;
 
-        generateHash();
+        try {
+            this.target = Address.get(target);
+            generateHash();
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to create key updater fact", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override
-    public Hint getOperationHint() {
-        return Hint.get(Constant.MC_KEY_UPDATER_OPERATION);
+    public Hint getOperationHint() throws Exception {
+        try {
+            return Hint.get(Constant.MC_KEY_UPDATER_OPERATION);
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to get operation hint", Util.getName()),
+                            e.getMessage()));
+        }
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] toBytes() throws Exception {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] btarget = this.target.toBytes();
-        byte[] bkeys = this.keys.toBytes();
+        byte[] bkeys = null;
         byte[] bcurrencyId = this.currencyId.getBytes();
+
+        try {
+            bkeys = this.keys.toBytes();
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert key updater fact to bytes", Util.getName()),
+                            e.getMessage()));
+        }
 
         return Util.concatByteArray(btoken, btarget, bkeys, bcurrencyId);
     }
 
     @Override
-    public HashMap<String,Object> toDict() {
+    public HashMap<String, Object> toDict() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());

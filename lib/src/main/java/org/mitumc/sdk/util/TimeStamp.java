@@ -22,14 +22,13 @@ public class TimeStamp {
         formatTimestamp();
     }
 
-    private TimeStamp(String timestamp) {
+    private TimeStamp(String timestamp) throws Exception {
         this.ISOtimestamp = timestamp;
         int t = timestamp.indexOf("T");
         int z = timestamp.indexOf("Z");
 
         if(t < 0 || z < 0) {
-            Util.raiseError("Invalid timestamp; TimeStamp.");
-            return;
+            throw new Exception(Util.errMsg("invalid timestamp format", Util.getName()));
         }
         formatTimestamp();
     }
@@ -42,8 +41,17 @@ public class TimeStamp {
         return new TimeStamp(timestamp);
     }
 
-    public static TimeStamp fromString(String timestamp) {
-        return new TimeStamp(timestamp);
+    public static TimeStamp fromString(String timestamp) throws Exception {
+        try {
+            return new TimeStamp(timestamp);
+        } catch(Exception e) {
+            throw new Exception(
+                Util.linkErrMsgs(
+                    Util.errMsg("failed to create timestamp from string", Util.getName()),
+                    e.getMessage()
+                )
+            );
+        }
     }
 
     private void formatTimestamp() {

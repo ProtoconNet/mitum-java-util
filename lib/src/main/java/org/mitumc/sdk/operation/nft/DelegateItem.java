@@ -11,8 +11,8 @@ public class DelegateItem extends NFTItem {
     private String collection;
     private Address agent;
     private String mode;
-    
-    DelegateItem(String collection, String agent, String mode, String currencyId) {
+
+    DelegateItem(String collection, String agent, String mode, String currencyId) throws Exception {
         super(Constant.MNFT_DELEGATE_ITEM, currencyId);
         this.collection = collection;
         this.agent = Address.get(agent);

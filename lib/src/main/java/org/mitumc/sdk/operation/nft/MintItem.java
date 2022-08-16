@@ -10,17 +10,27 @@ public class MintItem extends NFTItem {
     private String collection;
     private MintForm form;
 
-    MintItem(String collection, MintForm form, String currencyId) {
+    MintItem(String collection, MintForm form, String currencyId) throws Exception {
         super(Constant.MNFT_MINT_ITEM, currencyId);
         this.collection = collection;
         this.form = form;
     }
 
     @Override
-    public byte[] toBytes() {
+    public byte[] toBytes() throws Exception {
         byte[] bcollection = this.collection.getBytes();
-        byte[] bform = this.form.toBytes();
+        byte[] bform = null;
         byte[] bcurrencyId = this.currencyId.getBytes();
+
+        try {
+            bform = this.form.toBytes();
+        } catch (Exception e) {
+            throw new Exception(
+                    Util.linkErrMsgs(
+                            Util.errMsg("failed to convert mint item to bytes", Util.getName()),
+                            e.getMessage()));
+        }
+
         return Util.concatByteArray(bcollection, bform, bcurrencyId);
     }
 

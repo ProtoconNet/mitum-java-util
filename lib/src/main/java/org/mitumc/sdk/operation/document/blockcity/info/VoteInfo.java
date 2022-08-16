@@ -4,7 +4,7 @@ import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.operation.document.blockcity.info.base.BlockCityInfo;
 
 public class VoteInfo extends BlockCityInfo {
-    VoteInfo(String documentId) {
+    VoteInfo(String documentId) throws Exception {
         super(Constant.MBC_DOCTYPE_VOTE_DATA, documentId);
     }
 }

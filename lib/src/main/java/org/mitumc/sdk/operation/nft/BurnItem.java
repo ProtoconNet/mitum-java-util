@@ -9,8 +9,8 @@ import org.mitumc.sdk.util.Util;
 
 public class BurnItem extends NFTItem {
     private NFTID nid;
-    
-    BurnItem(NFTID nid, String currencyId) {
+
+    BurnItem(NFTID nid, String currencyId) throws Exception {
         super(Constant.MNFT_BURN_ITEM, currencyId);
         this.nid = nid;
     }
