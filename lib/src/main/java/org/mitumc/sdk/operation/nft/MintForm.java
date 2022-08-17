@@ -16,7 +16,7 @@ public class MintForm implements BytesConvertible, HashMapConvertible {
     private NFTSigners creators;
     private NFTSigners copyrighters;
 
-    MintForm(String hash, String uri, NFTSigners creators, NFTSigners copyrighters) throws Exception {
+    MintForm(String hash, String uri, NFTSigners creators, NFTSigners copyrighters) {
         this.hint = Hint.get(Constant.MNFT_MINT_FORM);
         this.hash = hash;
         this.uri = uri;
@@ -25,21 +25,11 @@ public class MintForm implements BytesConvertible, HashMapConvertible {
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] bhash = this.hash.getBytes();
         byte[] buri = this.uri.getBytes();
-        byte[] bcreators = null;
-        byte[] bcopyrighters = null;
-
-        try {
-            bcreators = this.creators.toBytes();
-            bcopyrighters = this.copyrighters.toBytes();
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert mint form to bytes", Util.getName()),
-                            e.getMessage()));
-        }
+        byte[] bcreators = this.creators.toBytes();
+        byte[] bcopyrighters = this.copyrighters.toBytes();
 
         return Util.concatByteArray(bhash, buri, bcreators, bcopyrighters);
     }

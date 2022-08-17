@@ -12,7 +12,7 @@ public class NFTSignItem extends NFTItem {
     private NFTID nid;
     private String currencyId;
 
-    NFTSignItem(String qualification, NFTID nid, String currencyId) throws Exception {
+    NFTSignItem(String qualification, NFTID nid, String currencyId) {
         super(Constant.MNFT_SIGN_ITEM, currencyId);
         this.qualification = qualification;
         this.nid = nid;

@@ -14,12 +14,16 @@ public class BigInt implements BytesConvertible {
 
     private BigInteger num;
 
-    public BigInt(String num) {
+    private BigInt(String num) throws NumberFormatException {
         this.num = new BigInteger(num);
     }
 
-    public static BigInt get(String num) {
+    public static BigInt fromString(String num) throws NumberFormatException {
         return new BigInt(num);
+    }
+
+    public static BigInt fromInt(int num) throws NumberFormatException {
+        return BigInt.fromString("" + num);
     }
 
     private byte[] reverse(byte[] bytes) {
@@ -73,7 +77,6 @@ public class BigInt implements BytesConvertible {
     }
 
     public byte[] toBytes(int byteLength, String endian, boolean isTight) {
-
         if (this.num.equals(new BigInteger("0"))) {
             if (isTight) {
                 return new byte[0];

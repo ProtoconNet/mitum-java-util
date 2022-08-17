@@ -17,26 +17,18 @@ public class FactSign implements BytesConvertible {
     private byte[] signature;
     private TimeStamp signedAt;
 
-    private FactSign(String signer, byte[] signature) throws Exception {
+    private FactSign(String signer, byte[] signature) {
         this.signer = signer;
         this.signature = Util.copyByteArray(signature);
         this.signedAt = Util.getDateTimeStamp();
         this.hint = Hint.get(Constant.BASE_FACT_SIGN);
     }
 
-    public static FactSign get(byte[] target, String signKey) throws Exception {
+    public static FactSign get(byte[] target, String signKey) {
         Keypair keypair = Keypair.fromPrivateKey(signKey);
         byte[] signature = keypair.sign(target);
         String signer = keypair.getPublicKey();
-
-        try {
-            return new FactSign(signer, signature);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create fact sign", Util.getName()),
-                            e.getMessage()));
-        }
+        return new FactSign(signer, signature);
     }
 
     public byte[] toBytes() {

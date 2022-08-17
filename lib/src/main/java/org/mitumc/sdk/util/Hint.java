@@ -1,50 +1,34 @@
 package org.mitumc.sdk.util;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.MitumVersionException;
+import org.mitumc.sdk.exception.StringFormatException;
 
 public class Hint {
     private String type;
     private String version;
 
-    private Hint(String type) throws Exception{
+    private Hint(String type) throws StringFormatException {
         this(type, Constant.VERSION);
     }
 
-    private Hint(String type, String version) throws Exception{
+    private Hint(String type, String version) throws StringFormatException {
         assertVersion(version);
         this.type = type;
         this.version = version;
     }
 
-    public static Hint get(String type) throws Exception {
-        try {
-            return new Hint(type);
-        } catch(Exception e) {
-            throw new Exception(
-                Util.linkErrMsgs(
-                    Util.errMsg("failed to create hint", Util.getName()),
-                    e.getMessage()
-                )
-            );
-        }
+    public static Hint get(String type) throws StringFormatException {
+        return new Hint(type);
     }
 
-    public static Hint get(String type, String version) throws Exception {
-        try {
-            return new Hint(type, version);
-        } catch(Exception e) {
-            throw new Exception(
-                Util.linkErrMsgs(
-                    Util.errMsg("failed to create hint", Util.getName()),
-                    e.getMessage()
-                )
-            );
-        }
+    public static Hint get(String type, String version) throws StringFormatException {
+        return new Hint(type, version);
     }
 
-    private void assertVersion(String version) throws Exception {
+    private void assertVersion(String version) throws MitumVersionException {
         if(!version.equals(Constant.VERSION)) {
-            throw new Exception(
+            throw new MitumVersionException(
                 Util.errMsg("invalid mitum version", Util.getName())
             );
         }

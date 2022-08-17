@@ -3,18 +3,21 @@ package org.mitumc.sdk.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.DummyMethodException;
+import org.mitumc.sdk.exception.StringFormatException;
 
 public class Util {
     public static String getClassName() {
-		return Thread.currentThread().getStackTrace()[2].getClassName();
-	}
+        return Thread.currentThread().getStackTrace()[2].getClassName();
+    }
 
     public static String getMethodName() {
-		return Thread.currentThread().getStackTrace()[2].getMethodName();
-	}
+        return Thread.currentThread().getStackTrace()[2].getMethodName();
+    }
 
     public static String getName() {
         return getClassName() + "." + getMethodName();
@@ -24,7 +27,7 @@ public class Util {
         return "error: " + msg + "; at " + name;
     }
 
-    public static String linkErrMsgs(String ...msgs) {
+    public static String linkErrMsgs(String... msgs) {
         String msg = "";
         for (String m : msgs) {
             msg += m + "\n";
@@ -32,10 +35,16 @@ public class Util {
         return msg;
     }
 
-    public static HashMap<String, String> parseHint(String hinted) throws Exception {
+    public static void loggingAndExit(Exception e) {
+        Logger logger = Logger.getGlobal();
+        logger.severe(e.getMessage());
+        System.exit(1);
+    }
+
+    public static HashMap<String, String> parseHint(String hinted) throws StringFormatException {
         int idx = hinted.indexOf('~');
         if (idx == -1) {
-            throw new Exception(errMsg("invalid hinted string", getName()));
+            throw new StringFormatException(errMsg("invalid hinted string", getName()));
         }
 
         HashMap<String, String> map = new HashMap<String, String>();
@@ -45,17 +54,8 @@ public class Util {
         return map;
     }
 
-    public static HashMap<String, String> parseType(String typed) throws Exception {
-        try {
-            RegExp.assertLongEnough(typed);
-        } catch(Exception e) {
-            throw new Exception(
-                Util.linkErrMsgs(
-                    Util.errMsg("failed to parse typed string", getName()),
-                    e.getMessage()
-                )
-            );
-        }
+    public static HashMap<String, String> parseType(String typed) throws StringFormatException {
+        RegExp.assertLongEnough(typed);
 
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("raw", typed.substring(0, typed.length() - 3));
@@ -64,36 +64,19 @@ public class Util {
         return map;
     }
 
-    public static HashMap<String, String> parseDocumentId(String documentId) throws Exception {
-        try {
-            RegExp.assertLongEnough(documentId);
-        } catch(Exception e) {
-            throw new Exception(
-                Util.linkErrMsgs(
-                    Util.errMsg("failed to parse document id", getName()),
-                    e.getMessage()
-                )
-            );
-        }
+    public static HashMap<String, String> parseDocumentId(String documentId) throws StringFormatException {
+        RegExp.assertLongEnough(documentId);
 
         HashMap<String, String> map = new HashMap<>();
         map.put("id", documentId.substring(0, documentId.length() - 3));
         map.put("suffix", documentId.substring(documentId.length() - 3));
-        
+
         return map;
     }
 
-    public static HashMap<String, String> parseNFTID(String nid) throws Exception {
-        try {
-            RegExp.assertNFTID(nid);
-        } catch(Exception e) {
-            throw new Exception(
-                Util.linkErrMsgs(
-                    Util.errMsg("failed to parse nft id", getName()),
-                    e.getMessage()
-                )
-            );
-        }
+    public static HashMap<String, String> parseNFTID(String nid) throws StringFormatException {
+        RegExp.assertNFTID(nid);
+
         int dash = nid.indexOf("-");
 
         HashMap<String, String> map = new HashMap<>();
@@ -103,21 +86,12 @@ public class Util {
         return map;
     }
 
-    public static Hint getHintFromString(String hint) throws Exception {
-        try {
-            int idx = hint.indexOf("-" + Constant.VERSION);
-            if (idx == -1) {
-                throw new Exception(Util.errMsg("no version with divider in target string", Util.getName()));
-            }
-            return Hint.get(hint.substring(0, idx));
-        } catch (Exception e) {
-            throw new Exception(
-                Util.linkErrMsgs(
-                    Util.errMsg("failed to create hint from string", getName()),
-                    e.getMessage()
-                )
-            );
+    public static Hint getHintFromString(String hint) throws StringFormatException {
+        int idx = hint.indexOf("-" + Constant.VERSION);
+        if (idx == -1) {
+            throw new StringFormatException(Util.errMsg("no version with divider in target string", Util.getName()));
         }
+        return Hint.get(hint.substring(0, idx));
     }
 
     @Deprecated
@@ -149,7 +123,7 @@ public class Util {
         return result;
     }
 
-    public static <T> byte[] concatItemArray(ArrayList<T> objs) throws Exception {
+    public static <T> byte[] concatItemArray(ArrayList<T> objs) {
         ArrayList<byte[]> arr = new ArrayList<>();
 
         int byteLen = 0;
@@ -159,13 +133,8 @@ public class Util {
                 arr.add(temp);
                 byteLen += temp.length;
             }
-        } catch(Exception e) {
-            throw new Exception(
-                linkErrMsgs(
-                    errMsg("failed to concat bytes of items", getName()),
-                    e.getMessage()
-                )
-            );
+        } catch (DummyMethodException e) {
+            loggingAndExit(e);
         }
 
         byte[] result = new byte[byteLen];
@@ -182,10 +151,6 @@ public class Util {
         byte[] result = new byte[src.length];
         System.arraycopy(src, 0, result, 0, src.length);
         return result;
-    }
-
-    public static void log(String msg) {
-        System.out.println(msg);
     }
 
     public static byte[] hexStringToBytes(String s) {

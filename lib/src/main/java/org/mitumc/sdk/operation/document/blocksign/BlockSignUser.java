@@ -15,7 +15,7 @@ public class BlockSignUser implements BytesConvertible, HashMapConvertible {
     private String signCode;
     private boolean signed;
 
-    BlockSignUser(String address, String signCode, boolean signed) throws Exception {
+    BlockSignUser(String address, String signCode, boolean signed) {
         this.hint = Hint.get(Constant.MBS_USER);
         this.address = Address.get(address);
         this.signCode = signCode;

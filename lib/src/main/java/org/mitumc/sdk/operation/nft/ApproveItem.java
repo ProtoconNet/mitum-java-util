@@ -12,7 +12,7 @@ public class ApproveItem extends NFTItem {
     private Address approved;
     private NFTID nid;
 
-    ApproveItem(String approved, NFTID nid, String currencyId) throws Exception {
+    ApproveItem(String approved, NFTID nid, String currencyId) {
         super(Constant.MNFT_APPROVE_ITEM, currencyId);
         this.approved = Address.get(approved);
         this.nid = nid;

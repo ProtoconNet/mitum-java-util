@@ -30,37 +30,19 @@ public class Signer {
         return new Signer(id, signKey);
     }
 
-    private static byte[] factSignToBytes(JsonObject factSign) throws Exception {
+    private static byte[] factSignToBytes(JsonObject factSign) {
         byte[] bsigner = factSign.get("signer").getAsString().getBytes();
         byte[] bsign = Base58.decode(factSign.get("signature").getAsString());
-        byte[] bsignedAt = null;
-
-        try {
-            bsignedAt = TimeStamp.fromString(factSign.get("signed_at").getAsString()).getUTC().getBytes();
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("Failed to convert fact sign to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
+        byte[] bsignedAt = TimeStamp.fromString(factSign.get("signed_at").getAsString()).getUTC().getBytes();
         return Util.concatByteArray(bsigner, bsign, bsignedAt);
     }
 
-    private static byte[] factSignsToBytes(ArrayList<JsonObject> factSigns) throws Exception {
+    private static byte[] factSignsToBytes(ArrayList<JsonObject> factSigns) {
         ArrayList<byte[]> tempArr = new ArrayList<>();
         int bytesLen = 0;
 
         for (JsonObject factSign : factSigns) {
-            byte[] bfactSign = null;
-            try {
-                bfactSign = factSignToBytes(factSign);
-            } catch (Exception e) {
-                throw new Exception(
-                        Util.linkErrMsgs(
-                                Util.errMsg("failed to convert fact_sign to bytes", Util.getName()),
-                                e.getMessage()));
-            }
+            byte[] bfactSign = factSignToBytes(factSign);
             tempArr.add(bfactSign);
             bytesLen += bfactSign.length;
         }
@@ -75,7 +57,7 @@ public class Signer {
         return bytes;
     }
 
-    public HashMap<String, Object> addSignToOperation(JsonObject operation) throws Exception {
+    public HashMap<String, Object> addSignToOperation(JsonObject operation) {
         HashMap<String, Object> signedOper = new HashMap<>();
 
         String factHash = operation.getAsJsonObject("fact").get("hash").getAsString();
@@ -95,25 +77,18 @@ public class Signer {
             factSigns.add(iterator.next().getAsJsonObject());
         }
 
-        try {
-            FactSign newFactSign = FactSign.get(Util.concatByteArray(bfactHash, this.id.getBytes()),
-                    this.signKey);
-            factSigns.add(new Gson().toJsonTree(newFactSign.toDict()).getAsJsonObject());
+        FactSign newFactSign = FactSign.get(Util.concatByteArray(bfactHash, this.id.getBytes()),
+                this.signKey);
+        factSigns.add(new Gson().toJsonTree(newFactSign.toDict()).getAsJsonObject());
 
-            byte[] bfactSigns = factSignsToBytes(factSigns);
-            signedOper.put("fact_signs", factSigns);
-            signedOper.put("hash", Hash.fromBytes(Util.concatByteArray(bfactHash, bfactSigns, bmemo)).getSha3Hash());
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to add new fact sign to fact_signs", Util.getName()),
-                            e.getMessage()));
-        }
+        byte[] bfactSigns = factSignsToBytes(factSigns);
+        signedOper.put("fact_signs", factSigns);
+        signedOper.put("hash", Hash.fromBytes(Util.concatByteArray(bfactHash, bfactSigns, bmemo)).getSha3Hash());
 
         return signedOper;
     }
 
-    public HashMap<String, Object> addSignToOperation(String operationPath) throws Exception {
+    public HashMap<String, Object> addSignToOperation(String operationPath) {
         JsonObject operation = JSONParser.getObjectFromJSONFile(operationPath);
         return addSignToOperation(operation);
     }

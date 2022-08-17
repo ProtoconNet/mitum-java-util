@@ -4,7 +4,7 @@ import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.operation.document.blockcity.info.base.BlockCityInfo;
 
 public class UserInfo extends BlockCityInfo {
-    UserInfo(String documentId) throws Exception {
+    UserInfo(String documentId) {
         super(Constant.MBC_DOCTYPE_USER_DATA, documentId);
     }
 }

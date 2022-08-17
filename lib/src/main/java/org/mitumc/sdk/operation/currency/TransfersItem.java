@@ -11,32 +11,15 @@ import org.mitumc.sdk.operation.currency.base.CurrencyItem;
 public class TransfersItem extends CurrencyItem {
     private Address receiver;
 
-    TransfersItem(String itemType, String receiver, Amount[] amounts) throws Exception {
+    TransfersItem(String itemType, String receiver, Amount[] amounts) {
         super(itemType, amounts);
-        try {
-            this.receiver = Address.get(receiver);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create transfers item", Util.getName()),
-                            e.getMessage()));
-        }
+        this.receiver = Address.get(receiver);
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] breceiver = this.receiver.toBytes();
-        byte[] bamounts = null;
-
-        try {
-            bamounts = Util.<Amount>concatItemArray(this.amounts);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert transfers item to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
+        byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
         return Util.concatByteArray(breceiver, bamounts);
     }
 

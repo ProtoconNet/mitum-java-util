@@ -18,7 +18,7 @@ public class PoolWithdrawFact extends PurposedOperationFact {
     private String poolId;
     private ArrayList<Amount> amounts;
 
-    PoolWithdrawFact(String sender, String pool, String poolId, Amount[] amounts) throws Exception {
+    PoolWithdrawFact(String sender, String pool, String poolId, Amount[] amounts) {
         super(Constant.MF_POOL_WITHDRAW_OPERATION_FACT);
         this.sender = Address.get(sender);
         this.pool = Address.get(pool);
@@ -29,34 +29,17 @@ public class PoolWithdrawFact extends PurposedOperationFact {
     }
 
     @Override
-    public Hint getOperationHint() throws Exception {
-        try {
-            return Hint.get(Constant.MF_POOL_WITHDRAW_OPERATION);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to get operation hint", Util.getName()),
-                            e.getMessage()));
-        }
+    public Hint getOperationHint() {
+        return Hint.get(Constant.MF_POOL_WITHDRAW_OPERATION);
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] bsender = this.sender.toBytes();
         byte[] bpool = this.pool.toBytes();
         byte[] bpoolId = this.poolId.getBytes();
-        byte[] bamounts = null;
-
-        try {
-            bamounts = Util.<Amount>concatItemArray(this.amounts);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert pool withdraw fact to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
+        byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
         return Util.concatByteArray(btoken, bsender, bpool, bpoolId, bamounts);
     }
 

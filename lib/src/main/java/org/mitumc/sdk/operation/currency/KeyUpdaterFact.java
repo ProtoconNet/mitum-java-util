@@ -15,50 +15,25 @@ public class KeyUpdaterFact extends PurposedOperationFact {
     private String currencyId;
     private Keys keys;
 
-    KeyUpdaterFact(String target, String currencyId, Keys keys) throws Exception {
+    KeyUpdaterFact(String target, String currencyId, Keys keys) {
         super(Constant.MC_KEY_UPDATER_OPERATION_FACT);
         this.currencyId = currencyId;
         this.keys = keys;
-
-        try {
-            this.target = Address.get(target);
-            generateHash();
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create key updater fact", Util.getName()),
-                            e.getMessage()));
-        }
+        this.target = Address.get(target);
+        generateHash();
     }
 
     @Override
-    public Hint getOperationHint() throws Exception {
-        try {
-            return Hint.get(Constant.MC_KEY_UPDATER_OPERATION);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to get operation hint", Util.getName()),
-                            e.getMessage()));
-        }
+    public Hint getOperationHint() {
+        return Hint.get(Constant.MC_KEY_UPDATER_OPERATION);
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] btarget = this.target.toBytes();
-        byte[] bkeys = null;
+        byte[] bkeys = this.keys.toBytes();
         byte[] bcurrencyId = this.currencyId.getBytes();
-
-        try {
-            bkeys = this.keys.toBytes();
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert key updater fact to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
         return Util.concatByteArray(btoken, btarget, bkeys, bcurrencyId);
     }
 

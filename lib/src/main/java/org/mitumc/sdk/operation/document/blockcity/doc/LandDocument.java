@@ -3,6 +3,7 @@ package org.mitumc.sdk.operation.document.blockcity.doc;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.base.Info;
@@ -19,7 +20,7 @@ public class LandDocument extends Document {
     private BigInt period;
 
     LandDocument(String documentId, String owner, String address, String area, String renter, String account,
-            String rentDate, int period) throws Exception {
+            String rentDate, int period) {
         super(SingleInfo.land(documentId), owner);
         assertInfo(info);
         this.address = address;
@@ -27,12 +28,12 @@ public class LandDocument extends Document {
         this.renter = renter;
         this.account = Address.get(account);
         this.rentDate = rentDate;
-        this.period = new BigInt("" + period);
+        this.period = BigInt.fromInt(period);
     }
 
-    private void assertInfo(Info info) throws Exception {
+    private void assertInfo(Info info) {
         if (!info.getDocType().equals(Constant.MBC_DOCTYPE_LAND_DATA)) {
-            throw new Exception(Util.errMsg("invalid doctype", Util.getName()));
+            throw new StringFormatException(Util.errMsg("invalid doctype", Util.getName()));
         }
     }
 
@@ -51,7 +52,7 @@ public class LandDocument extends Document {
     }
 
     @Override
-    public HashMap<String, Object> toDict() throws Exception {
+    public HashMap<String, Object> toDict() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
@@ -62,15 +63,7 @@ public class LandDocument extends Document {
         hashMap.put("account", this.account.getAddress());
         hashMap.put("rentdate", this.rentDate);
         hashMap.put("periodday", Integer.parseInt(this.period.getValue()));
-
-        try {
-            hashMap.put("info", this.info.toDict());
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert land document to hashmap", Util.getName()),
-                            e.getMessage()));
-        }
+        hashMap.put("info", this.info.toDict());
 
         return hashMap;
     }

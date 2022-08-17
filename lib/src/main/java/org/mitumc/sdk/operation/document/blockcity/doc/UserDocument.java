@@ -3,6 +3,7 @@ package org.mitumc.sdk.operation.document.blockcity.doc;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.base.Info;
 import org.mitumc.sdk.operation.document.blockcity.UserStatistics;
@@ -15,17 +16,17 @@ public class UserDocument extends Document {
     private BigInt bankGold;
     private UserStatistics statistics;
 
-    UserDocument(String documentId, String owner, int gold, int bankGold, UserStatistics statistics) throws Exception {
+    UserDocument(String documentId, String owner, int gold, int bankGold, UserStatistics statistics) {
         super(SingleInfo.user(documentId), owner);
         assertInfo(info);
-        this.gold = new BigInt("" + gold);
-        this.bankGold = new BigInt("" + bankGold);
+        this.gold = BigInt.fromInt(gold);
+        this.bankGold = BigInt.fromInt(bankGold);
         this.statistics = statistics;
     }
 
-    private void assertInfo(Info info) throws Exception {
+    private void assertInfo(Info info) {
         if (!info.getDocType().equals(Constant.MBC_DOCTYPE_USER_DATA)) {
-            throw new Exception(Util.errMsg("invalid doctype", Util.getName()));
+            throw new StringFormatException(Util.errMsg("invalid doctype", Util.getName()));
         }
     }
 
@@ -40,7 +41,7 @@ public class UserDocument extends Document {
     }
 
     @Override
-    public HashMap<String, Object> toDict() throws Exception {
+    public HashMap<String, Object> toDict() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
@@ -48,15 +49,7 @@ public class UserDocument extends Document {
         hashMap.put("gold", Integer.parseInt(this.gold.getValue()));
         hashMap.put("bankgold", Integer.parseInt(this.bankGold.getValue()));
         hashMap.put("statistics", this.statistics.toDict());
-
-        try {
-            hashMap.put("info", this.info.toDict());
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert user document to hashmap", Util.getName()),
-                            e.getMessage()));
-        }
+        hashMap.put("info", this.info.toDict());
 
         return hashMap;
     }

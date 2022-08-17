@@ -19,16 +19,16 @@ public class UserStatistics implements BytesConvertible, HashMapConvertible {
     private BigInt intel;
     private BigInt vital;
 
-    UserStatistics(int hp, int str, int agi, int dex, int cha, int intel, int vital) throws Exception {
+    UserStatistics(int hp, int str, int agi, int dex, int cha, int intel, int vital) {
         this.hint = Hint.get(Constant.MBC_USER_STATISTICS);
 
-        this.hp = new BigInt("" + hp);
-        this.str = new BigInt("" + str);
-        this.agi = new BigInt("" + agi);
-        this.dex = new BigInt("" + dex);
-        this.cha = new BigInt("" + cha);
-        this.intel = new BigInt("" + intel);
-        this.vital = new BigInt("" + vital);
+        this.hp = BigInt.fromInt(hp);
+        this.str = BigInt.fromInt(str);
+        this.agi = BigInt.fromInt(agi);
+        this.dex = BigInt.fromInt(dex);
+        this.cha = BigInt.fromInt(cha);
+        this.intel = BigInt.fromInt(intel);
+        this.vital = BigInt.fromInt(vital);
     }
 
     @Override
@@ -40,7 +40,6 @@ public class UserStatistics implements BytesConvertible, HashMapConvertible {
         byte[] bcha = this.cha.toBytes();
         byte[] bintel = this.intel.toBytes();
         byte[] bvital = this.vital.toBytes();
-
         return Util.concatByteArray(bhp, bstr, bagi, bdex, bcha, bintel, bvital);
     }
 

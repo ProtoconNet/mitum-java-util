@@ -3,6 +3,7 @@ package org.mitumc.sdk.operation.document.blockcity;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.key.Address;
@@ -17,18 +18,18 @@ public class Candidate implements BytesConvertible, HashMapConvertible {
     private String manifest;
     private BigInt count;
 
-    Candidate(String address, String nickname, String manifest, int count) throws Exception {
+    Candidate(String address, String nickname, String manifest, int count) {
         assertManifest(manifest);
         this.hint = Hint.get(Constant.MBC_VOTING_CANDIDATE);
         this.address = Address.get(address);
         this.nickname = nickname;
         this.manifest = manifest;
-        this.count = new BigInt("" + count);
+        this.count = BigInt.fromInt(count);
     }
 
-    private void assertManifest(String manifest) throws Exception {
+    private void assertManifest(String manifest) {
         if (manifest.length() > 100) {
-            throw new Exception(Util.errMsg(
+            throw new NumberRangeException(Util.errMsg(
                     "manifest length is too long - now, manifest(" + manifest.length() + ") > 100", Util.getName()));
         }
     }

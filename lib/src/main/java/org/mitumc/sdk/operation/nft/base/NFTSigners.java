@@ -16,37 +16,20 @@ public class NFTSigners implements BytesConvertible, HashMapConvertible {
     private BigInt total;
     private ArrayList<NFTSigner> signers;
 
-    private NFTSigners(int total, NFTSigner[] signers) throws Exception {
+    private NFTSigners(int total, NFTSigner[] signers) {
         this.hint = Hint.get(Constant.MNFT_SIGNERS);
-        this.total = new BigInt(total + "");
+        this.total = BigInt.fromInt(total);
         this.signers = new ArrayList<NFTSigner>(Arrays.asList(signers));
     }
 
-    public static NFTSigners get(int total, NFTSigner[] signers) throws Exception {
-        try {
-            return new NFTSigners(total, signers);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create nft signers", Util.getName()),
-                            e.getMessage()));
-        }
+    public static NFTSigners get(int total, NFTSigner[] signers) {
+        return new NFTSigners(total, signers);
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] btotal = this.total.toBytes();
-        byte[] bsigners = null;
-
-        try {
-            bsigners = Util.<NFTSigner>concatItemArray(this.signers);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert nft signers to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
+        byte[] bsigners = Util.<NFTSigner>concatItemArray(this.signers);
         return Util.concatByteArray(btotal, bsigners);
     }
 

@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.mitumc.sdk.exception.StringFormatException;
+
 public class TimeStamp {
     final public static String ISO_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private String ISOtimestamp;
@@ -22,13 +24,13 @@ public class TimeStamp {
         formatTimestamp();
     }
 
-    private TimeStamp(String timestamp) throws Exception {
+    private TimeStamp(String timestamp) throws StringFormatException {
         this.ISOtimestamp = timestamp;
         int t = timestamp.indexOf("T");
         int z = timestamp.indexOf("Z");
 
         if(t < 0 || z < 0) {
-            throw new Exception(Util.errMsg("invalid timestamp format", Util.getName()));
+            throw new StringFormatException(Util.errMsg("invalid timestamp format", Util.getName()));
         }
         formatTimestamp();
     }
@@ -41,17 +43,8 @@ public class TimeStamp {
         return new TimeStamp(timestamp);
     }
 
-    public static TimeStamp fromString(String timestamp) throws Exception {
-        try {
-            return new TimeStamp(timestamp);
-        } catch(Exception e) {
-            throw new Exception(
-                Util.linkErrMsgs(
-                    Util.errMsg("failed to create timestamp from string", Util.getName()),
-                    e.getMessage()
-                )
-            );
-        }
+    public static TimeStamp fromString(String timestamp) throws StringFormatException {
+        return new TimeStamp(timestamp);
     }
 
     private void formatTimestamp() {

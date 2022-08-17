@@ -11,26 +11,15 @@ import org.mitumc.sdk.util.Util;
 public class CreateAccountsItem extends CurrencyItem {
     private Keys keys;
 
-    CreateAccountsItem(String itemType, Keys keys, Amount[] amounts) throws Exception {
+    CreateAccountsItem(String itemType, Keys keys, Amount[] amounts) {
         super(itemType, amounts);
         this.keys = keys;
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
-        byte[] bkeys = null;
-        byte[] bamounts = null;
-
-        try {
-            bkeys = this.keys.toBytes();
-            bamounts = Util.<Amount>concatItemArray(this.amounts);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert create accounts item to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
+    public byte[] toBytes() {
+        byte[] bkeys = this.keys.toBytes();
+        byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
         return Util.concatByteArray(bkeys, bamounts);
     }
 

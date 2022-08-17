@@ -1,5 +1,6 @@
 package org.mitumc.sdk.operation.base;
 
+import org.mitumc.sdk.exception.DummyMethodException;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.util.Hash;
@@ -12,16 +13,9 @@ abstract public class OperationFact implements BytesConvertible, HashMapConverti
     protected TimeStamp token;
     protected Hash hash;
 
-    protected OperationFact(String operationType) throws Exception {
+    protected OperationFact(String operationType) {
         this.token = Util.getDateTimeStamp();
-        try {
-            this.hint = Hint.get(operationType);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create operation fact", Util.getName()),
-                            e.getMessage()));
-        }
+        this.hint = Hint.get(operationType);
     }
 
     public String getType() {
@@ -32,16 +26,13 @@ abstract public class OperationFact implements BytesConvertible, HashMapConverti
         return this.hash;
     }
 
-    protected void generateHash() throws Exception {
+    protected void generateHash() {
         try {
             this.hash = Hash.fromBytes(toBytes());
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to generate hash", Util.getName()),
-                            e.getMessage()));
+        } catch (DummyMethodException e) {
+            Util.loggingAndExit(e);
         }
     }
 
-    abstract public Hint getOperationHint() throws Exception;
+    abstract public Hint getOperationHint() throws DummyMethodException;
 }

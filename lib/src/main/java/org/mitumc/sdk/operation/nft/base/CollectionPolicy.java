@@ -18,10 +18,10 @@ public class CollectionPolicy implements BytesConvertible, HashMapConvertible {
     private String uri;
     private ArrayList<Address> whites;
 
-    private CollectionPolicy(String name, int royalty, String uri, String[] whites) throws Exception {
+    private CollectionPolicy(String name, int royalty, String uri, String[] whites) {
         this.hint = Hint.get(Constant.MNFT_COLLECTION_POLICY);
         this.name = name;
-        this.royalty = new BigInt(royalty + "");
+        this.royalty = BigInt.fromInt(royalty);
         this.uri = uri;
         this.whites = new ArrayList<Address>();
 
@@ -30,33 +30,16 @@ public class CollectionPolicy implements BytesConvertible, HashMapConvertible {
         }
     }
 
-    public static CollectionPolicy get(String name, int royalty, String uri, String[] whites) throws Exception {
-        try {
-            return new CollectionPolicy(name, royalty, uri, whites);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create collection policy", Util.getName()),
-                            e.getMessage()));
-        }
+    public static CollectionPolicy get(String name, int royalty, String uri, String[] whites) {
+        return new CollectionPolicy(name, royalty, uri, whites);
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] bname = this.name.getBytes();
         byte[] broyalty = this.royalty.toBytes();
         byte[] buri = this.uri.getBytes();
-        byte[] bwhites = null;
-
-        try {
-            bwhites = Util.<Address>concatItemArray(this.whites);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert collection policy to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
+        byte[] bwhites = Util.<Address>concatItemArray(this.whites);
         return Util.concatByteArray(bname, broyalty, buri, bwhites);
     }
 

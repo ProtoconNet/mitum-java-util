@@ -3,6 +3,7 @@ package org.mitumc.sdk.operation.document.blockcity.doc;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.base.Info;
@@ -16,8 +17,8 @@ public class HistoryDocument extends Document {
     private String usage;
     private String app;
 
-    HistoryDocument(String documentId, String owner, String name, String account, String date, String usage, String app)
-            throws Exception {
+    HistoryDocument(String documentId, String owner, String name, String account, String date, String usage,
+            String app) {
         super(SingleInfo.history(documentId), owner);
         assertInfo(info);
         this.name = name;
@@ -27,9 +28,9 @@ public class HistoryDocument extends Document {
         this.app = app;
     }
 
-    private void assertInfo(Info info) throws Exception {
+    private void assertInfo(Info info) {
         if (!info.getDocType().equals(Constant.MBC_DOCTYPE_HISTORY_DATA)) {
-            throw new Exception(Util.errMsg("invalid doctype", Util.getName()));
+            throw new StringFormatException(Util.errMsg("invalid doctype", Util.getName()));
         }
     }
 
@@ -47,7 +48,7 @@ public class HistoryDocument extends Document {
     }
 
     @Override
-    public HashMap<String, Object> toDict() throws Exception {
+    public HashMap<String, Object> toDict() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
@@ -57,15 +58,7 @@ public class HistoryDocument extends Document {
         hashMap.put("date", this.date);
         hashMap.put("usage", this.usage);
         hashMap.put("application", this.app);
-
-        try {
-            hashMap.put("info", this.info.toDict());
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert history document to hashmap", Util.getName()),
-                            e.getMessage()));
-        }
+        hashMap.put("info", this.info.toDict());
 
         return hashMap;
     }

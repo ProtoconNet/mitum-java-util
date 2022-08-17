@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.operation.document.base.Document;
 import org.mitumc.sdk.operation.document.base.Info;
@@ -23,10 +24,10 @@ public class VoteDocument extends Document {
     private String office;
 
     VoteDocument(String documentId, String owner, int round, String endTime, Candidate[] candidates, String bossName,
-            String account, String office) throws Exception {
+            String account, String office) {
         super(SingleInfo.vote(documentId), owner);
         assertInfo(info);
-        this.round = new BigInt("" + round);
+        this.round = BigInt.fromInt(round);
         this.endTime = endTime;
         this.bossName = bossName;
         this.account = Address.get(account);
@@ -38,14 +39,14 @@ public class VoteDocument extends Document {
         }
     }
 
-    private void assertInfo(Info info) throws Exception {
+    private void assertInfo(Info info) {
         if (!info.getDocType().equals(Constant.MBC_DOCTYPE_VOTE_DATA)) {
-            throw new Exception(Util.errMsg("invalid doctype", Util.getName()));
+            throw new StringFormatException(Util.errMsg("invalid doctype", Util.getName()));
         }
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         this.candidates.sort(new CandidateComparator());
 
         byte[] binfo = this.info.toBytes();
@@ -55,22 +56,13 @@ public class VoteDocument extends Document {
         byte[] bbossName = this.bossName.getBytes();
         byte[] baccount = this.account.toBytes();
         byte[] boffice = this.office.getBytes();
-        byte[] bcandidates = null;
-
-        try {
-            bcandidates = Util.<Candidate>concatItemArray(this.candidates);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert vote document to bytes", Util.getName()),
-                            e.getMessage()));
-        }
+        byte[] bcandidates = Util.<Candidate>concatItemArray(this.candidates);
 
         return Util.concatByteArray(binfo, bowner, bround, bendTime, bbossName, baccount, boffice, bcandidates);
     }
 
     @Override
-    public HashMap<String, Object> toDict() throws Exception {
+    public HashMap<String, Object> toDict() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
@@ -87,15 +79,7 @@ public class VoteDocument extends Document {
         hashMap.put("bossname", this.bossName);
         hashMap.put("account", this.account.getAddress());
         hashMap.put("termofoffice", this.office);
-
-        try {
-            hashMap.put("info", this.info.toDict());
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert vote document to hashmap", Util.getName()),
-                            e.getMessage()));
-        }
+        hashMap.put("info", this.info.toDict());
 
         return hashMap;
     }

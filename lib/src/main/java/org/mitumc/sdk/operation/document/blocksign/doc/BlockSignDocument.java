@@ -19,34 +19,26 @@ public class BlockSignDocument extends Document {
     private ArrayList<BlockSignUser> signers;
 
     private BlockSignDocument(String documentId, String owner, String fileHash, BlockSignUser creator, String title,
-            String size, BlockSignUser[] signers) throws Exception {
+            String size, BlockSignUser[] signers) {
         super(BlockSignGeneralInfo.get(documentId), owner);
-
         this.fileHash = fileHash;
         this.creator = creator;
         this.title = title;
-        this.size = new BigInt(size);
-
+        this.size = BigInt.fromString(size);
         this.signers = new ArrayList<>();
+
         for (BlockSignUser user : signers) {
             this.signers.add(user);
         }
     }
 
     public static BlockSignDocument get(String documentId, String owner, String fileHash, BlockSignUser creator,
-            String title, String size, BlockSignUser[] signers) throws Exception {
-        try {
-            return new BlockSignDocument(documentId, owner, fileHash, creator, title, size, signers);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create block sign document", Util.getName()),
-                            e.getMessage()));
-        }
+            String title, String size, BlockSignUser[] signers) {
+        return new BlockSignDocument(documentId, owner, fileHash, creator, title, size, signers);
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         this.signers.sort(new SignerComparator());
 
         byte[] binfo = this.info.toBytes();
@@ -55,22 +47,13 @@ public class BlockSignDocument extends Document {
         byte[] bcreator = this.creator.toBytes();
         byte[] btitle = this.title.getBytes();
         byte[] bsize = this.size.toBytes(BigInt.LITTLE_ENDIAN, true);
-        byte[] bsigners = null;
-
-        try {
-            bsigners = Util.<BlockSignUser>concatItemArray(this.signers);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert block sign document to bytes", Util.getName()),
-                            e.getMessage()));
-        }
+        byte[] bsigners = Util.<BlockSignUser>concatItemArray(this.signers);
 
         return Util.concatByteArray(binfo, bowner, bfileHash, bcreator, btitle, bsize, bsigners);
     }
 
     @Override
-    public HashMap<String, Object> toDict() throws Exception {
+    public HashMap<String, Object> toDict() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("_hint", this.hint.getHint());
@@ -79,15 +62,7 @@ public class BlockSignDocument extends Document {
         hashMap.put("creator", this.creator.toDict());
         hashMap.put("title", this.title);
         hashMap.put("size", this.size.getValue());
-
-        try {
-            hashMap.put("info", this.info.toDict());
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert block sign document to hashmap", Util.getName()),
-                            e.getMessage()));
-        }
+        hashMap.put("info", this.info.toDict());
 
         ArrayList<Object> arr = new ArrayList<>();
         for (BlockSignUser user : this.signers) {

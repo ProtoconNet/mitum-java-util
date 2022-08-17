@@ -13,7 +13,7 @@ public class SignDocumentsItem extends PurposedDocumentsItem {
     private Address owner;
     private String currencyId;
 
-    SignDocumentsItem(String documentId, String owner, String currencyId) throws Exception {
+    SignDocumentsItem(String documentId, String owner, String currencyId) {
         super(Constant.MBS_SIGN_ITEM_SINGLE_DOCUMENT);
         this.documentId = DocumentId.get(documentId);
         this.owner = Address.get(owner);
@@ -25,7 +25,6 @@ public class SignDocumentsItem extends PurposedDocumentsItem {
         byte[] bdocumentId = this.documentId.toBytes();
         byte[] bowner = this.owner.toBytes();
         byte[] bcurrencyId = this.currencyId.getBytes();
-
         return Util.concatByteArray(bdocumentId, bowner, bcurrencyId);
     }
 

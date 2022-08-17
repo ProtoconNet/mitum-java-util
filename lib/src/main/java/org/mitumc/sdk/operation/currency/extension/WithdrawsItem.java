@@ -11,32 +11,15 @@ import org.mitumc.sdk.util.Util;
 public class WithdrawsItem extends CurrencyItem {
     private Address target;
 
-    WithdrawsItem(String itemType, String target, Amount[] amounts) throws Exception {
+    WithdrawsItem(String itemType, String target, Amount[] amounts) {
         super(itemType, amounts);
-        try {
-            this.target = Address.get(target);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create withdraws item", Util.getName()),
-                            e.getMessage()));
-        }
+        this.target = Address.get(target);
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] btarget = this.target.toBytes();
-        byte[] bamounts = null;
-
-        try {
-            bamounts = Util.<Amount>concatItemArray(this.amounts);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert withdraws item to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
+        byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
         return Util.concatByteArray(btarget, bamounts);
     }
 

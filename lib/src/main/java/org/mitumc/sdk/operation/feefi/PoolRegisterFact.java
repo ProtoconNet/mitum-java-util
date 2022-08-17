@@ -19,7 +19,7 @@ public class PoolRegisterFact extends PurposedOperationFact {
     private String currencyId;
 
     PoolRegisterFact(String sender, String target, Amount initialFee, String incomingCid, String outgoingCid,
-            String currencyId) throws Exception {
+            String currencyId) {
         super(Constant.MF_POOL_REGISTER_OPERATION_FACT);
         this.sender = Address.get(sender);
         this.target = Address.get(target);
@@ -32,15 +32,8 @@ public class PoolRegisterFact extends PurposedOperationFact {
     }
 
     @Override
-    public Hint getOperationHint() throws Exception {
-        try {
-            return Hint.get(Constant.MF_POOL_REGISTER_OPERATION);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to get operation hint", Util.getName()),
-                            e.getMessage()));
-        }
+    public Hint getOperationHint() {
+        return Hint.get(Constant.MF_POOL_REGISTER_OPERATION);
     }
 
     @Override

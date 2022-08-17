@@ -47,31 +47,16 @@ public class Generator implements IdSettable {
         return this.id;
     }
 
-    public Operation getOperation(OperationFact fact) throws Exception {
+    public Operation getOperation(OperationFact fact) {
         return Operation.get(fact, "", this.id);
     }
 
-    public Operation getOperation(OperationFact fact, String memo) throws Exception {
-        try {
-            return Operation.get(fact, memo, this.id);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create operation", Util.getName()),
-                            e.getMessage()));
-        }
+    public Operation getOperation(OperationFact fact, String memo) {
+        return Operation.get(fact, memo, this.id);
     }
 
-    public HashMap<String, Object> getSeal(String signKey, Operation[] operations) throws Exception {
-        Keypair keypair = null;
-        try {
-            keypair = Keypair.fromPrivateKey(signKey);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create seal", Util.getName()),
-                            e.getMessage()));
-        }
+    public HashMap<String, Object> getSeal(String signKey, Operation[] operations) {
+        Keypair keypair = Keypair.fromPrivateKey(signKey);
 
         TimeStamp signedAt = Util.getDateTimeStamp();
         byte[] bsignedAt = signedAt.getUTC().getBytes();
@@ -124,11 +109,11 @@ public class Generator implements IdSettable {
         return hashMap;
     }
 
-    public static HashMap<String, Object> randomKeys() throws Exception {
+    public static HashMap<String, Object> randomKeys() {
         return Generator.randomKeys(1);
     }
 
-    public static HashMap<String, Object> randomKeys(int numOfKeys) throws Exception {
+    public static HashMap<String, Object> randomKeys(int numOfKeys) {
         int weight = 100 / numOfKeys;
         if (100 % numOfKeys != 0) {
             weight++;
@@ -138,19 +123,12 @@ public class Generator implements IdSettable {
         Key[] ks = new Key[numOfKeys];
         Keys keys = null;
 
-        try {
-            for (int i = 0; i < numOfKeys; i++) {
-                Keypair kp = Keypair.random();
-                kps[i] = kp;
-                ks[i] = Key.get(kp.getPublicKey(), weight);
-            }
-            keys = Keys.get(ks, 100);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create random keys", Util.getName()),
-                            e.getMessage()));
+        for (int i = 0; i < numOfKeys; i++) {
+            Keypair kp = Keypair.random();
+            kps[i] = kp;
+            ks[i] = Key.get(kp.getPublicKey(), weight);
         }
+        keys = Keys.get(ks, 100);
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("keypairs", kps);

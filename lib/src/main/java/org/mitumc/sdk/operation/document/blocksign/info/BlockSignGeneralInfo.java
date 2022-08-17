@@ -2,21 +2,13 @@ package org.mitumc.sdk.operation.document.blocksign.info;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.operation.document.blocksign.info.base.BlockSignInfo;
-import org.mitumc.sdk.util.Util;
 
 public class BlockSignGeneralInfo extends BlockSignInfo {
-    private BlockSignGeneralInfo(String documentId) throws Exception {
+    private BlockSignGeneralInfo(String documentId) {
         super(Constant.MBS_DOCTYPE_DOCUMENT_DATA, documentId);
     }
 
-    public static BlockSignGeneralInfo get(String documentId) throws Exception {
-        try {
-            return new BlockSignGeneralInfo(documentId);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to create blocksign general info", Util.getName()),
-                            e.getMessage()));
-        }
+    public static BlockSignGeneralInfo get(String documentId) {
+        return new BlockSignGeneralInfo(documentId);
     }
 }

@@ -16,8 +16,7 @@ public class CollectionPolicyUpdaterFact extends PurposedOperationFact {
     private CollectionPolicy policy;
     private String currencyId;
 
-    CollectionPolicyUpdaterFact(String sender, String collection, CollectionPolicy policy, String currencyId)
-            throws Exception {
+    CollectionPolicyUpdaterFact(String sender, String collection, CollectionPolicy policy, String currencyId) {
         super(Constant.MNFT_COLLECTION_POLICY_UPDATER_OPERATION_FACT);
         this.sender = Address.get(sender);
         this.collection = collection;
@@ -28,34 +27,17 @@ public class CollectionPolicyUpdaterFact extends PurposedOperationFact {
     }
 
     @Override
-    public Hint getOperationHint() throws Exception {
-        try {
-            return Hint.get(Constant.MNFT_COLLECTION_POLICY_UPDATER_OPERATION);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to get operation hint", Util.getName()),
-                            e.getMessage()));
-        }
+    public Hint getOperationHint() {
+        return Hint.get(Constant.MNFT_COLLECTION_POLICY_UPDATER_OPERATION);
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] bsender = this.sender.toBytes();
         byte[] bcollection = this.collection.getBytes();
-        byte[] bpolicy = null;
+        byte[] bpolicy = this.policy.toBytes();
         byte[] bcurrencyId = this.currencyId.getBytes();
-
-        try {
-            bpolicy = this.policy.toBytes();
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert collection policy updater fact to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
         return Util.concatByteArray(btoken, bsender, bcollection, bpolicy, bcurrencyId);
     }
 

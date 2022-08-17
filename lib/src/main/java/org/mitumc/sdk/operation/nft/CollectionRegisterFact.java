@@ -14,7 +14,7 @@ public class CollectionRegisterFact extends PurposedOperationFact {
     private CollectionRegisterForm form;
     private String currencyId;
 
-    CollectionRegisterFact(String sender, CollectionRegisterForm form, String currencyId) throws Exception {
+    CollectionRegisterFact(String sender, CollectionRegisterForm form, String currencyId) {
         super(Constant.MNFT_COLLECTION_REGISTER_OPERATION_FACT);
         this.sender = Address.get(sender);
         this.form = form;
@@ -24,32 +24,16 @@ public class CollectionRegisterFact extends PurposedOperationFact {
     }
 
     @Override
-    public Hint getOperationHint() throws Exception {
-        try {
-            return Hint.get(Constant.MNFT_COLLECTION_REGISTER_OPERATION);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to get operation hint", Util.getName()),
-                            e.getMessage()));
-        }
+    public Hint getOperationHint() {
+        return Hint.get(Constant.MNFT_COLLECTION_REGISTER_OPERATION);
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] bsender = this.sender.toBytes();
-        byte[] bform = null;
+        byte[] bform = this.form.toBytes();
         byte[] bcurrencyId = this.currencyId.getBytes();
-
-        try {
-            bform = this.form.toBytes();
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert collection register fact to bytes", Util.getName()),
-                            e.getMessage()));
-        }
 
         return Util.concatByteArray(btoken, bsender, bform, bcurrencyId);
     }

@@ -20,13 +20,12 @@ public class CollectionRegisterForm implements BytesConvertible, HashMapConverti
     private String uri;
     private ArrayList<Address> whites;
 
-    CollectionRegisterForm(String target, String symbol, String name, int royalty, String uri, String[] whites)
-            throws Exception {
+    CollectionRegisterForm(String target, String symbol, String name, int royalty, String uri, String[] whites) {
         this.hint = Hint.get(Constant.MNFT_COLLECTION_REGISTER_FORM);
         this.target = Address.get(target);
         this.symbol = symbol;
         this.name = name;
-        this.royalty = new BigInt(royalty + "");
+        this.royalty = BigInt.fromInt(royalty);
         this.uri = uri;
         this.whites = new ArrayList<>();
 
@@ -36,23 +35,13 @@ public class CollectionRegisterForm implements BytesConvertible, HashMapConverti
     }
 
     @Override
-    public byte[] toBytes() throws Exception {
+    public byte[] toBytes() {
         byte[] btarget = this.target.toBytes();
         byte[] bsymbol = this.symbol.getBytes();
         byte[] bname = this.name.getBytes();
         byte[] broyalty = this.royalty.toBytes();
         byte[] buri = this.uri.getBytes();
-        byte[] bwhites = null;
-
-        try {
-            bwhites = Util.<Address>concatItemArray(this.whites);
-        } catch (Exception e) {
-            throw new Exception(
-                    Util.linkErrMsgs(
-                            Util.errMsg("failed to convert collection register form to bytes", Util.getName()),
-                            e.getMessage()));
-        }
-
+        byte[] bwhites = Util.<Address>concatItemArray(this.whites);
         return Util.concatByteArray(btarget, bsymbol, bname, broyalty, buri, bwhites);
     }
 
