@@ -63,9 +63,9 @@ public class SignerTest {
         JSONParser.writeJsonFileFromHashMap(signed14, "../test-jsons/test-result/signed0-mint.json");
         JSONParser.writeJsonFileFromHashMap(signed15, "../test-jsons/test-result/signed0-burn.json");
         JSONParser.writeJsonFileFromHashMap(signed16, "../test-jsons/test-result/signed0-nft-sign.json");
-        JSONParser.writeJsonFileFromHashMap(signed17, "../test-jsons/test-result/signed-nft-transfer.json");
-        JSONParser.writeJsonFileFromHashMap(signed18, "../test-jsons/test-result/signed-approve.json");
-        JSONParser.writeJsonFileFromHashMap(signed19, "../test-jsons/test-result/signed-delegate.json");
+        JSONParser.writeJsonFileFromHashMap(signed17, "../test-jsons/test-result/signed0-nft-transfer.json");
+        JSONParser.writeJsonFileFromHashMap(signed18, "../test-jsons/test-result/signed0-approve.json");
+        JSONParser.writeJsonFileFromHashMap(signed19, "../test-jsons/test-result/signed0-delegate.json");
 
     }
 

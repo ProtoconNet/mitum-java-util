@@ -28,7 +28,7 @@ public class JSONParser {
         }
     }
 
-    public static JsonObject getObjectFromMap(HashMap<String, Object> target) {
+    public static JsonObject getObjectFromHashMap(HashMap<String, Object> target) {
         return new Gson().toJsonTree(target).getAsJsonObject();
     }
 

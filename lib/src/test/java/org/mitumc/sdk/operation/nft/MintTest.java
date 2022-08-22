@@ -62,7 +62,7 @@ public class MintTest {
 			fact.getOperationHint().getHint()
 		);
 
-        Operation op = Generator.get("mitun").getOperation(fact);
+        Operation op = Generator.get("mitum").getOperation(fact);
         op.sign(senderPriv);
 
         op.exportToJsonFile("../test-jsons/test-result/mint.json");
