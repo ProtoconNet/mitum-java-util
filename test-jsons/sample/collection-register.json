@@ -1,0 +1,32 @@
+{
+  "fact": {
+    "form": {
+      "symbol": "COL",
+      "whites": [
+        "8GEEipYJ9jkQnnmDezVMCPeQxv5k2a5xV4uBTcgW3hNYmca",
+        "2pvE7NUEaopPh5D2rtHcnJ24w3EZTuM6HVfB7Y9CXQHKmca"
+      ],
+      "name": "Collection",
+      "royalty": 0,
+      "_hint": "mitum-nft-collection-register-form-v0.0.1",
+      "uri": "https://localhost:5000",
+      "target": "C6WQgCNibJWkJ7gCbAHgNEv6PqF55ZbpN3QXvrqkFPyGmca"
+    },
+    "sender": "Ah8mEHJCgP1yKxa9dbDWGssHvccDsbtScTTizrW735Q7mca",
+    "currency": "PEN",
+    "_hint": "mitum-nft-collection-register-operation-fact-v0.0.1",
+    "hash": "5FpSweHDwVj8KovDF5yyjtzZo8eDCRvY7AH4YKqiPEMn",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy45MjFa"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "AN1rKvtY4JEn6tDnordLdxqbCcZ4cNky5ufxKrofHnDvPpJ2iYEeszJVShiPMzwrrYvhbkj9pUA49sVCnHAQppBs82HFh4uMa",
+      "signed_at": "2022-08-19T18:34:37.921Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "miyT2x3ifn25R36AvvyBzBAs8BTa7FxM7LUnjWyFESnHmpu"
+    }
+  ],
+  "_hint": "mitum-nft-collection-register-operation-v0.0.1",
+  "hash": "6sgXPS6ruSUHUTDViMxGsyBJGs2ac51NLR59TM8DJwKG"
+}

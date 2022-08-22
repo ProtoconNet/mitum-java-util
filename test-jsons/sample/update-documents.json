@@ -1,0 +1,43 @@
+{
+  "fact": {
+    "sender": "6u3zvRpQkbDqGcR4WPoQczRJyHyGekwqDqitWtUB8LKEmca",
+    "_hint": "mitum-update-documents-operation-fact-v0.0.1",
+    "items": [
+      {
+        "doc": {
+          "owner": "6u3zvRpQkbDqGcR4WPoQczRJyHyGekwqDqitWtUB8LKEmca",
+          "area": "area0",
+          "address": "address0",
+          "rentdate": "today",
+          "_hint": "mitum-blockcity-document-land-data-v0.0.1",
+          "renter": "render0",
+          "account": "HxqD1uDh5RChjzop8keuAJ7VKLNEcTWfg2K6LMEt8ax2mca",
+          "periodday": 1,
+          "info": {
+            "doctype": "mitum-blockcity-document-land-data",
+            "docid": {
+              "id": "abcdcli",
+              "_hint": "mitum-blockcity-land-document-id-v0.0.1"
+            },
+            "_hint": "mitum-document-info-v0.0.1"
+          }
+        },
+        "currency": "PEN",
+        "_hint": "mitum-update-documents-item-v0.0.1"
+      }
+    ],
+    "hash": "5DZk9yAzcJAjGwuLGRi7DUdT6KsZi3JZdgktTSt6jv7m",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy44MjNa"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXZFDMypy1ZFGjgUZcp3cNCZ6EBtAr4xXHidamAd1jqVCd4CRzK4W3i5QAET9zSXK3GrbHnNmowBjA8MRkRDmbSA8HSNG",
+      "signed_at": "2022-08-19T18:34:37.823Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "sG3ycGUG3xQ8i2mFKpbweHmrhjwYZUgjwmbGisQJcGWEmpu"
+    }
+  ],
+  "_hint": "mitum-update-documents-operation-v0.0.1",
+  "hash": "4pika2f5MZQgG9G4NRAFqXCRkcYGdTffeH9fbCZWM1Po"
+}

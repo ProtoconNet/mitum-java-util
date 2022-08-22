@@ -1,0 +1,31 @@
+{
+  "fact": {
+    "sender": "7kaqQNBM87hLCC81LF8yLaZRHFhLmdnSVa9GGRu5gD5qmca",
+    "_hint": "mitum-nft-transfer-operation-fact-v0.0.1",
+    "items": [
+      {
+        "receiver": "EgApPSzM7wavjW4sCaos7py4owk9ikNYARMcmSpi6y8mca",
+        "currency": "PEN",
+        "_hint": "mitum-nft-transfer-item-v0.0.1",
+        "nft": {
+          "collection": "COL",
+          "idx": 1,
+          "_hint": "mitum-nft-nft-id-v0.0.1"
+        }
+      }
+    ],
+    "hash": "74k5G6fnmArqnwPms4Mw7PLcrs2zCuNA3h7F2JTwQBGj",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy45NDla"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXYv9rXhwnPYSVEwKeu7FC9cYwGSt2st6Sfp5vu1Cj11GmHR1MUhmqfeAmXYWNDXURd9WBGzBq4sEWCbNqtWSPyD4gD5b",
+      "signed_at": "2022-08-19T18:34:37.949Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "21xX5p6NoTESgCdwv4LtCHJEWD1SQPxnro1atTsFdeF7empu"
+    }
+  ],
+  "_hint": "mitum-nft-transfer-operation-v0.0.1",
+  "hash": "41QRfgYnLc9i9kjEaRYbQceXhr3iTzba8En8eKVkaQbM"
+}

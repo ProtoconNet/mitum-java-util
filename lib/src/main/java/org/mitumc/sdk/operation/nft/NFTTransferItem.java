@@ -12,8 +12,8 @@ public class NFTTransferItem extends NFTItem {
     private Address receiver;
     private NFTID nid;
 
-    NFTTransferItem(String receiver, NFTID nid, String currencyId) {
-        super(Constant.MNFT_TRANSFER_ITEM, currencyId);
+    NFTTransferItem(String receiver, NFTID nid, String currency) {
+        super(Constant.MNFT_TRANSFER_ITEM, currency);
         this.receiver = Address.get(receiver);
         this.nid = nid;
     }
@@ -22,7 +22,7 @@ public class NFTTransferItem extends NFTItem {
     public byte[] toBytes() {
         byte[] breceiver = this.receiver.toBytes();
         byte[] bnid = this.nid.toBytes();
-        byte[] bcurrencyId = this.currencyId.getBytes();
+        byte[] bcurrencyId = this.currency.toBytes();
         return Util.concatByteArray(breceiver, bnid, bcurrencyId);
     }
 
@@ -33,7 +33,7 @@ public class NFTTransferItem extends NFTItem {
         map.put("_hint", this.hint.getHint());
         map.put("receiver", this.receiver.getAddress());
         map.put("nft", this.nid.toDict());
-        map.put("currency", this.currencyId);
+        map.put("currency", this.currency.toString());
 
         return map;
     }

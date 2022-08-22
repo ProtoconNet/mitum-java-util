@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.key.Address;
-import org.mitumc.sdk.operation.currency.base.Amount;
+import org.mitumc.sdk.operation.Amount;
 import org.mitumc.sdk.operation.currency.base.CurrencyItem;
 
 public class TransfersItem extends CurrencyItem {

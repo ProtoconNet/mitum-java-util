@@ -26,7 +26,7 @@ public class VoteDocument extends Document {
     VoteDocument(String documentId, String owner, int round, String endTime, Candidate[] candidates, String bossName,
             String account, String office) {
         super(SingleInfo.vote(documentId), owner);
-        assertInfo(info);
+        assertInfoValid(info);
         this.round = BigInt.fromInt(round);
         this.endTime = endTime;
         this.bossName = bossName;
@@ -39,7 +39,7 @@ public class VoteDocument extends Document {
         }
     }
 
-    private void assertInfo(Info info) {
+    private static void assertInfoValid(Info info) {
         if (!info.getDocType().equals(Constant.MBC_DOCTYPE_VOTE_DATA)) {
             throw new StringFormatException(Util.errMsg("invalid doctype", Util.getName()));
         }

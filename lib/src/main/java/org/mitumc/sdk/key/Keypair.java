@@ -7,6 +7,7 @@ import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.util.Util;
 
 public class Keypair {
+    public static final String ID = "KEYPAIR_ID";
     private BaseKey privateKey;
     private BaseKey publicKey;
     private BTCKeyPair keypair;

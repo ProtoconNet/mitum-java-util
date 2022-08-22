@@ -10,6 +10,8 @@ import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.exception.EmptyElementException;
+import org.mitumc.sdk.exception.NotEnoughtSumException;
+import org.mitumc.sdk.exception.NumberLimitExceededException;
 import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Hash;
@@ -17,14 +19,16 @@ import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
 public class Keys implements BytesConvertible, HashMapConvertible {
+    public static final String ID = "KEYS_ID";
     private Hint hint;
     private ArrayList<Key> keys;
     private BigInt threshold;
     private Hash hash;
 
     private Keys(Key[] keys, int threshold) {
-        assertThreshold(threshold);
-        assertOverThreshold(keys, threshold);
+        assertThresholdValidRange(threshold);
+        assertNumberOfKeysValidRange(keys);
+        assertWeightsSumEnough(keys, threshold);
         this.hint = Hint.get(Constant.MC_KEYS);
         this.keys = new ArrayList<Key>(Arrays.asList(keys));
         this.threshold = BigInt.fromInt(threshold);
@@ -35,14 +39,14 @@ public class Keys implements BytesConvertible, HashMapConvertible {
         return new Keys(keys, threshold);
     }
 
-    private void assertThreshold(int threshold) {
+    private static void assertThresholdValidRange(int threshold) {
         if (threshold < 1 || threshold > 100) {
             throw new NumberRangeException(
-                    Util.errMsg("invalid threshold - now, threshold is " + threshold, Util.getName()));
+                    Util.errMsg("invalid threshold - now, " + threshold, Util.getName()));
         }
     }
 
-    private void assertOverThreshold(Key[] keys, int threshold) {
+    private static void assertWeightsSumEnough(Key[] keys, int threshold) {
         long sum = 0;
 
         for (Key key : keys) {
@@ -50,16 +54,38 @@ public class Keys implements BytesConvertible, HashMapConvertible {
         }
 
         if (sum < threshold) {
-            throw new NumberRangeException(
+            throw new NotEnoughtSumException(
                     Util.errMsg("the sum of all weights doesn't satisfy the condition - now, weight-sum(" + sum
                             + ") < threshold(" + threshold + ")", Util.getName()));
         }
     }
 
-    private void generateHash() {
-        if (this.keys.size() <= 0) {
-            throw new EmptyElementException(Util.errMsg("no keys", Util.getName()));
+    private static void assertNumberOfKeysValidRange(Key[] keys) {
+        if (keys.length <= 0) {
+            throw new EmptyElementException(Util.errMsg("empty keys", Util.getName()));
         }
+
+        if (keys.length > 10) {
+            throw new NumberLimitExceededException(
+                Util.errMsg("the number of keys exceeds max - now, " + keys.length, Util.getName()
+            ));
+        }
+    }
+
+    private void assertNumberOfKeysInRange() {
+        if (this.keys.size() <= 0) {
+            throw new EmptyElementException(Util.errMsg("empty keys", Util.getName()));
+        }
+
+        if (this.keys.size() > 10) {
+            throw new NumberLimitExceededException(
+                Util.errMsg("the number of keys exceeds max - now, " + this.keys.size(), Util.getName()
+            ));
+        }
+    }
+
+    private void generateHash() {
+        assertNumberOfKeysInRange();
         this.hash = Hash.fromBytes(this.toBytes());
     }
 

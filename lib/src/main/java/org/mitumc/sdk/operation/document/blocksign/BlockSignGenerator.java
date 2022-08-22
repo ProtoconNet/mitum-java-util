@@ -9,20 +9,20 @@ public class BlockSignGenerator extends BaseGenerator {
         return new BlockSignGenerator();
     }
 
-    public static BlockSignUser user(String address, String signCode, boolean signed) {
+    public BlockSignUser user(String address, String signCode, boolean signed) {
         return new BlockSignUser(address, signCode, signed);
     }
 
-    public static Document document(String documentId, String owner, String fileHash, BlockSignUser creator,
+    public Document document(String documentId, String owner, String fileHash, BlockSignUser creator,
             String title, String size, BlockSignUser[] signers) {
         return BlockSignDocument.get(documentId, owner, fileHash, creator, title, size, signers);
     }
 
-    public static SignDocumentsItem getSignDocumentsItem(String documentId, String owner, String currencyId) {
-        return new SignDocumentsItem(documentId, owner, currencyId);
+    public SignDocumentsItem getSignDocumentsItem(String documentId, String owner, String currency) {
+        return new SignDocumentsItem(documentId, owner, currency);
     }
 
-    public static SignDocumentsFact getSignDocumentsFact(String sender, SignDocumentsItem[] items) {
+    public SignDocumentsFact getSignDocumentsFact(String sender, SignDocumentsItem[] items) {
         return new SignDocumentsFact(sender, items);
     }
 }

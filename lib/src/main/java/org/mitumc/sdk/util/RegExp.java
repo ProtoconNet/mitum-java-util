@@ -16,107 +16,108 @@ public class RegExp {
     public static final String EXP_BLOCKSIGN_DATA = Constant.MBS_DOCUMENT_DATA;
 
     public static void assertLongEnough(String target) throws StringFormatException {
-        if(target.length() < 3) {
+        if (target.length() < 3) {
             throw new StringFormatException(Util.errMsg("target string is too short", Util.getName()));
         }
     }
 
     public static void assertAddress(String address) throws StringFormatException {
         assertLongEnough(address);
-        if(!address.substring(address.length() - 3).equals(EXP_ADDRESS)) {
+        if (!address.substring(address.length() - 3).equals(EXP_ADDRESS)) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
-        if(!Pattern.matches("^[a-zA-Z0-9]*$", address.substring(0, address.length() - 3))) {
+        if (!Pattern.matches("^[a-zA-Z0-9]*$", address.substring(0, address.length() - 3))) {
             throw new StringFormatException(Util.errMsg("invalid format", Util.getName()));
         }
     }
 
-    public static void assertKey(String key) throws StringFormatException{
+    public static void assertKey(String key) throws StringFormatException {
         assertLongEnough(key);
         String suffix = key.substring(key.length() - 3);
-        if(!(suffix.equals(EXP_PRIVATE_KEY) || suffix.equals(EXP_PUBLIC_KEY))) {
+        if (!(suffix.equals(EXP_PRIVATE_KEY) || suffix.equals(EXP_PUBLIC_KEY))) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
-        if(!Pattern.matches("^[a-zA-Z0-9]*$", key.substring(0, key.length() - 3))) {
+        if (!Pattern.matches("^[a-zA-Z0-9]*$", key.substring(0, key.length() - 3))) {
             throw new StringFormatException(Util.errMsg("invalid format", Util.getName()));
         }
     }
 
     public static void assertPrivateKey(String key) throws StringFormatException {
         assertLongEnough(key);
-        if(!key.substring(key.length() - 3).equals(EXP_PRIVATE_KEY)) {
+        if (!key.substring(key.length() - 3).equals(EXP_PRIVATE_KEY)) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
-        if(!Pattern.matches("^[a-zA-Z0-9]*$", key.substring(0, key.length() - 3))) {
+        if (!Pattern.matches("^[a-zA-Z0-9]*$", key.substring(0, key.length() - 3))) {
             throw new StringFormatException(Util.errMsg("invalid format", Util.getName()));
         }
     }
 
     public static void assertPublicKey(String key) throws StringFormatException {
         assertLongEnough(key);
-        if(!key.substring(key.length() - 3).equals(EXP_PUBLIC_KEY)) {
+        if (!key.substring(key.length() - 3).equals(EXP_PUBLIC_KEY)) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
-        if(!Pattern.matches("^[a-zA-Z0-9]*$", key.substring(0, key.length() - 3))) {
+        if (!Pattern.matches("^[a-zA-Z0-9]*$", key.substring(0, key.length() - 3))) {
             throw new StringFormatException(Util.errMsg("invalid format", Util.getName()));
         }
     }
 
-    public static void assertBlockSignDocumentId(String id) throws StringFormatException {
+    public static void assertBlockSignDocumentID(String id) throws StringFormatException {
         assertLongEnough(id);
         String suffix = id.substring(id.length() - 3);
-        if(!suffix.equals(EXP_BLOCKSIGN_DATA)) {
+        if (!suffix.equals(EXP_BLOCKSIGN_DATA)) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
     }
 
-    public static void assertBlockCityDocumentId(String id) throws StringFormatException {
+    public static void assertBlockCityDocumentID(String id) throws StringFormatException {
         assertLongEnough(id);
         String suffix = id.substring(id.length() - 3);
-        if(!(suffix.equals(EXP_USER_DATA) || suffix.equals(EXP_LAND_DATA) || suffix.equals(EXP_VOTE_DATA) || suffix.equals(EXP_HISTORY_DATA))) {
+        if (!(suffix.equals(EXP_USER_DATA) || suffix.equals(EXP_LAND_DATA) || suffix.equals(EXP_VOTE_DATA)
+                || suffix.equals(EXP_HISTORY_DATA))) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
     }
-    
+
     public static void assertUserData(String id) throws StringFormatException {
         assertLongEnough(id);
-        if(!id.substring(id.length() - 3).equals(EXP_USER_DATA)) {
+        if (!id.substring(id.length() - 3).equals(EXP_USER_DATA)) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
     }
 
     public static void assertLandData(String id) throws StringFormatException {
         assertLongEnough(id);
-        if(!id.substring(id.length() - 3).equals(EXP_LAND_DATA)) {
+        if (!id.substring(id.length() - 3).equals(EXP_LAND_DATA)) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
     }
 
     public static void assertVoteData(String id) throws StringFormatException {
         assertLongEnough(id);
-        if(!id.substring(id.length() - 3).equals(EXP_VOTE_DATA)) {
+        if (!id.substring(id.length() - 3).equals(EXP_VOTE_DATA)) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
     }
 
     public static void assertHistoryData(String id) throws StringFormatException {
         assertLongEnough(id);
-        if(!id.substring(id.length() - 3).equals(EXP_HISTORY_DATA)) {
+        if (!id.substring(id.length() - 3).equals(EXP_HISTORY_DATA)) {
             throw new StringFormatException(Util.errMsg("invalid type suffix", Util.getName()));
         }
     }
 
     public static void assertNFTID(String id) throws StringFormatException {
         int dash = id.indexOf("-");
-        if(dash < 0) {
+        if (dash < 0) {
             throw new StringFormatException(Util.errMsg("no divider(-) in target string", Util.getName()));
         }
-        
+
         assertLongEnough(id.substring(0, dash));
         try {
-            Integer.parseInt(id.substring(dash + 1));
-        } catch(Exception e) {
-            throw new StringFormatException(Util.errMsg("collection idx is not integer", Util.getName()));
+            BigInt.fromString(id.substring(dash + 1));
+        } catch (Exception e) {
+            throw new StringFormatException(Util.errMsg("collection idx is not positive integer", Util.getName()));
         }
     }
 }

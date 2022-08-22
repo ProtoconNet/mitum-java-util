@@ -1,0 +1,30 @@
+{
+  "fact": {
+    "sender": "2Y29zthKxzfS4sC4Ncw6oNFutPQepTZXeU26f7JTsKkXmca",
+    "_hint": "mitum-nft-burn-operation-fact-v0.0.1",
+    "items": [
+      {
+        "currency": "PEN",
+        "_hint": "mitum-nft-burn-item-v0.0.1",
+        "nft": {
+          "collection": "COL",
+          "idx": 1,
+          "_hint": "mitum-nft-nft-id-v0.0.1"
+        }
+      }
+    ],
+    "hash": "J8i4J4NKMQf4ssa5wRrN479RZSW3KTFPTCpp9dNptVGp",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy44OTla"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXZVkDq4tWd2G4Y7LErZJ8dPx8eo5G33x4gjBLHiSz1kg3YJ3sVfrR4keSeXeJ1oryHBYctmD5xV36X7FRifHKN4MA6Th",
+      "signed_at": "2022-08-19T18:34:37.900Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "jC7SYzmhwwNVisuCkZgR5s6GDnpuUUYH2EFcMybE3jXVmpu"
+    }
+  ],
+  "_hint": "mitum-nft-burn-operation-v0.0.1",
+  "hash": "5A1pWUgNpLgAYip1f3HbPJ82wTPmQA43YnSPujaZCLE7"
+}

@@ -64,7 +64,7 @@ public class Util {
         return map;
     }
 
-    public static HashMap<String, String> parseDocumentId(String documentId) throws StringFormatException {
+    public static HashMap<String, String> parseDocumentID(String documentId) throws StringFormatException {
         RegExp.assertLongEnough(documentId);
 
         HashMap<String, String> map = new HashMap<>();
@@ -92,18 +92,6 @@ public class Util {
             throw new StringFormatException(Util.errMsg("no version with divider in target string", Util.getName()));
         }
         return Hint.get(hint.substring(0, idx));
-    }
-
-    @Deprecated
-    public static Boolean isTypeValid(String type) {
-        switch (type) {
-            case Constant.KEY_PRIVATE:
-            case Constant.KEY_PUBLIC:
-            case Constant.MC_ADDRESS:
-                return true;
-            default:
-                return false;
-        }
     }
 
     public static TimeStamp getDateTimeStamp() {

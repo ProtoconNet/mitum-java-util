@@ -1,0 +1,67 @@
+{
+  "fact": {
+    "sender": "Au8y6bektFE62Vf7ph6V16wtzt4SJRmrh4Bqf72pej16mca",
+    "_hint": "mitum-nft-mint-operation-fact-v0.0.1",
+    "items": [
+      {
+        "form": {
+          "copyrighters": {
+            "signers": [
+              {
+                "signed": false,
+                "share": 50,
+                "_hint": "mitum-nft-signer-v0.0.1",
+                "account": "Fk7978PhvEowxQvyyoRn71nc1Akf5u8xfaAhsjxpNgA1mca"
+              },
+              {
+                "signed": false,
+                "share": 50,
+                "_hint": "mitum-nft-signer-v0.0.1",
+                "account": "E2AMz9uB4K9aXXQxxGYM2rgrdeibFcPin4KwyiinYoKDmca"
+              }
+            ],
+            "total": 100,
+            "_hint": "mitum-nft-signers-v0.0.1"
+          },
+          "creators": {
+            "signers": [
+              {
+                "signed": false,
+                "share": 50,
+                "_hint": "mitum-nft-signer-v0.0.1",
+                "account": "Fk7978PhvEowxQvyyoRn71nc1Akf5u8xfaAhsjxpNgA1mca"
+              },
+              {
+                "signed": false,
+                "share": 50,
+                "_hint": "mitum-nft-signer-v0.0.1",
+                "account": "E2AMz9uB4K9aXXQxxGYM2rgrdeibFcPin4KwyiinYoKDmca"
+              }
+            ],
+            "total": 100,
+            "_hint": "mitum-nft-signers-v0.0.1"
+          },
+          "_hint": "mitum-nft-mint-form-v0.0.1",
+          "uri": "https://localhost:5000",
+          "hash": "nfthash"
+        },
+        "currency": "PEN",
+        "collection": "COL",
+        "_hint": "mitum-nft-mint-item-v0.0.1"
+      }
+    ],
+    "hash": "4ZFzMvmcgHFzpNetMEPLJiETD43dLj1mBttjttPGDQdh",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy45MzRa"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXYgscE2sw8yy626AXazK6o5aZiaWa16H6kWzNMqSt6gwny438EeD4TdwAmStJpHMw35BkP6Bp9JBaoZzPnMG5rgzVStW",
+      "signed_at": "2022-08-19T18:34:37.935Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "wn4rviYFtz8hTC4pE8uL4ZG2BvjqVatmWyN7aM1s7CR2mpu"
+    }
+  ],
+  "_hint": "mitum-nft-mint-operation-v0.0.1",
+  "hash": "B4LnoivbMRzqodRfLWVgPpPo4d37K49LKRbfgX7F7uLG"
+}

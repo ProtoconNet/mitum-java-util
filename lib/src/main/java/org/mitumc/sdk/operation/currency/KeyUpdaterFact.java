@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Keys;
+import org.mitumc.sdk.operation.CurrencyID;
 import org.mitumc.sdk.operation.base.PurposedOperationFact;
 import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.util.Hint;
@@ -12,12 +13,12 @@ import org.mitumc.sdk.util.Util;
 
 public class KeyUpdaterFact extends PurposedOperationFact {
     private Address target;
-    private String currencyId;
+    private CurrencyID currency;
     private Keys keys;
 
-    KeyUpdaterFact(String target, String currencyId, Keys keys) {
+    KeyUpdaterFact(String target, String currency, Keys keys) {
         super(Constant.MC_KEY_UPDATER_OPERATION_FACT);
-        this.currencyId = currencyId;
+        this.currency = CurrencyID.get(currency);
         this.keys = keys;
         this.target = Address.get(target);
         generateHash();
@@ -33,7 +34,7 @@ public class KeyUpdaterFact extends PurposedOperationFact {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] btarget = this.target.toBytes();
         byte[] bkeys = this.keys.toBytes();
-        byte[] bcurrencyId = this.currencyId.getBytes();
+        byte[] bcurrencyId = this.currency.toBytes();
         return Util.concatByteArray(btoken, btarget, bkeys, bcurrencyId);
     }
 
@@ -46,7 +47,7 @@ public class KeyUpdaterFact extends PurposedOperationFact {
         hashMap.put("token", Base64.getEncoder().encodeToString(this.token.getISO().getBytes()));
         hashMap.put("target", this.target.getAddress());
         hashMap.put("keys", this.keys.toDict());
-        hashMap.put("currency", this.currencyId);
+        hashMap.put("currency", this.currency.toString());
 
         return hashMap;
     }

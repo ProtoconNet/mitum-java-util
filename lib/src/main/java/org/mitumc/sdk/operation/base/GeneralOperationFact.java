@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 
+import org.mitumc.sdk.exception.EmptyElementException;
 import org.mitumc.sdk.exception.DummyMethodException;
 import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.util.Hint;
@@ -16,9 +17,16 @@ public class GeneralOperationFact<T extends Item> extends OperationFact {
 
     protected GeneralOperationFact(String factType, String sender, T[] items) {
         super(factType);
+        assertNotEmpty(items);
         this.items = new ArrayList<T>(Arrays.asList(items));
         this.sender = Address.get(sender);
         generateHash();
+    }
+
+    private void assertNotEmpty(T[] items) {
+        if(items.length <= 0) {
+            throw new EmptyElementException(Util.errMsg("empty items", Util.getName()));
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package org.mitumc.sdk.operation.nft;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.EmptyStringException;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.operation.nft.base.NFTSigners;
@@ -17,11 +18,18 @@ public class MintForm implements BytesConvertible, HashMapConvertible {
     private NFTSigners copyrighters;
 
     MintForm(String hash, String uri, NFTSigners creators, NFTSigners copyrighters) {
+        assertURINotEmpty(uri);
         this.hint = Hint.get(Constant.MNFT_MINT_FORM);
         this.hash = hash;
         this.uri = uri;
         this.creators = creators;
         this.copyrighters = copyrighters;
+    }
+
+    private static void assertURINotEmpty(String uri) {
+        if (uri.equals("")) {
+            throw new EmptyStringException(Util.errMsg("empty nft uri", Util.getName()));
+        }
     }
 
     @Override

@@ -11,82 +11,82 @@ public class NFTGenerator extends BaseGenerator {
         return new NFTGenerator();
     }
 
-    public static NFTSigner signer(String account, int share, boolean signed) {
+    public NFTSigner signer(String account, int share, boolean signed) {
         return NFTSigner.get(account, share, signed);
     }
 
-    public static NFTSigners signers(int total, NFTSigner[] signers) {
+    public NFTSigners signers(int total, NFTSigner[] signers) {
         return NFTSigners.get(total, signers);
     }
 
-    public static CollectionRegisterForm collectionRegisterForm(String target, String symbol, String name, int royalty,
+    public CollectionRegisterForm collectionRegisterForm(String target, String symbol, String name, int royalty,
             String uri, String[] whites) {
         return new CollectionRegisterForm(target, symbol, name, royalty, uri, whites);
     }
 
-    public static CollectionPolicy collectionPolicy(String name, int royalty, String uri, String[] whites) {
+    public CollectionPolicy collectionPolicy(String name, int royalty, String uri, String[] whites) {
         return CollectionPolicy.get(name, royalty, uri, whites);
     }
 
-    public static MintForm mintForm(String hash, String uri, NFTSigners creators, NFTSigners copyrighters) {
+    public MintForm mintForm(String hash, String uri, NFTSigners creators, NFTSigners copyrighters) {
         return new MintForm(hash, uri, creators, copyrighters);
     }
 
-    public static MintItem getMintItem(String collection, MintForm form, String currencyId) {
-        return new MintItem(collection, form, currencyId);
+    public MintItem getMintItem(String collection, MintForm form, String currency) {
+        return new MintItem(collection, form, currency);
     }
 
-    public static NFTTransferItem getTransferItem(String receiver, NFTID nid, String currencyId) {
-        return new NFTTransferItem(receiver, nid, currencyId);
+    public NFTTransferItem getTransferItem(String receiver, NFTID nid, String currency) {
+        return new NFTTransferItem(receiver, nid, currency);
     }
 
-    public static BurnItem getBurnItem(NFTID nid, String currencyId) {
-        return new BurnItem(nid, currencyId);
+    public BurnItem getBurnItem(NFTID nid, String currency) {
+        return new BurnItem(nid, currency);
     }
 
-    public static NFTSignItem getSignItem(String qualification, NFTID nid, String currencyId) {
-        return new NFTSignItem(qualification, nid, currencyId);
+    public NFTSignItem getSignItem(String qualification, NFTID nid, String currency) {
+        return new NFTSignItem(qualification, nid, currency);
     }
 
-    public static ApproveItem getApproveItem(String approved, NFTID nid, String currencyId) {
-        return new ApproveItem(approved, nid, currencyId);
+    public ApproveItem getApproveItem(String approved, NFTID nid, String currency) {
+        return new ApproveItem(approved, nid, currency);
     }
 
-    public static DelegateItem getDelegateItem(String collection, String agent, String mode, String currencyId) {
-        return new DelegateItem(collection, agent, mode, currencyId);
+    public DelegateItem getDelegateItem(String collection, String agent, String mode, String currency) {
+        return new DelegateItem(collection, agent, mode, currency);
     }
 
-    public static CollectionRegisterFact getCollectionRegisterFact(String sender, CollectionRegisterForm form,
-            String currencyId) {
-        return new CollectionRegisterFact(sender, form, currencyId);
+    public CollectionRegisterFact getCollectionRegisterFact(String sender, CollectionRegisterForm form,
+            String currency) {
+        return new CollectionRegisterFact(sender, form, currency);
     }
 
-    public static CollectionPolicyUpdaterFact getCollectionPolicyUpdaterFact(String sender, String collection,
-            CollectionPolicy policy, String currencyId) {
-        return new CollectionPolicyUpdaterFact(sender, collection, policy, currencyId);
+    public CollectionPolicyUpdaterFact getCollectionPolicyUpdaterFact(String sender, String collection,
+            CollectionPolicy policy, String currency) {
+        return new CollectionPolicyUpdaterFact(sender, collection, policy, currency);
     }
 
-    public static MintFact getMintFact(String sender, MintItem[] items) {
+    public MintFact getMintFact(String sender, MintItem[] items) {
         return new MintFact(sender, items);
     }
 
-    public static NFTTransferFact getTransferFact(String sender, NFTTransferItem[] items) {
+    public NFTTransferFact getTransferFact(String sender, NFTTransferItem[] items) {
         return new NFTTransferFact(sender, items);
     }
 
-    public static BurnFact getBurnFact(String sender, BurnItem[] items) {
+    public BurnFact getBurnFact(String sender, BurnItem[] items) {
         return new BurnFact(sender, items);
     }
 
-    public static NFTSignFact getSignFact(String sender, NFTSignItem[] items) {
+    public NFTSignFact getSignFact(String sender, NFTSignItem[] items) {
         return new NFTSignFact(sender, items);
     }
 
-    public static ApproveFact getApproveFact(String sender, ApproveItem[] items) {
+    public ApproveFact getApproveFact(String sender, ApproveItem[] items) {
         return new ApproveFact(sender, items);
     }
 
-    public static DelegateFact getDelegateFact(String sender, DelegateItem[] items) {
+    public DelegateFact getDelegateFact(String sender, DelegateItem[] items) {
         return new DelegateFact(sender, items);
     }
 }

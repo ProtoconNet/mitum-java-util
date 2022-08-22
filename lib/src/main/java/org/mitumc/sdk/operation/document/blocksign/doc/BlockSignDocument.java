@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.operation.document.base.Document;
+import org.mitumc.sdk.operation.document.base.Info;
 import org.mitumc.sdk.operation.document.blocksign.BlockSignUser;
 import org.mitumc.sdk.operation.document.blocksign.info.BlockSignGeneralInfo;
 import org.mitumc.sdk.util.BigInt;
@@ -21,6 +24,7 @@ public class BlockSignDocument extends Document {
     private BlockSignDocument(String documentId, String owner, String fileHash, BlockSignUser creator, String title,
             String size, BlockSignUser[] signers) {
         super(BlockSignGeneralInfo.get(documentId), owner);
+        assertInfoValid(info);
         this.fileHash = fileHash;
         this.creator = creator;
         this.title = title;
@@ -29,6 +33,12 @@ public class BlockSignDocument extends Document {
 
         for (BlockSignUser user : signers) {
             this.signers.add(user);
+        }
+    }
+
+    private static void assertInfoValid(Info info) {
+        if (!info.getDocType().equals(Constant.MBS_DOCTYPE_DOCUMENT_DATA)) {
+            throw new StringFormatException(Util.errMsg("invalid doctype", Util.getName()));
         }
     }
 

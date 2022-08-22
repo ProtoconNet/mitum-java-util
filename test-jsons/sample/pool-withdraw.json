@@ -1,0 +1,28 @@
+{
+  "fact": {
+    "amounts": [
+      {
+        "amount": "1000",
+        "currency": "PEN",
+        "_hint": "mitum-currency-amount-v0.0.1"
+      }
+    ],
+    "sender": "5eaRErrjwCbkKyuEUDSzFDJQ8XkCay4gTmZa7B8K3q27mca",
+    "pool": "5D3KvLypfzfz9oPjPY6vTmroG2o5QDXVYdrQw7CouYDSmca",
+    "poolid": "PEN",
+    "_hint": "mitum-feefi-pool-withdraw-operation-fact-v0.0.1",
+    "hash": "ntqW86ogZ1sQAbNBBym5KoqE1fASs16dTXm1Quy6vMe",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy44OTFa"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXZ8x1dw2SYpJGDT4VcaWD7bXGQtAtHozk1cSpdjXsPi9DyugnJJ9ijqWytVjkA8yTmEwNSsKwhGMCyFe4tcsaBUsFPTs",
+      "signed_at": "2022-08-19T18:34:37.891Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "2B1cWi97GPqgEdUVp2zYNTNNz6TtPzt7kvCRvyZrvRcdGmpu"
+    }
+  ],
+  "_hint": "mitum-feefi-pool-withdraw-operation-v0.0.1",
+  "hash": "88QHYAjW8DWYjPojrkpV8yV8eTwjnuWHvKaGwCmbak3E"
+}

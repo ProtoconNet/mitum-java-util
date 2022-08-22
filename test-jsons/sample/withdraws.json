@@ -1,0 +1,32 @@
+{
+  "fact": {
+    "sender": "6s2g5vSMZu8R6g3CPB5EsMCR6hhzdgw8saEm9PUpM7kmmca",
+    "_hint": "mitum-currency-contract-account-withdraw-operation-fact-v0.0.1",
+    "items": [
+      {
+        "amounts": [
+          {
+            "amount": "100",
+            "currency": "PEN",
+            "_hint": "mitum-currency-amount-v0.0.1"
+          }
+        ],
+        "_hint": "mitum-currency-withdraws-item-multi-amounts-v0.0.1",
+        "target": "5dUKNWhNAH78wcpvep1Kb12sbd6MUKs2MFXQL4gSxN6rmca"
+      }
+    ],
+    "hash": "KMtFquTz9wtkhEqqjEYB4HUFSJttUtUGqCENnP1WRgV",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy44MDha"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXYfxzvYJ133ZK78g95LyEgeNFdf9ap6WjQpwZiaa89fQjySmcpHJuqKSgvcVVfnKg1VLgjMN5spzr4xjz5q9CbAkZKYp",
+      "signed_at": "2022-08-19T18:34:37.809Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "f6gUgFgPUJNr33Zqhr1LJCSHVmGLMq9sQLuLo3CrjgBvmpu"
+    }
+  ],
+  "_hint": "mitum-currency-contract-account-withdraw-operation-v0.0.1",
+  "hash": "8AezeYNFhbA9fGD9xYXBLJtZJUprvRExgCZYUdw2eGPr"
+}

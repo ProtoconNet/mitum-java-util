@@ -1,0 +1,31 @@
+{
+  "fact": {
+    "sender": "9SEMWCoFfXcgAYq1D6cWeerDJR755h9653aR1Aofzozcmca",
+    "currency": "PEN",
+    "collection": "COL",
+    "_hint": "mitum-nft-collection-policy-updater-operation-fact-v0.0.1",
+    "hash": "AirgAZg4bMxETDzE536Lx5os7tPGgUKw8cws16nqbE9G",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy45MDVa",
+    "policy": {
+      "whites": [
+        "4LAjA3QjRrnXcPFKx7SYjASQEQUn2tndwfv5kQgmP8zrmca",
+        "GwZWmESArFWbs6h2PC86QtBNQrS1brCc5eU97KaapyAVmca"
+      ],
+      "name": "Collection",
+      "royalty": 1,
+      "_hint": "mitum-nft-collection-policy-v0.0.1",
+      "uri": "https://localhost:5000"
+    }
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXZCbKeb3Q7F7RxeNjR5jyZNjc1oEagDkSu9tfjcWghmDKwQwXYMNwzUv6DYPDvNa7VMGQGcEzKWVJHioaEEhBTs6wjMc",
+      "signed_at": "2022-08-19T18:34:37.906Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "2BHvP98bFym68kQexG3rAMLVbzAK8EHhEbJusGMyiTBjQmpu"
+    }
+  ],
+  "_hint": "mitum-nft-collection-policy-updater-operation-v0.0.1",
+  "hash": "9pZm2VeJg9sxwjBknRG6uMfXqRaLUYjeMGdVCgWJm7vW"
+}

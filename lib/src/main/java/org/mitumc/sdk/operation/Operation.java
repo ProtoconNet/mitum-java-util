@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bitcoinj.core.Base58;
+import org.mitumc.sdk.JSONParser;
 import org.mitumc.sdk.exception.DummyMethodException;
 import org.mitumc.sdk.exception.EmptyElementException;
 import org.mitumc.sdk.interfaces.BytesConvertible;
@@ -109,5 +110,9 @@ public class Operation implements BytesConvertible, HashMapConvertible {
         hashMap.put("fact_signs", arr);
 
         return hashMap;
+    }
+
+    public void exportToJsonFile(String fp) {
+        JSONParser.writeJsonFileFromHashMap(this.toDict(), fp);
     }
 }

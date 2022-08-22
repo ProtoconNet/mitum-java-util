@@ -10,15 +10,15 @@ import org.mitumc.sdk.util.Util;
 public class BurnItem extends NFTItem {
     private NFTID nid;
 
-    BurnItem(NFTID nid, String currencyId) {
-        super(Constant.MNFT_BURN_ITEM, currencyId);
+    BurnItem(NFTID nid, String currency) {
+        super(Constant.MNFT_BURN_ITEM, currency);
         this.nid = nid;
     }
 
     @Override
     public byte[] toBytes() {
         byte[] bnid = this.nid.toBytes();
-        byte[] bcurrencyId = this.currencyId.getBytes();
+        byte[] bcurrencyId = this.currency.toBytes();
         return Util.concatByteArray(bnid, bcurrencyId);
     }
 
@@ -28,7 +28,7 @@ public class BurnItem extends NFTItem {
 
         map.put("_hint", this.hint.getHint());
         map.put("nft", this.nid.toDict());
-        map.put("currency", this.currencyId);
+        map.put("currency", this.currency.toString());
 
         return map;
     }

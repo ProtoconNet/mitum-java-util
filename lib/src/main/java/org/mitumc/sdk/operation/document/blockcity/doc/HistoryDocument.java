@@ -20,7 +20,7 @@ public class HistoryDocument extends Document {
     HistoryDocument(String documentId, String owner, String name, String account, String date, String usage,
             String app) {
         super(SingleInfo.history(documentId), owner);
-        assertInfo(info);
+        assertInfoValid(info);
         this.name = name;
         this.account = Address.get(account);
         this.date = date;
@@ -28,7 +28,7 @@ public class HistoryDocument extends Document {
         this.app = app;
     }
 
-    private void assertInfo(Info info) {
+    private static void assertInfoValid(Info info) {
         if (!info.getDocType().equals(Constant.MBC_DOCTYPE_HISTORY_DATA)) {
             throw new StringFormatException(Util.errMsg("invalid doctype", Util.getName()));
         }

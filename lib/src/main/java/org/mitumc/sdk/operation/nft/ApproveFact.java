@@ -2,7 +2,6 @@ package org.mitumc.sdk.operation.nft;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.util.Hint;
-import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.operation.base.GeneralOperationFact;
 
 public class ApproveFact extends GeneralOperationFact<ApproveItem> {

@@ -1,0 +1,28 @@
+{
+  "fact": {
+    "sender": "FHD6dAdtJQvmNU977ukcrwqA43MRLWs1W44TSMqrBHzTmca",
+    "outgoingcid": "MCC",
+    "initialfee": {
+      "amount": "1000",
+      "currency": "PEN",
+      "_hint": "mitum-currency-amount-v0.0.1"
+    },
+    "currency": "MCC",
+    "_hint": "mitum-feefi-pool-register-operation-fact-v0.0.1",
+    "hash": "43QncXUuEAU4CkzNgyukqJLq4kovD6XZbaR3mq6bNTgw",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy44ODNa",
+    "target": "FTssbSXonyDAJFwRYJ8mLYPvsHPHXag87SFCtS1bp5fvmca",
+    "incomingcid": "PEN"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXZGM2rXx4iWvfo4yM6ijJJX4h8w2xicrF4Y2WQdXbj5Lpr1Xq6ZCZHg3r6qPfApJrS6pf8wDkowTLJD8oyNvjtqnmxJv",
+      "signed_at": "2022-08-19T18:34:37.884Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "23WUUritAdZWzwCkLuwbSbCDhR7M6CwZNterMA3T36wmGmpu"
+    }
+  ],
+  "_hint": "mitum-feefi-pool-register-operation-v0.0.1",
+  "hash": "DQX2G6snvDPmfqHvvokEspqEfrmet2x4fLteo5vAmwcC"
+}

@@ -21,4 +21,8 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    // afterTest { desc, result ->
+    //     def output = "Class: ${desc.className}, Test: ${desc.name}, Result: ${result.resultType}"
+    //     println(output)
+    // }
 }

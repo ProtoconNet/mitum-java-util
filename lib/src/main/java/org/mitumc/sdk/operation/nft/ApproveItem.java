@@ -12,8 +12,8 @@ public class ApproveItem extends NFTItem {
     private Address approved;
     private NFTID nid;
 
-    ApproveItem(String approved, NFTID nid, String currencyId) {
-        super(Constant.MNFT_APPROVE_ITEM, currencyId);
+    ApproveItem(String approved, NFTID nid, String currency) {
+        super(Constant.MNFT_APPROVE_ITEM, currency);
         this.approved = Address.get(approved);
         this.nid = nid;
     }
@@ -22,7 +22,7 @@ public class ApproveItem extends NFTItem {
     public byte[] toBytes() {
         byte[] bapproved = this.approved.toBytes();
         byte[] bnid = this.nid.toBytes();
-        byte[] bcurrencyId = this.currencyId.getBytes();
+        byte[] bcurrencyId = this.currency.toBytes();
         return Util.concatByteArray(bapproved, bnid, bcurrencyId);
     }
 
@@ -33,7 +33,7 @@ public class ApproveItem extends NFTItem {
         map.put("_hint", this.hint.getHint());
         map.put("approved", this.approved.getAddress());
         map.put("nft", this.nid.toDict());
-        map.put("currency", this.currencyId);
+        map.put("currency", this.currency.toString());
 
         return map;
     }

@@ -2,6 +2,7 @@ package org.mitumc.sdk.util;
 
 import java.math.BigInteger;
 
+import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 
 public class BigInt implements BytesConvertible {
@@ -14,16 +15,31 @@ public class BigInt implements BytesConvertible {
 
     private BigInteger num;
 
-    private BigInt(String num) throws NumberFormatException {
+    private BigInt(String num) {
         this.num = new BigInteger(num);
     }
 
-    public static BigInt fromString(String num) throws NumberFormatException {
-        return new BigInt(num);
+    private BigInt(String num, boolean allowNegative) {
+        this(num);
+        if(!allowNegative && (this.num.signum() < 0)) {
+            throw new NumberRangeException(Util.errMsg("negative big - only positive or zero bigs available", Util.getName()));
+        }
     }
 
-    public static BigInt fromInt(int num) throws NumberFormatException {
-        return BigInt.fromString("" + num);
+    public static BigInt fromString(String num) {
+        return BigInt.fromString(num, false);
+    }
+
+    public static BigInt fromInt(int num) {
+        return BigInt.fromString("" + num, false);
+    }
+
+    public static BigInt fromString(String num, boolean allowNegative) {
+        return new BigInt(num, allowNegative);
+    }
+
+    public static BigInt fromInt(int num, boolean allowNegative) {
+        return BigInt.fromString(num + "", allowNegative);
     }
 
     private byte[] reverse(byte[] bytes) {
@@ -42,6 +58,10 @@ public class BigInt implements BytesConvertible {
         }
 
         return bytes;
+    }
+
+    public int signum() {
+        return this.num.signum();
     }
 
     public String getValue() {

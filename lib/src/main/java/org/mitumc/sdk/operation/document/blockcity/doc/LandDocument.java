@@ -3,6 +3,7 @@ package org.mitumc.sdk.operation.document.blockcity.doc;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.operation.document.base.Document;
@@ -22,7 +23,8 @@ public class LandDocument extends Document {
     LandDocument(String documentId, String owner, String address, String area, String renter, String account,
             String rentDate, int period) {
         super(SingleInfo.land(documentId), owner);
-        assertInfo(info);
+        assertInfoValid(info);
+        assertPeriodValidRange(period);
         this.address = address;
         this.area = area;
         this.renter = renter;
@@ -31,9 +33,15 @@ public class LandDocument extends Document {
         this.period = BigInt.fromInt(period);
     }
 
-    private void assertInfo(Info info) {
+    private static void assertInfoValid(Info info) {
         if (!info.getDocType().equals(Constant.MBC_DOCTYPE_LAND_DATA)) {
             throw new StringFormatException(Util.errMsg("invalid doctype", Util.getName()));
+        }
+    }
+
+    private static void assertPeriodValidRange(int period) {
+        if (period < 0) {
+            throw new NumberRangeException(Util.errMsg("invalid period - now, " + period, Util.getName()));
         }
     }
 

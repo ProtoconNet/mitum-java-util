@@ -207,7 +207,7 @@ CreateAccountsItem getCreateAccountsItem(Keys keys, Amount[] amounts);
 TransfersItem getTransfersItem(String receiver, Amount[] amounts);
 
 CreateAccountsFact getCreateAccountsFact(String sender, CreateAccountsItem[] items);
-KeyUpdaterFact getKeyUpdaterFact(String target, String currencyId, Keys keys);
+KeyUpdaterFact getKeyUpdaterFact(String target, String currency, Keys keys);
 TransfersFact getTransfersFact(String sender, TransfersItem[] items);
 ```
 
@@ -216,8 +216,8 @@ TransfersFact getTransfersFact(String sender, TransfersItem[] items);
 Using `Generator.md()`, below methods are available.
 
 ```java
-CreateDocumentsItem getCreateDocumentsItem(Document document, String currencyId);
-UpdateDocumentsItem getUpdateDocumentsItem(Document document, String currencyId);
+CreateDocumentsItem getCreateDocumentsItem(Document document, String currency);
+UpdateDocumentsItem getUpdateDocumentsItem(Document document, String currency);
 CreateDocumentsFact getCreateDocumentsFact(String sender, CreateDocumentsItem[] items);
 UpdateDocumentsFact getUpdateDocumentsFact(String sender, UpdateDocumentsItem[] items);
 ```
@@ -232,7 +232,7 @@ So `md` helps to generate `item` and `fact` of those operations simultaneously.
 BlockSignUser user(String address, String signCode, boolean signed);
 Document document(String documentId, String owner, String fileHash, BlockSignUser creator, String title, String size, BlockSignUser[] signers);
 
-SignDocumentsItem getSignDocumentsItem(String documentId, String owner, String currencyId);
+SignDocumentsItem getSignDocumentsItem(String documentId, String owner, String currency);
 SignDocumentsFact getSignDocumentsFact(String sender, SignDocumentsItem[] items);
 ```
 

@@ -1,0 +1,43 @@
+{
+  "fact": {
+    "sender": "EWbFsy82T5fkkz9EiT4kQiP1Kw2ZVLMBEyeaYSi8Va99mca",
+    "_hint": "mitum-currency-create-accounts-operation-fact-v0.0.1",
+    "items": [
+      {
+        "amounts": [
+          {
+            "amount": "100",
+            "currency": "PEN",
+            "_hint": "mitum-currency-amount-v0.0.1"
+          }
+        ],
+        "keys": {
+          "keys": [
+            {
+              "weight": 100,
+              "_hint": "mitum-currency-key-v0.0.1",
+              "key": "nZQ3GcJxVDEmoy9MHK8DPEDF4vrsAs8uu4nJYRL3kXEJmpu"
+            }
+          ],
+          "threshold": 100,
+          "_hint": "mitum-currency-keys-v0.0.1",
+          "hash": "9oF6qsgft6ikGedAbasELw6UuLRnKmRPixJuWtPx7ZGR"
+        },
+        "_hint": "mitum-currency-create-accounts-single-amount-v0.0.1"
+      }
+    ],
+    "hash": "DSSE3VNtfSMpqytRDsKMLYMJt6GZVsCJEMTesaeqPCYQ",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy43NzNa"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXZQcPtjaHyaCe7J6vvn5mkwxD8fra1aL7a6keVeoQ83yx5mmP1vGnnqmX2hNNLzeu4VWjsnvNKpaVBaKxKXvLCky41HV",
+      "signed_at": "2022-08-19T18:34:37.775Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "28p3idxZHDzDfhaL5FEjFHdKgxDuBYU37bNFh1WyyBTGPmpu"
+    }
+  ],
+  "_hint": "mitum-currency-create-accounts-operation-v0.0.1",
+  "hash": "BkbrRW2SyrQrQai5sVkXsCDPeCKza5qvS9duJkAkkiwQ"
+}

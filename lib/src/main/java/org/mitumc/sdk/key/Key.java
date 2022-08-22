@@ -16,15 +16,15 @@ public class Key implements BytesConvertible, HashMapConvertible {
     private BigInt weight;
 
     private Key(String key, int weight) {
-        assertWeight(weight);
+        assertWeightValidRange(weight);
         this.hint = Hint.get(Constant.MC_KEY);
         this.key = BaseKey.get(key);
         this.weight = BigInt.fromInt(weight);
     }
 
-    private void assertWeight(int weight) {
+    private static void assertWeightValidRange(int weight) {
         if (weight < 1 || weight > 100) {
-            throw new NumberRangeException(Util.errMsg("invalid weight - now " + weight, Util.getName()));
+            throw new NumberRangeException(Util.errMsg("invalid weight - now, " + weight, Util.getName()));
         }
     }
 

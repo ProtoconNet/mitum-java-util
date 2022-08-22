@@ -1,0 +1,27 @@
+{
+  "fact": {
+    "sender": "BUhott5a7SrsRUzJbVLx4xZgvKyz97MnBwN6xS1qrXSnmca",
+    "fee": {
+      "amount": "1000",
+      "currency": "PEN",
+      "_hint": "mitum-currency-amount-v0.0.1"
+    },
+    "poolid": "PEN",
+    "currency": "MCC",
+    "_hint": "mitum-feefi-pool-policy-updater-operation-fact-v0.0.1",
+    "hash": "5Tp6x2hBVb1EkSufVwka3J4gkCQmneKEqcZZ9zPX8Njf",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy44NzZa",
+    "target": "6dPqyRhfMSjWNX8cgCkYG4E2qKXZ1jpM8Qe36jB1SudVmca"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXZSBeL5eT2fSAYa3dYmvZhpnX8Av42Q4tJZtqDLk3Ehy7yyyiZe6VTB3MgbNUqAqYY4u9Y8ynJQdzf5wmf2rh4r4Hu1d",
+      "signed_at": "2022-08-19T18:34:37.877Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "2ABntqaVKUmfvnFXs8MuubxqygtRUAhx4UZoynypjY1TLmpu"
+    }
+  ],
+  "_hint": "mitum-feefi-pool-policy-updater-operation-v0.0.1",
+  "hash": "DtdasNBmcut1DfgyAYyugLKKZm691ahsGvjot3KZxTqn"
+}

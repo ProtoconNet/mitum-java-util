@@ -1,7 +1,7 @@
 package org.mitumc.sdk.operation.feefi;
 
+import org.mitumc.sdk.operation.Amount;
 import org.mitumc.sdk.operation.base.BaseGenerator;
-import org.mitumc.sdk.operation.currency.base.Amount;
 
 public class FeefiGenerator extends BaseGenerator {
     public static FeefiGenerator get() {
@@ -9,13 +9,13 @@ public class FeefiGenerator extends BaseGenerator {
     }
 
     public PoolRegisterFact getPoolRegisterFact(String sender, String target, Amount initialFee, String incomingCid,
-            String outgoingCid, String currencyId) {
-        return new PoolRegisterFact(sender, target, initialFee, incomingCid, outgoingCid, currencyId);
+            String outgoingCid, String currency) {
+        return new PoolRegisterFact(sender, target, initialFee, incomingCid, outgoingCid, currency);
     }
 
     public PoolPolicyUpdaterFact getPoolPolicyUpdaterFact(String sender, String target, Amount fee, String poolId,
-            String currencyId) {
-        return new PoolPolicyUpdaterFact(sender, target, fee, poolId, currencyId);
+            String currency) {
+        return new PoolPolicyUpdaterFact(sender, target, fee, poolId, currency);
     }
 
     public PoolDepositsFact getPoolDepositsFact(String sender, String pool, String poolId, Amount amount) {

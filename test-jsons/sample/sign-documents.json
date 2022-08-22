@@ -1,0 +1,27 @@
+{
+  "fact": {
+    "sender": "C6CkeJhrQZqCCZeWGHD8L4Aeu6tmARH6R1XtKJdWnD4Jmca",
+    "_hint": "mitum-blocksign-sign-documents-operation-fact-v0.0.1",
+    "items": [
+      {
+        "owner": "9BG23UM6KKsqxUL63iPdfSUCv9bPJgTx6CHjMSijK2rKmca",
+        "currency": "PEN",
+        "documentid": "abcdsdi",
+        "_hint": "mitum-blocksign-sign-item-single-document-v0.0.1"
+      }
+    ],
+    "hash": "4Wc43rNquh7XHHkcB6fHMFFQHVxKcXXk1hXzDw1m7xdF",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy44NjNa"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXZAuFpEu513esixkwQPHchehNMbT4Grp8rAzCY19cgXY6bSPYuAt2b3sSHd3sufAgCYDLJxXsXaK1jkv5kvRqeQeKL6E",
+      "signed_at": "2022-08-19T18:34:37.863Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "eVgrC4YHkRcLmj1bdWq6YZfJakmxStzdxqTBuJFxnfG1mpu"
+    }
+  ],
+  "_hint": "mitum-blocksign-sign-documents-operation-v0.0.1",
+  "hash": "3z1j1M7gn5shYeXdHh8KgZpd11T4RvLh6CPqfCZAcEm6"
+}

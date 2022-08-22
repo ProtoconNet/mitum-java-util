@@ -1,0 +1,32 @@
+{
+  "fact": {
+    "keys": {
+      "keys": [
+        {
+          "weight": 100,
+          "_hint": "mitum-currency-key-v0.0.1",
+          "key": "qzLkCkRS57vYYUZXMikoWSA1eQFb5DfDqFyqYBoQCkJampu"
+        }
+      ],
+      "threshold": 100,
+      "_hint": "mitum-currency-keys-v0.0.1",
+      "hash": "3nZkjkxSWWZoNZ7q27M8bmTAHoHZxh145rTqwRQV2Jfv"
+    },
+    "currency": "PEN",
+    "_hint": "mitum-currency-keyupdater-operation-fact-v0.0.1",
+    "hash": "7DRnY92qHR21QiW2LXiywCUAKxPg16qXzfYgrDXRhGxk",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy43OTFa",
+    "target": "CymiR4gDskE9NY1jc2g4XM7teNy2aQ62yB4XvXh6EPFmca"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXYtxWe8fy63DNDdfFrNvhjKTDZuo3D7YWxxVmaG7CS4FDUsNZWATqZYGywVe6SsrKpQv7QKxwAMKhjJ84FL4FK2p4dB4",
+      "signed_at": "2022-08-19T18:34:37.792Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "2AfVgGxPiD5DdAz1qiLwHt8Cesziq3Pb9LSJQt7D5gP9fmpu"
+    }
+  ],
+  "_hint": "mitum-currency-keyupdater-operation-v0.0.1",
+  "hash": "CKJJ5qsWpZPgGivEiVmRJw6eJVXhwCUAXCYzL2zNgVLA"
+}

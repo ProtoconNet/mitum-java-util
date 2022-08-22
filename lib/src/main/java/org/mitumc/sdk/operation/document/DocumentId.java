@@ -9,21 +9,46 @@ import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.exception.StringFormatException;
 
-public class DocumentId implements BytesConvertible, HashMapConvertible {
+public class DocumentID implements BytesConvertible, HashMapConvertible {
+    private Hint hint;
     private String id;
     private String type;
 
-    private DocumentId(String documentId) {
-        HashMap<String, String> parsed = Util.parseDocumentId(documentId);
+    private DocumentID(String documentId) {
+        HashMap<String, String> parsed = Util.parseDocumentID(documentId);
         this.id = parsed.get("id");
         this.type = parsed.get("suffix");
+        setHint();
     }
 
-    public static DocumentId get(String documentId) {
-        return new DocumentId(documentId);
+    public static DocumentID get(String documentId) {
+        return new DocumentID(documentId);
     }
 
-    public String getDocumentId() {
+    private void setHint() {
+        switch (getType()) {
+            case Constant.MBS_DOCUMENT_DATA:
+                this.hint = Hint.get(Constant.MD_DOCUMENT_ID);
+                break;
+            case Constant.MBC_USER_DATA:
+                this.hint = Hint.get(Constant.MBC_USER_DOCUMENT_ID);
+                break;
+            case Constant.MBC_LAND_DATA:
+                this.hint = Hint.get(Constant.MBC_LAND_DOCUMENT_ID);
+                break;
+            case Constant.MBC_VOTE_DATA:
+                this.hint = Hint.get(Constant.MBC_VOTE_DOCUMENT_ID);
+                break;
+            case Constant.MBC_HISTORY_DATA:
+                this.hint = Hint.get(Constant.MBC_HISTORY_DOCUMENT_ID);
+                break;
+            default:
+                throw new StringFormatException(
+                        Util.errMsg("invalid document id", Util.getName()));
+        }
+    }
+
+    public String getDocumentID() {
         return this.id + this.type;
     }
 
@@ -37,36 +62,15 @@ public class DocumentId implements BytesConvertible, HashMapConvertible {
 
     @Override
     public byte[] toBytes() {
-        return this.getDocumentId().getBytes();
+        return this.getDocumentID().getBytes();
     }
 
     @Override
     public HashMap<String, Object> toDict() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
-        if (getType().equals(Constant.MBS_DOCUMENT_DATA)) {
-            hashMap.put("_hint", Hint.get(Constant.MD_DOCUMENT_ID).getHint());
-        } else {
-            switch (getType()) {
-                case Constant.MBC_USER_DATA:
-                    hashMap.put("_hint", Hint.get(Constant.MBC_USER_DOCUMENT_ID).getHint());
-                    break;
-                case Constant.MBC_LAND_DATA:
-                    hashMap.put("_hint", Hint.get(Constant.MBC_LAND_DOCUMENT_ID).getHint());
-                    break;
-                case Constant.MBC_VOTE_DATA:
-                    hashMap.put("_hint", Hint.get(Constant.MBC_VOTE_DOCUMENT_ID).getHint());
-                    break;
-                case Constant.MBC_HISTORY_DATA:
-                    hashMap.put("_hint", Hint.get(Constant.MBC_HISTORY_DOCUMENT_ID).getHint());
-                    break;
-                default:
-                    throw new StringFormatException(
-                            Util.errMsg("invalid document id", Util.getName()));
-            }
-        }
-
-        hashMap.put("id", getDocumentId());
+        hashMap.put("_hint", this.hint.getHint());
+        hashMap.put("id", getDocumentID());
 
         return hashMap;
     }

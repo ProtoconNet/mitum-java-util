@@ -3,6 +3,7 @@ package org.mitumc.sdk.operation.nft.base;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.key.Address;
@@ -17,6 +18,7 @@ public class NFTSigner implements BytesConvertible, HashMapConvertible {
     private boolean signed;
 
     private NFTSigner(String account, int share, boolean signed) {
+        assertShareValidRange(share);
         this.hint = Hint.get(Constant.MNFT_SIGNER);
         this.account = Address.get(account);
         this.share = BigInt.fromInt(share);
@@ -25,6 +27,16 @@ public class NFTSigner implements BytesConvertible, HashMapConvertible {
 
     public static NFTSigner get(String account, int share, boolean signed) {
         return new NFTSigner(account, share, signed);
+    }
+
+    private static void assertShareValidRange(int share) {
+        if (share < 0 || share > 100) {
+            throw new NumberRangeException(Util.errMsg("invalid share - now, " + share, Util.getName()));
+        }
+    }
+
+    public int getShare() {
+        return Integer.parseInt(this.share.getValue());
     }
 
     @Override

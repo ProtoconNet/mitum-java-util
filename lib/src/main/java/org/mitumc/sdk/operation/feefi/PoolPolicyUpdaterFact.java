@@ -5,8 +5,9 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.key.Address;
+import org.mitumc.sdk.operation.Amount;
+import org.mitumc.sdk.operation.CurrencyID;
 import org.mitumc.sdk.operation.base.PurposedOperationFact;
-import org.mitumc.sdk.operation.currency.base.Amount;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 
@@ -14,16 +15,16 @@ public class PoolPolicyUpdaterFact extends PurposedOperationFact {
     private Address sender;
     private Address target;
     private Amount fee;
-    private String poolId;
-    private String currencyId;
+    private CurrencyID poolId;
+    private CurrencyID currency;
 
-    PoolPolicyUpdaterFact(String sender, String target, Amount fee, String poolId, String currencyId) {
+    PoolPolicyUpdaterFact(String sender, String target, Amount fee, String poolId, String currency) {
         super(Constant.MF_POOL_POLICY_UPDATER_OPERATION_FACT);
         this.sender = Address.get(sender);
         this.target = Address.get(target);
         this.fee = fee;
-        this.poolId = poolId;
-        this.currencyId = currencyId;
+        this.poolId = CurrencyID.get(poolId);
+        this.currency = CurrencyID.get(currency);
 
         this.generateHash();
     }
@@ -39,8 +40,8 @@ public class PoolPolicyUpdaterFact extends PurposedOperationFact {
         byte[] bsender = this.sender.toBytes();
         byte[] btarget = this.target.toBytes();
         byte[] bfee = this.fee.toBytes();
-        byte[] bpoolId = this.poolId.getBytes();
-        byte[] bcurrencyId = this.currencyId.getBytes();
+        byte[] bpoolId = this.poolId.toBytes();
+        byte[] bcurrencyId = this.currency.toBytes();
         return Util.concatByteArray(btoken, bsender, btarget, bfee, bpoolId, bcurrencyId);
     }
 
@@ -54,8 +55,8 @@ public class PoolPolicyUpdaterFact extends PurposedOperationFact {
         hashMap.put("sender", this.sender.getAddress());
         hashMap.put("target", this.target.getAddress());
         hashMap.put("fee", this.fee.toDict());
-        hashMap.put("poolid", this.poolId);
-        hashMap.put("currency", this.currencyId);
+        hashMap.put("poolid", this.poolId.toString());
+        hashMap.put("currency", this.currency.toString());
 
         return hashMap;
     }

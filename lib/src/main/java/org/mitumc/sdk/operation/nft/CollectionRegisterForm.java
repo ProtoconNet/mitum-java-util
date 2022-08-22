@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.NumberLimitExceededException;
+import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.key.Address;
+import org.mitumc.sdk.operation.ContractID;
 import org.mitumc.sdk.util.BigInt;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
@@ -14,16 +17,19 @@ import org.mitumc.sdk.util.Util;
 public class CollectionRegisterForm implements BytesConvertible, HashMapConvertible {
     private Hint hint;
     private Address target;
-    private String symbol;
+    private ContractID symbol;
     private String name;
     private BigInt royalty;
     private String uri;
     private ArrayList<Address> whites;
 
     CollectionRegisterForm(String target, String symbol, String name, int royalty, String uri, String[] whites) {
+        assertNumberOfWhitesValidRange(whites);
+        assertRoyaltyValidRange(royalty);
+        
         this.hint = Hint.get(Constant.MNFT_COLLECTION_REGISTER_FORM);
         this.target = Address.get(target);
-        this.symbol = symbol;
+        this.symbol = ContractID.get(symbol);
         this.name = name;
         this.royalty = BigInt.fromInt(royalty);
         this.uri = uri;
@@ -34,10 +40,22 @@ public class CollectionRegisterForm implements BytesConvertible, HashMapConverti
         }
     }
 
+    private static void assertNumberOfWhitesValidRange(String[] whites) {
+        if (whites.length > 10) {
+            throw new NumberLimitExceededException(Util.errMsg("the number of whites exceeds max - now, " + whites.length, Util.getName()));
+        }
+    }
+
+    private static void assertRoyaltyValidRange(int royalty) {
+        if (royalty < 0 || royalty >= 100) {
+            throw new NumberRangeException(Util.errMsg("invalid royalty - now, " + royalty, Util.getName()));
+        }
+    }
+
     @Override
     public byte[] toBytes() {
         byte[] btarget = this.target.toBytes();
-        byte[] bsymbol = this.symbol.getBytes();
+        byte[] bsymbol = this.symbol.toBytes();
         byte[] bname = this.name.getBytes();
         byte[] broyalty = this.royalty.toBytes();
         byte[] buri = this.uri.getBytes();
@@ -51,7 +69,7 @@ public class CollectionRegisterForm implements BytesConvertible, HashMapConverti
 
         map.put("_hint", this.hint.getHint());
         map.put("target", this.target.getAddress());
-        map.put("symbol", this.symbol);
+        map.put("symbol", this.symbol.toString());
         map.put("name", this.name);
         map.put("royalty", Integer.parseInt(this.royalty.getValue()));
         map.put("uri", this.uri);

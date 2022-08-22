@@ -9,42 +9,41 @@ import org.mitumc.sdk.util.RegExp;
 import org.mitumc.sdk.util.Util;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
-import org.mitumc.sdk.operation.document.DocumentId;
+import org.mitumc.sdk.operation.document.DocumentID;
 
 public abstract class Info implements BytesConvertible, HashMapConvertible {
     private Hint hint;
     private String docType;
-    private DocumentId documentId;
+    private DocumentID documentId;
 
     protected Info(String docType, String documentId) {
         assertInfo(docType, documentId);
         this.hint = Hint.get(Constant.MD_DOCUMENT_INFO);
         this.docType = docType;
-        this.documentId = DocumentId.get(documentId);
+        this.documentId = DocumentID.get(documentId);
     }
 
-    private void assertInfo(String docType, String documentId) {
-        if (docType.equals(Constant.MBS_DOCTYPE_DOCUMENT_DATA)) {
-            RegExp.assertBlockSignDocumentId(documentId);
-        } else {
-            switch (docType) {
-                case Constant.MBC_DOCTYPE_USER_DATA:
-                    RegExp.assertUserData(documentId);
-                    break;
-                case Constant.MBC_DOCTYPE_LAND_DATA:
-                    RegExp.assertLandData(documentId);
-                    break;
-                case Constant.MBC_DOCTYPE_VOTE_DATA:
-                    RegExp.assertVoteData(documentId);
-                    break;
-                case Constant.MBC_DOCTYPE_HISTORY_DATA:
-                    RegExp.assertHistoryData(documentId);
-                    break;
-                default:
-                    RegExp.assertBlockCityDocumentId(documentId);
-                    throw new StringFormatException(
-                            Util.errMsg("invalid document type", Util.getName()));
-            }
+    private static void assertInfo(String docType, String documentId) {
+        switch (docType) {
+            case Constant.MBS_DOCTYPE_DOCUMENT_DATA:
+                RegExp.assertBlockSignDocumentID(documentId);
+                break;
+            case Constant.MBC_DOCTYPE_USER_DATA:
+                RegExp.assertUserData(documentId);
+                break;
+            case Constant.MBC_DOCTYPE_LAND_DATA:
+                RegExp.assertLandData(documentId);
+                break;
+            case Constant.MBC_DOCTYPE_VOTE_DATA:
+                RegExp.assertVoteData(documentId);
+                break;
+            case Constant.MBC_DOCTYPE_HISTORY_DATA:
+                RegExp.assertHistoryData(documentId);
+                break;
+            default:
+                RegExp.assertBlockCityDocumentID(documentId);
+                throw new StringFormatException(
+                        Util.errMsg("invalid document type", Util.getName()));
         }
     }
 

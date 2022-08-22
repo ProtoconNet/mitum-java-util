@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
+import org.mitumc.sdk.exception.NumberLimitExceededException;
+import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
 import org.mitumc.sdk.key.Address;
@@ -19,6 +21,9 @@ public class CollectionPolicy implements BytesConvertible, HashMapConvertible {
     private ArrayList<Address> whites;
 
     private CollectionPolicy(String name, int royalty, String uri, String[] whites) {
+        assertNumberOfWhitesValidRange(whites);
+        assertRoyaltyValidRange(royalty);
+
         this.hint = Hint.get(Constant.MNFT_COLLECTION_POLICY);
         this.name = name;
         this.royalty = BigInt.fromInt(royalty);
@@ -32,6 +37,18 @@ public class CollectionPolicy implements BytesConvertible, HashMapConvertible {
 
     public static CollectionPolicy get(String name, int royalty, String uri, String[] whites) {
         return new CollectionPolicy(name, royalty, uri, whites);
+    }
+
+    private static void assertNumberOfWhitesValidRange(String[] whites) {
+        if (whites.length > 10) {
+            throw new NumberLimitExceededException(Util.errMsg("the number of whites exceeds max - now, " + whites.length, Util.getName()));
+        }
+    }
+
+    private static void assertRoyaltyValidRange(int royalty) {
+        if (royalty < 0 || royalty >= 100) {
+            throw new NumberRangeException(Util.errMsg("invalid royalty - now, " + royalty, Util.getName()));
+        }
     }
 
     @Override

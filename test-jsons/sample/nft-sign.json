@@ -1,0 +1,31 @@
+{
+  "fact": {
+    "sender": "DRpTA9pUhoGncXvkjah5qsb9qxwD1yLU7LNMzKYQBiu6mca",
+    "_hint": "mitum-nft-sign-operation-fact-v0.0.1",
+    "items": [
+      {
+        "qualification": "creator",
+        "currency": "PEN",
+        "_hint": "mitum-nft-sign-item-v0.0.1",
+        "nft": {
+          "collection": "COL",
+          "idx": 1,
+          "_hint": "mitum-nft-nft-id-v0.0.1"
+        }
+      }
+    ],
+    "hash": "AsjLYLQUn1iBm2fPvo3iRphiRdbmK2USEeVcKBtWutDL",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy45NDRa"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "381yXYoSDtWewLpPY8nNrhcLZLR6pR3id4Wamb8hrBMX6gaTUdm8JytAiZx9gdPanSEjcrj9RgLMK6CWsToytaMKfpzExSWj",
+      "signed_at": "2022-08-19T18:34:37.944Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "2BE4nJSbgRBDdAHusajM1WWbAfhvWJJkSqALAmd9Yfc7qmpu"
+    }
+  ],
+  "_hint": "mitum-nft-sign-operation-v0.0.1",
+  "hash": "KpjQgdLxyr7H5hzTwL5nerTGfSBcCfBuaMFJwLjRXQu"
+}

@@ -27,7 +27,7 @@ public class Candidate implements BytesConvertible, HashMapConvertible {
         this.count = BigInt.fromInt(count);
     }
 
-    private void assertManifest(String manifest) {
+    private static void assertManifest(String manifest) {
         if (manifest.length() > 100) {
             throw new NumberRangeException(Util.errMsg(
                     "manifest length is too long - now, manifest(" + manifest.length() + ") > 100", Util.getName()));

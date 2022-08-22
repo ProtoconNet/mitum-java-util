@@ -26,7 +26,7 @@ public class Hint {
         return new Hint(type, version);
     }
 
-    private void assertVersion(String version) throws MitumVersionException {
+    private static void assertVersion(String version) throws MitumVersionException {
         if(!version.equals(Constant.VERSION)) {
             throw new MitumVersionException(
                 Util.errMsg("invalid mitum version", Util.getName())

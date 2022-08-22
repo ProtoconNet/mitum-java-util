@@ -1,0 +1,32 @@
+{
+  "fact": {
+    "sender": "5TQBW5qzVPCaUqkrJkq1MXua7uji9M2svfYuHtKRZmhRmca",
+    "_hint": "mitum-currency-transfers-operation-fact-v0.0.1",
+    "items": [
+      {
+        "receiver": "4o5HFbyFaFFgzDhzsmsUDSu9ega2onFZviZnhHhcA6ygmca",
+        "amounts": [
+          {
+            "amount": "100",
+            "currency": "PEN",
+            "_hint": "mitum-currency-amount-v0.0.1"
+          }
+        ],
+        "_hint": "mitum-currency-transfers-item-single-amount-v0.0.1"
+      }
+    ],
+    "hash": "EmtEmELH4YGvLEJ12K1AnLWh49sdBxhw2CYst8NWMig7",
+    "token": "MjAyMi0wOC0xOVQxODozNDozNy43OTZa"
+  },
+  "memo": "",
+  "fact_signs": [
+    {
+      "signature": "AN1rKvtNMcJqkFHdSkXqYVSJhGdTM1KdBsBmrXdTC8tH7xEWaJ5uJe2PEJ5rDgvoezZTgaZMVhLfPB9Rcjk5MYDLAE5ivejGj",
+      "signed_at": "2022-08-19T18:34:37.797Z",
+      "_hint": "base-fact-sign-v0.0.1",
+      "signer": "23APzRbJhxjAD8o7hT5BUQimNTrqbWWzu4wnntfHVWHVQmpu"
+    }
+  ],
+  "_hint": "mitum-currency-transfers-operation-v0.0.1",
+  "hash": "An9JpznCUiiraAWeF8vQbYjSV4DGKBCnHH9bCMftCWPU"
+}

@@ -18,13 +18,13 @@ public class UserDocument extends Document {
 
     UserDocument(String documentId, String owner, int gold, int bankGold, UserStatistics statistics) {
         super(SingleInfo.user(documentId), owner);
-        assertInfo(info);
+        assertInfoValid(info);
         this.gold = BigInt.fromInt(gold);
         this.bankGold = BigInt.fromInt(bankGold);
         this.statistics = statistics;
     }
 
-    private void assertInfo(Info info) {
+    private static void assertInfoValid(Info info) {
         if (!info.getDocType().equals(Constant.MBC_DOCTYPE_USER_DATA)) {
             throw new StringFormatException(Util.errMsg("invalid doctype", Util.getName()));
         }
