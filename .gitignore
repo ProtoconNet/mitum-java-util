@@ -31,3 +31,5 @@ lib/bin
 lib/build
 .DS_STORE
 .vscode/
+
+test-jsons/test-result/*.json
