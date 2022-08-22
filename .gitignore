@@ -29,7 +29,8 @@ hs_err_pid*
 .gradle/
 lib/bin
 lib/build
-.DS_STORE
 .vscode/
+
+*/.DS_STORE
 
 test-jsons/test-result/*.json
