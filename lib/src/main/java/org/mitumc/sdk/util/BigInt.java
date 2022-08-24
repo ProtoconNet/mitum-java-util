@@ -46,18 +46,24 @@ public class BigInt implements BytesConvertible {
         if (bytes == null) {
             return null;
         }
-        int i = 0;
-        int j = bytes.length - 1;
-        byte tmp;
-        while (j > i) {
-            tmp = bytes[j];
-            bytes[j] = bytes[i];
-            bytes[i] = tmp;
-            j--;
-            i++;
+
+        byte[] reversed = new byte[bytes.length];
+        for(int i = 0; i < bytes.length; i++) {
+            reversed[i] = bytes[bytes.length - 1 - i];
         }
 
-        return bytes;
+        return reversed;
+    }
+
+    private int bytesLen() {
+        int quotient = (int) this.num.bitLength() / 8;
+        int left = this.num.bitLength() % 8;
+        
+        if (left != 0) {
+            return quotient + 1;
+        }
+
+        return quotient;
     }
 
     public int signum() {
@@ -106,7 +112,8 @@ public class BigInt implements BytesConvertible {
         }
 
         /* tight big-endian */
-        byte[] bytes = reverse(this.num.toByteArray());
+        byte[] bytes = new byte[bytesLen()];
+        System.arraycopy(reverse(this.num.toByteArray()), 0, bytes, 0, bytesLen());
 
         /* byteLength is ignored */
         if (isTight) {
