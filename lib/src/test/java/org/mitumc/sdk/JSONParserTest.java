@@ -1,7 +1,13 @@
 package org.mitumc.sdk;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.HashMap;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mitumc.sdk.exception.InvalidOperationException;
+import org.mitumc.sdk.key.Keypair;
 
 import com.google.gson.JsonObject;
 
@@ -58,5 +64,29 @@ public class JSONParserTest {
         JSONParser.writeJsonFileFromJsonObject(json17, "../test-jsons/test-result/copy-nft-transfer.json");
         JSONParser.writeJsonFileFromJsonObject(json18, "../test-jsons/test-result/copy-approve.json");
         JSONParser.writeJsonFileFromJsonObject(json19, "../test-jsons/test-result/copy-delegate.json");
+    }
+
+    @DisplayName("Test json parser - merge operations")
+    @Test
+    void testMergeOperations() {
+        // different fact
+        JsonObject json0 = JSONParser.getObjectFromJsonFile("../test-jsons/sample/create-accounts.json");
+        JsonObject json1 = JSONParser.getObjectFromJsonFile("../test-jsons/sample/key-updater.json");
+        JsonObject json2 = JSONParser.getObjectFromJsonFile("../test-jsons/sample/transfers.json");
+        assertThrows(InvalidOperationException.class, () -> JSONParser.mergeOperations(new JsonObject[]{ json0, json1, json2 }));
+    
+        // already signed
+        Signer signer0 = Signer.get("mitum", Keypair.random().getPrivateKey());
+        Signer signer1 = Signer.get("mitum", Keypair.random().getPrivateKey());
+        Signer signer2 = Signer.get("mitum", Keypair.random().getPrivateKey());
+    
+        JsonObject target0 = JSONParser.getObjectFromJsonFile("../test-jsons/sample/create-contract-accounts.json");
+
+        JsonObject signed0 = JSONParser.getObjectFromHashMap(signer0.addSignToOperation(target0));
+        JsonObject signed1 = JSONParser.getObjectFromHashMap(signer1.addSignToOperation(target0));
+        JsonObject signed2 = JSONParser.getObjectFromHashMap(signer2.addSignToOperation(target0));
+
+        HashMap<String, Object> merged = JSONParser.mergeOperations(new JsonObject[]{ signed0, signed1, signed2 });
+        JSONParser.writeJsonFileFromHashMap(merged, "../test-jsons/test-result/merged_4_factsigns.json");
     }
 }

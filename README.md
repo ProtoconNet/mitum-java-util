@@ -443,6 +443,8 @@ JsonObject getObjectFromJsonFile(String fpName);
 JsonObject getObjectFromHashMap(HashMap<String, Object> target, String fpName);
 void writeJsonFileFromJsonObject(JsonObject target, String fpName);
 void writeJsonFileFromHashMap(HashMap target, String fpName);
+HashMap<String, Object> mergeOperations(JsonObject[] operations);
+HashMap<String, Object> mergeOperations(HashMap<String, Object>[] operations);
 ```
 
 Note that you don't have to use `JSONParser` when you create a json file of operations without creating seals.
