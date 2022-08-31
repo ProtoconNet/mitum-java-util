@@ -440,7 +440,7 @@ Methods that `JSONParser` supports are,
 
 ```java
 JsonObject getObjectFromJsonFile(String fpName);
-JsonObject getObjectFromHashMap(HashMap<String, Object> target, String fpName);
+JsonObject getObjectFromHashMap(HashMap<String, Object> target);
 void writeJsonFileFromJsonObject(JsonObject target, String fpName);
 void writeJsonFileFromHashMap(HashMap target, String fpName);
 HashMap<String, Object> mergeOperations(JsonObject[] operations);
