@@ -11,12 +11,12 @@ import org.mitumc.sdk.exception.DummyMethodException;
 import org.mitumc.sdk.exception.StringFormatException;
 
 public class Util {
-    public static String getClassName() {
-        return Thread.currentThread().getStackTrace()[2].getClassName();
+    private static String getClassName() {
+        return Thread.currentThread().getStackTrace()[3].getClassName();
     }
 
-    public static String getMethodName() {
-        return Thread.currentThread().getStackTrace()[2].getMethodName();
+    private static String getMethodName() {
+        return Thread.currentThread().getStackTrace()[3].getMethodName();
     }
 
     public static String getName() {

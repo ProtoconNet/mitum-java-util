@@ -46,7 +46,7 @@ Gradle 7.4
 
 [Download jar file](release/) and include the package to your project.
 
-The latest version is `mitum-java-util-4.0.0-jdk17.jar`.
+The latest version is `mitum-java-util-4.1.1-jdk17.jar`.
 
 ## Test
 
@@ -69,7 +69,7 @@ BUILD SUCCESSFUL in 288ms
 Add the following line to your build.gradle file.
 
 ```sh
-implementation files('./lib/mitum-java-util-4.0.0-jdk17.jar')
+implementation files('./lib/mitum-java-util-4.1.1-jdk17.jar')
 ```
 
 ## Index
