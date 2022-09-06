@@ -16,7 +16,6 @@ import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.key.Keypair;
 import org.mitumc.sdk.key.Keys;
 import org.mitumc.sdk.operation.Operation;
-import org.mitumc.sdk.operation.nft.base.NFTID;
 import org.mitumc.sdk.util.Hint;
 
 public class NFTSignTest {

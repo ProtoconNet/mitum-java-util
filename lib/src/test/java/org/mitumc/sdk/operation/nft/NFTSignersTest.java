@@ -12,7 +12,6 @@ import org.mitumc.sdk.exception.NumberLimitExceededException;
 import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.key.Keys;
-import org.mitumc.sdk.operation.nft.base.NFTSigner;
 
 public class NFTSignersTest {
     

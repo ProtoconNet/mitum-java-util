@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.exception.NoSuchOptionException;
-import org.mitumc.sdk.operation.nft.base.NFTID;
 import org.mitumc.sdk.operation.nft.base.NFTItem;
 import org.mitumc.sdk.util.Util;
 

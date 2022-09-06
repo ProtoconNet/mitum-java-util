@@ -1,10 +1,6 @@
 package org.mitumc.sdk.operation.nft;
 
 import org.mitumc.sdk.operation.base.BaseGenerator;
-import org.mitumc.sdk.operation.nft.base.CollectionPolicy;
-import org.mitumc.sdk.operation.nft.base.NFTID;
-import org.mitumc.sdk.operation.nft.base.NFTSigner;
-import org.mitumc.sdk.operation.nft.base.NFTSigners;
 
 public class NFTGenerator extends BaseGenerator {
     public static NFTGenerator get() {

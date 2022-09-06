@@ -8,7 +8,6 @@ import org.mitumc.sdk.key.Address;
 import org.mitumc.sdk.operation.ContractID;
 import org.mitumc.sdk.operation.CurrencyID;
 import org.mitumc.sdk.operation.base.PurposedOperationFact;
-import org.mitumc.sdk.operation.nft.base.CollectionPolicy;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 

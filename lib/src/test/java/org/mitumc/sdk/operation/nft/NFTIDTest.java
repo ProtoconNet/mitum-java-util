@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.exception.StringFormatException;
-import org.mitumc.sdk.operation.nft.base.NFTID;
 import org.mitumc.sdk.util.BigInt;
 
 public class NFTIDTest {
