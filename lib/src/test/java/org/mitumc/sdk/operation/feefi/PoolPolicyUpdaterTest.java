@@ -9,10 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.key.Keypair;
 import org.mitumc.sdk.key.Keys;
-import org.mitumc.sdk.operation.Amount;
 import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.util.Hint;
 
@@ -36,9 +36,7 @@ public class PoolPolicyUpdaterTest {
         HashMap<String, Object> target = Generator.randomKeys();
         String targetAddr = ((Keys) target.get(Keys.ID)).getAddress();
 
-        Amount fee = Amount.get("PEN", "1000");
-
-        PoolPolicyUpdaterFact fact = gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, fee, "PEN", "MCC");
+        PoolPolicyUpdaterFact fact = gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "PEN", "AAA", "MCC");
 
         assertDoesNotThrow(() -> fact.toBytes());
 		assertDoesNotThrow(() -> fact.toDict());
@@ -65,9 +63,7 @@ public class PoolPolicyUpdaterTest {
         HashMap<String, Object> target = Generator.randomKeys();
         String targetAddr = ((Keys) target.get(Keys.ID)).getAddress();
 
-        Amount fee = Amount.get("PEN", "1000");
-
-        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact("abcdefg123", targetAddr, fee, "PEN", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact("abcdefg123", targetAddr, "1000", "PEN", "AAA", "MCC"));
     }
 
     @DisplayName("Test feefi@pool-policy-updater - wrong target")
@@ -78,9 +74,22 @@ public class PoolPolicyUpdaterTest {
         HashMap<String, Object> sender = Generator.randomKeys();
         String senderAddr = ((Keys) sender.get(Keys.ID)).getAddress();
 
-        Amount fee = Amount.get("PEN", "1000");
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, "abcdefg123", "1000", "PEN", "AAA", "MCC"));
+    }
 
-        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, "abcdefg123", fee, "PEN", "MCC"));
+    @DisplayName("Test feefi@pool-policy-updater - wrong fee")
+    @Test
+    void testPoolPolicyUpdaterWrongFee() {
+        FeefiGenerator gn = FeefiGenerator.get();
+
+        HashMap<String, Object> sender = Generator.randomKeys();
+        String senderAddr = ((Keys) sender.get(Keys.ID)).getAddress();
+
+        HashMap<String, Object> target = Generator.randomKeys();
+        String targetAddr = ((Keys) target.get(Keys.ID)).getAddress();
+
+        assertThrows(NumberRangeException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "-1", "PEN", "AAA", "PEN"));
+        assertThrows(NumberFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "abc", "PEN", "AAA", "PEN"));
     }
 
     @DisplayName("Test feefi@pool-policy-updater - wrong currency")
@@ -95,13 +104,14 @@ public class PoolPolicyUpdaterTest {
         HashMap<String, Object> target = Generator.randomKeys();
         String targetAddr = ((Keys) target.get(Keys.ID)).getAddress();
 
-        Amount fee = Amount.get("PEN", "1000");
-
-        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, fee, "", "MCC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, fee, "PE", "MCC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, fee, "PENPENPENPEN", "MCC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, fee, "PEN", ""));
-        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, fee, "PEN", "MC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, fee, "PEN", "MCCMCCMCCMCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "","AAA", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "PE", "AAA", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "PENPENPENPEN", "AAA", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "PEN", "AAA", ""));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "PEN", "AAA", "MC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "PEN", "AAA", "MCCMCCMCCMCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "PEN", "", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "PEN", "AA", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000", "PEN", "AAAAAAAAAAAA", "MCC"));
     }
 }

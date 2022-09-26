@@ -46,7 +46,7 @@ Gradle 7.4
 
 [Download jar file](release/) and include the package to your project.
 
-The latest version is `mitum-java-util-4.1.1-jdk17.jar`.
+The latest version is `mitum-java-util-4.2.0-jdk17.jar`.
 
 ## Test
 
@@ -69,7 +69,7 @@ BUILD SUCCESSFUL in 288ms
 Add the following line to your build.gradle file.
 
 ```sh
-implementation files('./lib/mitum-java-util-4.1.1-jdk17.jar')
+implementation files('./lib/mitum-java-util-4.2.0-jdk17.jar')
 ```
 
 ## Index
@@ -340,10 +340,10 @@ Document historyDocument(String documentId, String owner, String name, String ac
 Using `Generator.feefi`, following methods are available.
 
 ```java
-PoolRegisterFact getPoolRegisterFact(String sender, String target, Amount initialFee, String incomingCid, String outgoingCid, String currency);
-PoolPolicyUpdaterFact getPoolPolicyUpdaterFact(String sender, String target, Amount fee, String poolId, String currency);
-PoolDepositsFact getPoolDepositsFact(String sender, String pool, String poolId, Amount amount);
-PoolWithdrawFact getPoolWithdrawFact(String sender, String pool, String poolId, Amount[] amounts);
+PoolRegisterFact getPoolRegisterFact(String sender, String target, String initialFee, String incomeCid, String outlayCid, String currency);
+PoolPolicyUpdaterFact getPoolPolicyUpdaterFact(String sender, String target, String fee, String incomeCid, String outlayCid, String currency);
+PoolDepositsFact getPoolDepositsFact(String sender, String pool, String incomeCid, String outlayCid, String amount);
+PoolWithdrawFact getPoolWithdrawFact(String sender, String pool, String incomeCid, String outlayCid, Amount[] amounts);
 ```
 
 #### NFT Generator
@@ -931,9 +931,7 @@ String targetAddr = "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca";
 
 Generator gn = Generator.get("mitum");
 
-Amount fee = Amount.get("PEN", "1000");
-
-PoolRegisterFact fact = gn.feefi.getPoolRegisterFact(senderAddr, targetAddr, fee, "PEN", "MCC", "MCC");
+PoolRegisterFact fact = gn.feefi.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PEN", "MCC", "MCC");
 
 Operation op = Generator.get("mitum").getOperation(fact);
 op.sign(senderPriv);
@@ -960,9 +958,7 @@ String targetAddr = "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca";
 
 Generator gn = Generator.get("mitum");
 
-Amount amount = Amount.get("100", "MCC");
-
-PoolPolicyUpdaterFact fact = gn.feefi.getPoolPolicyUpdaterFact(senderAddr, targetAddr, amount, "ABC", "MCC"); // sender, target, amount, pool id, currency id
+PoolPolicyUpdaterFact fact = gn.feefi.getPoolPolicyUpdaterFact(senderAddr, targetAddr, "1000, "MCC", "ABC", "MCC");
 
 PoolPolicyUpdater operation = gn.getOperation(fact, "");
 operation.sign(senderPriv);
@@ -989,9 +985,7 @@ String targetAddr = "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca";
 
 Generator gn = Generator.get("mitum");
 
-Amount amount = Amount.get("100", "MCC");
-
-PoolDepositsFact fact = gn.feefi.getPoolDepositsFact(senderAddr, targetAddr, "ABC", amount); // sender, pool, pool id, amount
+PoolDepositsFact fact = gn.feefi.getPoolDepositsFact(senderAddr, targetAddr, "MCC", "ABC", "1000");
 
 PoolDeposits operation = gn.getOperation(fact, "");
 operation.sign(senderPriv);
@@ -1018,9 +1012,7 @@ String targetAddr = "77UNyuDQtxkYhRMLuKgyQCpWwGZzLoZ4E7S7qZd4Jbmpmca";
 
 Generator gn = Generator.get("mitum");
 
-Amount amount = Amount.get("100", "MCC");
-
-PoolWithdrawFact fact = gn.feefi.getPoolWithdrawFact(senderAddr, targetAddr, "ABC", new Amount[]{ amount }); // sender, pool, pool id, amounts
+PoolWithdrawFact fact = gn.feefi.getPoolWithdrawFact(senderAddr, targetAddr, "MCC", "ABC", new Amount[]{ amount }); // sender, pool, pool id, amounts
 
 PoolWithdraw operation = gn.getOperation(fact, "");
 operation.sign(senderPriv);

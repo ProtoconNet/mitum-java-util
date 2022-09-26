@@ -1,4 +1,4 @@
-package org.mitumc.sdk.operation.nft.base;
+package org.mitumc.sdk.operation.nft;
 
 import java.util.ArrayList;
 import java.util.HashMap;

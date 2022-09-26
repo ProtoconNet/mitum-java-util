@@ -18,15 +18,17 @@ import org.mitumc.sdk.util.Util;
 public class PoolWithdrawFact extends PurposedOperationFact {
     private Address sender;
     private Address pool;
-    private CurrencyID poolId;
+    private CurrencyID incomeCid;
+    private CurrencyID outlayCid;
     private ArrayList<Amount> amounts;
 
-    PoolWithdrawFact(String sender, String pool, String poolId, Amount[] amounts) {
+    PoolWithdrawFact(String sender, String pool, String incomeCid, String outlayCid, Amount[] amounts) {
         super(Constant.MF_POOL_WITHDRAW_OPERATION_FACT);
         assertNumberOfAmountsValidRange(amounts);
         this.sender = Address.get(sender);
         this.pool = Address.get(pool);
-        this.poolId = CurrencyID.get(poolId);
+        this.incomeCid = CurrencyID.get(incomeCid);
+        this.outlayCid = CurrencyID.get(outlayCid);
         this.amounts = new ArrayList<Amount>(Arrays.asList(amounts));
 
         this.generateHash();
@@ -54,9 +56,10 @@ public class PoolWithdrawFact extends PurposedOperationFact {
         byte[] btoken = this.token.getISO().getBytes();
         byte[] bsender = this.sender.toBytes();
         byte[] bpool = this.pool.toBytes();
-        byte[] bpoolId = this.poolId.toBytes();
+        byte[] bincomeCid = this.incomeCid.toBytes();
+        byte[] boutlayCid = this.outlayCid.toBytes();
         byte[] bamounts = Util.<Amount>concatItemArray(this.amounts);
-        return Util.concatByteArray(btoken, bsender, bpool, bpoolId, bamounts);
+        return Util.concatByteArray(btoken, bsender, bpool, bincomeCid, boutlayCid, bamounts);
     }
 
     @Override
@@ -68,7 +71,8 @@ public class PoolWithdrawFact extends PurposedOperationFact {
         hashMap.put("token", Base64.getEncoder().encodeToString(this.token.getISO().getBytes()));
         hashMap.put("sender", this.sender.getAddress());
         hashMap.put("pool", this.pool.getAddress());
-        hashMap.put("poolid", this.poolId.toString());
+        hashMap.put("incomeCid", this.incomeCid.toString());
+        hashMap.put("outlayCid", this.outlayCid.toString());
 
         ArrayList<Object> arr = new ArrayList<>();
         for (Amount amt : this.amounts) {

@@ -39,7 +39,7 @@ public class PoolWithdrawTest {
 
         Amount am = Amount.get("PEN", "1000");
 
-        PoolWithdrawFact fact = gn.getPoolWithdrawFact(senderAddr, poolAddr, "PEN", new Amount[]{ am });
+        PoolWithdrawFact fact = gn.getPoolWithdrawFact(senderAddr, poolAddr, "PEN", "AAA", new Amount[]{ am });
 
         assertDoesNotThrow(() -> fact.toBytes());
 		assertDoesNotThrow(() -> fact.toDict());
@@ -73,6 +73,7 @@ public class PoolWithdrawTest {
             senderAddr,
             poolAddr,
             "PEN",
+            "AAA", 
             new Amount[]{ }
         ));
     }
@@ -91,6 +92,7 @@ public class PoolWithdrawTest {
             "abcdefg123",
             poolAddr,
             "PEN",
+            "AAA", 
             new Amount[]{ am }
         ));
     }
@@ -109,6 +111,7 @@ public class PoolWithdrawTest {
             senderAddr,
             "abcdefg123",
             "PEN",
+            "AAA", 
             new Amount[]{ am }
         ));
     }
@@ -130,19 +133,43 @@ public class PoolWithdrawTest {
         assertThrows(StringFormatException.class, () -> gn.getPoolWithdrawFact(
             senderAddr,
             poolAddr,
-            "",
+            "AAA",
+            "", 
             new Amount[]{ am }
         ));
         assertThrows(StringFormatException.class, () -> gn.getPoolWithdrawFact(
             senderAddr,
             poolAddr,
-            "PE",
+            "AAA",
+            "PE", 
             new Amount[]{ am }
         ));
         assertThrows(StringFormatException.class, () -> gn.getPoolWithdrawFact(
             senderAddr,
             poolAddr,
+            "AAA", 
             "PENPENPENPEN",
+            new Amount[]{ am }
+        ));
+        assertThrows(StringFormatException.class, () -> gn.getPoolWithdrawFact(
+            senderAddr,
+            poolAddr,
+            "",
+            "PEN", 
+            new Amount[]{ am }
+        ));
+        assertThrows(StringFormatException.class, () -> gn.getPoolWithdrawFact(
+            senderAddr,
+            poolAddr,
+            "AA",
+            "PEN", 
+            new Amount[]{ am }
+        ));
+        assertThrows(StringFormatException.class, () -> gn.getPoolWithdrawFact(
+            senderAddr,
+            poolAddr,
+            "AAAAAAAAAAAA", 
+            "PEN",
             new Amount[]{ am }
         ));
     }

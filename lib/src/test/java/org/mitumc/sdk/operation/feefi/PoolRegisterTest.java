@@ -9,10 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.key.Keypair;
 import org.mitumc.sdk.key.Keys;
-import org.mitumc.sdk.operation.Amount;
 import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.util.Hint;
 
@@ -36,9 +36,7 @@ public class PoolRegisterTest {
         HashMap<String, Object> target = Generator.randomKeys();
         String targetAddr = ((Keys) target.get(Keys.ID)).getAddress();
 
-        Amount fee = Amount.get("PEN", "1000");
-
-        PoolRegisterFact fact = gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "PEN", "MCC", "MCC");
+        PoolRegisterFact fact = gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PEN", "MCC", "MCC");
 
         assertDoesNotThrow(() -> fact.toBytes());
 		assertDoesNotThrow(() -> fact.toDict());
@@ -65,9 +63,7 @@ public class PoolRegisterTest {
         HashMap<String, Object> target = Generator.randomKeys();
         String targetAddr = ((Keys) target.get(Keys.ID)).getAddress();
 
-        Amount fee = Amount.get("PEN", "1000");
-
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact("abcdefg123", targetAddr, fee, "PEN", "MCC", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact("abcdefg123", targetAddr, "1000", "PEN", "MCC", "MCC"));
     }
 
     @DisplayName("Test feefi@pool-register - wrong target")
@@ -78,9 +74,22 @@ public class PoolRegisterTest {
         HashMap<String, Object> sender = Generator.randomKeys();
         String senderAddr = ((Keys) sender.get(Keys.ID)).getAddress();
 
-        Amount fee = Amount.get("PEN", "1000");
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, "abcdefg123", "1000", "PEN", "MCC", "MCC"));
+    }
 
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, "abcdefg123", fee, "PEN", "MCC", "MCC"));
+    @DisplayName("Test feefi@pool-register - wrong fee")
+    @Test
+    void testPoolRegisterWrongFee() {
+        FeefiGenerator gn = FeefiGenerator.get();
+
+        HashMap<String, Object> sender = Generator.randomKeys();
+        String senderAddr = ((Keys) sender.get(Keys.ID)).getAddress();
+
+        HashMap<String, Object> target = Generator.randomKeys();
+        String targetAddr = ((Keys) target.get(Keys.ID)).getAddress();
+
+        assertThrows(NumberRangeException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "-1", "PEN", "MCC", "MCC"));
+        assertThrows(NumberFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "abc", "PEN", "MCC", "MCC"));
     }
 
     @DisplayName("Test feefi@pool-register - wrong currency")
@@ -95,16 +104,14 @@ public class PoolRegisterTest {
         HashMap<String, Object> target = Generator.randomKeys();
         String targetAddr = ((Keys) target.get(Keys.ID)).getAddress();
 
-        Amount fee = Amount.get("PEN", "1000");
-
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "", "MCC", "MCC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "PE", "MCC", "MCC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "PENPENPENPEN", "MCC", "MCC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "PEN", "", "MCC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "PEN", "MC", "MCC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "PEN", "MCCMCCMCCMCC", "MCC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "PEN", "MCC", ""));
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "PEN", "MCC", "MC"));
-        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, fee, "PEN", "MCC", "MCCMCCMCCMCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "", "MCC", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PE", "MCC", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PENPENPENPEN", "MCC", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PEN", "", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PEN", "MC", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PEN", "MCCMCCMCCMCC", "MCC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PEN", "MCC", ""));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PEN", "MCC", "MC"));
+        assertThrows(StringFormatException.class, () -> gn.getPoolRegisterFact(senderAddr, targetAddr, "1000", "PEN", "MCC", "MCCMCCMCCMCC"));
     }
 }

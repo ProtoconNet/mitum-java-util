@@ -6,7 +6,6 @@ import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.exception.EmptyStringException;
 import org.mitumc.sdk.interfaces.BytesConvertible;
 import org.mitumc.sdk.interfaces.HashMapConvertible;
-import org.mitumc.sdk.operation.nft.base.NFTSigners;
 import org.mitumc.sdk.util.Hint;
 import org.mitumc.sdk.util.Util;
 

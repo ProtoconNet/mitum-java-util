@@ -9,15 +9,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mitumc.sdk.Constant;
 import org.mitumc.sdk.Generator;
+import org.mitumc.sdk.exception.NumberRangeException;
 import org.mitumc.sdk.exception.StringFormatException;
 import org.mitumc.sdk.key.Keypair;
 import org.mitumc.sdk.key.Keys;
-import org.mitumc.sdk.operation.Amount;
 import org.mitumc.sdk.operation.Operation;
 import org.mitumc.sdk.util.Hint;
 
 public class PoolDepositsTest {
-
     @DisplayName("Test feefi@pool-deposits")
     @Test
     @SuppressWarnings("unchecked")
@@ -36,13 +35,12 @@ public class PoolDepositsTest {
         HashMap<String, Object> pool = Generator.randomKeys();
         String poolAddr = ((Keys) pool.get(Keys.ID)).getAddress();
 
-        Amount am = Amount.get("PEN", "1000");
-
         PoolDepositsFact fact = gn.getPoolDepositsFact(
             senderAddr,
             poolAddr,
             "PEN",
-            am
+            "AAA",
+            "1000"
         );
 
         assertDoesNotThrow(() -> fact.toBytes());
@@ -70,13 +68,12 @@ public class PoolDepositsTest {
         HashMap<String, Object> pool = Generator.randomKeys();
         String poolAddr = ((Keys) pool.get(Keys.ID)).getAddress();
 
-        Amount am = Amount.get("PEN", "1000");
-
         assertThrows(StringFormatException.class, () -> gn.getPoolDepositsFact(
             "abcdefg123",
             poolAddr,
             "PEN",
-            am
+            "AAA",
+            "1000"
         ));
     }
 
@@ -88,13 +85,48 @@ public class PoolDepositsTest {
         HashMap<String, Object> sender = Generator.randomKeys();
         String senderAddr = ((Keys) sender.get(Keys.ID)).getAddress();
 
-        Amount am = Amount.get("PEN", "1000");
-
         assertThrows(StringFormatException.class, () -> gn.getPoolDepositsFact(
             senderAddr,
             "abcdefg123",
             "PEN",
-            am
+            "AAA",
+            "1000"
+        ));
+    }
+    
+    @DisplayName("Test feefi@pool-deposits - wrong amount")
+    @Test
+    void testPoolDepositsWrongAmount() {
+        FeefiGenerator gn = FeefiGenerator.get();
+
+        HashMap<String, Object> sender = Generator.randomKeys();
+        String senderAddr = ((Keys) sender.get(Keys.ID)).getAddress();
+
+        HashMap<String, Object> target = Generator.randomKeys();
+        String targetAddr = ((Keys) target.get(Keys.ID)).getAddress();
+
+        assertThrows(NumberRangeException.class, () -> gn.getPoolDepositsFact(
+            senderAddr,
+            targetAddr,
+            "PEN",
+            "AAA",
+            "-1"
+        ));
+
+        assertThrows(NumberFormatException.class, () -> gn.getPoolDepositsFact(
+            senderAddr,
+            targetAddr,
+            "PEN",
+            "AAA",
+            "abc"
+        ));
+
+        assertThrows(NumberRangeException.class, () -> gn.getPoolDepositsFact(
+            senderAddr,
+            targetAddr,
+            "PEN",
+            "AAA",
+            "0"
         ));
     }
 
@@ -110,25 +142,47 @@ public class PoolDepositsTest {
         HashMap<String, Object> pool = Generator.randomKeys();
         String poolAddr = ((Keys) pool.get(Keys.ID)).getAddress();
 
-        Amount am = Amount.get("PEN", "1000");
-
         assertThrows(StringFormatException.class, () -> gn.getPoolDepositsFact(
             senderAddr,
             poolAddr,
             "",
-            am
+            "AAA",
+            "1000"
         ));
         assertThrows(StringFormatException.class, () -> gn.getPoolDepositsFact(
             senderAddr,
             poolAddr,
             "PE",
-            am
+            "AAA",
+            "1000"
         ));
         assertThrows(StringFormatException.class, () -> gn.getPoolDepositsFact(
             senderAddr,
             poolAddr,
             "PENPENPENPEN",
-            am
+            "AAA",
+            "1000"
+        ));
+        assertThrows(StringFormatException.class, () -> gn.getPoolDepositsFact(
+            senderAddr,
+            poolAddr,
+            "PEN",
+            "",
+            "1000"
+        ));
+        assertThrows(StringFormatException.class, () -> gn.getPoolDepositsFact(
+            senderAddr,
+            poolAddr,
+            "PEN",
+            "AA",
+            "1000"
+        ));
+        assertThrows(StringFormatException.class, () -> gn.getPoolDepositsFact(
+            senderAddr,
+            poolAddr,
+            "PEN",
+            "AAAAAAAAAAAA",
+            "1000"
         ));
     }
 }

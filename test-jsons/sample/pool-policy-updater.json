@@ -1,27 +1,24 @@
 {
   "fact": {
-    "sender": "BUhott5a7SrsRUzJbVLx4xZgvKyz97MnBwN6xS1qrXSnmca",
-    "fee": {
-      "amount": "1000",
-      "currency": "PEN",
-      "_hint": "mitum-currency-amount-v0.0.1"
-    },
-    "poolid": "PEN",
+    "incomecid": "PEN",
+    "sender": "FeaA9G9LK5PYfk4fKCyKUer6V2nVniFfSEoaKJcpcVeTmca",
+    "fee": "1000",
     "currency": "MCC",
+    "outlaycid": "AAA",
     "_hint": "mitum-feefi-pool-policy-updater-operation-fact-v0.0.1",
-    "hash": "5Tp6x2hBVb1EkSufVwka3J4gkCQmneKEqcZZ9zPX8Njf",
-    "token": "MjAyMi0wOC0xOVQxODozNDozNy44NzZa",
-    "target": "6dPqyRhfMSjWNX8cgCkYG4E2qKXZ1jpM8Qe36jB1SudVmca"
+    "hash": "JAbLCYDFMzveZtKQuFdn2a32d1uzhYKEyYJeSncdLCqp",
+    "token": "MjAyMi0wOS0yNlQxNjoyNjoyOC4wMDla",
+    "target": "9pEzHtG9k3BjRbNjuG1DXpJ7WUaddVmz2wKfU9Sr8PqYmca"
   },
   "memo": "",
   "fact_signs": [
     {
-      "signature": "381yXZSBeL5eT2fSAYa3dYmvZhpnX8Av42Q4tJZtqDLk3Ehy7yyyiZe6VTB3MgbNUqAqYY4u9Y8ynJQdzf5wmf2rh4r4Hu1d",
-      "signed_at": "2022-08-19T18:34:37.877Z",
+      "signature": "AN1rKvteMocNjMuWqEaYTtDediwP5Jpe2diLybh6yyMg68s6mjKYBqapmpJXPWhY6M2hvtp8SoE77F1WTvm2uGf2U8ic6Lf6C",
+      "signed_at": "2022-09-26T16:26:28.010Z",
       "_hint": "base-fact-sign-v0.0.1",
-      "signer": "2ABntqaVKUmfvnFXs8MuubxqygtRUAhx4UZoynypjY1TLmpu"
+      "signer": "xQVdbfJWJvsqQbsiqkkL3yoD7piS1LtwozdMeCFTnABompu"
     }
   ],
   "_hint": "mitum-feefi-pool-policy-updater-operation-v0.0.1",
-  "hash": "DtdasNBmcut1DfgyAYyugLKKZm691ahsGvjot3KZxTqn"
+  "hash": "3GbAXHV4PaVhbs9VRHfqM3bXavwfQduy219RzGkzSsi4"
 }
