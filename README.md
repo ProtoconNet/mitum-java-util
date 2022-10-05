@@ -78,21 +78,21 @@ implementation files('./lib/mitum-java-util-4.2.0-jdk17.jar')
 |---|---|
 |1|[Generate Keypairs](#generate-keypairs)|
 |2|[How to Use Generator](#how-to-use-generator)|
-|2-1|[Create Generator](#create-generator)|
+|2-1|[Support Operations](#support-operations)|
 |2-2|[Get Address from Keys](#get-address-from-keys)|
 |2-3|[Generate JSON File from Operation and Seal](#generate-json-file-from-operation-and-seal)|
-|3|[Currency Operations](#generate-currency-operation)|
-|3-1|[Create Accounts](#generate-create-accounts)|
-|3-2|[Key Updater](#generate-key-updater)|
-|3-3|[Transfers](#generate-transfers)|
-|3-4|[Create Contract Accounts](#generate-create-contract-accounts)|
-|3-5|[Withdraws](#generate-withdraws)|
-|4|[Document Operations](#generate-document-operation)|
-|4-1|[BlockSign Documents](#generate-blocksign-documents)|
-|4-2|[BlockCity Documents](#generate-blockcity-documents)|
-|4-3|[Create Documents](#generate-create-documents)|
-|4-4|[Update Documents](#generate-update-documents)|
-|4-5|[BlockSign Sign Documents](#generate-blocksign-sign-documents)|
+|3|[Currency Operations](#currency-operations)|
+|3-1|[Create Accounts](#create-accounts)|
+|3-2|[Key Updater](#key-updater)|
+|3-3|[Transfers](#transfers)|
+|3-4|[Create Contract Accounts](#create-contract-accounts)|
+|3-5|[Withdraws](#withdraws)|
+|4|[Document Operations](#document-operations)|
+|4-1|[BlockSign Documents](#blocksign-documents)|
+|4-2|[BlockCity Documents](#blockcity-documents)|
+|4-3|[Create Documents](#create-documents)|
+|4-4|[Update Documents](#update-documents)|
+|4-5|[BlockSign Sign Documents](#blocksign-sign-documents)|
 |5|[Feefi Operations](#feefi-operations)|
 |5-1|[Pool Register](#pool-register)|
 |5-2|[Pool Policy Updater](#pool-policy-updater)|
