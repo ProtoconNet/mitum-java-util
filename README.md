@@ -26,7 +26,7 @@ Additionally, This project is using below external Java libraries.
 
 * [bitcoinj v0.14.7](https://bitcoinj.org/)
 
-And you must download and add [ecdsa-keygen-java v1.4](https://github.com/wyuinche/ecdsa-keygen-java) to the project to build.
+And you must download and add [ecdsa-keygen-java v1.5](https://github.com/wyuinche/ecdsa-keygen-java) to the project to build.
 
 ```sh
 $ java -version
@@ -46,7 +46,7 @@ Gradle 7.4
 
 [Download jar file](release/) and include the package to your project.
 
-The latest version is `mitum-java-util-4.2.0-jdk17.jar`.
+The latest version is `mitum-java-util-4.2.1-jdk17.jar`.
 
 ## Test
 
@@ -69,7 +69,7 @@ BUILD SUCCESSFUL in 288ms
 Add the following line to your build.gradle file.
 
 ```sh
-implementation files('./lib/mitum-java-util-4.2.0-jdk17.jar')
+implementation files('./lib/mitum-java-util-4.2.1-jdk17.jar')
 ```
 
 ## Index

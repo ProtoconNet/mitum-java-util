@@ -41,6 +41,12 @@ class KeypairTest {
 
         assertEquals(kpFromString.getPrivateKey(), kpFromBytes.getPrivateKey());
         assertEquals(kpFromString.getPublicKey(), kpFromBytes.getPublicKey());
+
+        stringSeed = "lwkejfl#@439080sdfklj1o48u3.33323li4j2l3";
+        Keypair kp = Keypair.fromSeed(stringSeed);
+
+        assertEquals(kp.getPrivateKey(), "KyuqYqJLC9oPtaUudToDFq1kdshADx1sAyDiRaeQHJTNGpziqZJvmpr");
+        assertEquals(kp.getPublicKey(), "v99vuWLMn1rBcTi8GQna2wU61CpZh4GWzub3PGwqV7vfmpu");
     }
 
     @DisplayName("Test keypair - from private key")
