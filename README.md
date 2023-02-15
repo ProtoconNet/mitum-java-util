@@ -179,6 +179,11 @@ byte[] bseed = seed.getBytes();
 Keypair skp = Keypair.fromSeed(bseed);
 ```
 
+__When creating a key pair using the mnemonic of the protocon and mitum wallet, observe the following procedure.__
+1. Create a byte[]-type seed from the mnemonic.
+2. After base58 encoding, convert the seed generated in _1._ into a String-type string.
+3. Create a mitum key pair by inserting the string of _2._ into `Keypair.fromSeed(String)`.
+
 ## How to Use Generator
 
 This section describes how to use `Generator`. 
